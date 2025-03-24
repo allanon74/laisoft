@@ -1,0 +1,26 @@
+{% extends "./base_v.html" %}
+{% load static %}
+
+{% block headers %} <script type="text/javascript" src="{% static 'script/div_update.js' %}"></script> {% endblock %}
+	
+{% block pagetitle %}Comune di Laives -  formulario premio produzione {% endblock %}
+
+{% block leftcolumn %}
+
+<div class="card">
+<h3> Formulari di {{ dipendente }}</h3>
+<br />
+<form method="post">
+{{ formset }}
+</form>
+
+</div>
+
+{% endblock %}
+
+{% block rightcolumn %}
+	
+{% endblock %}
+
+{% block footer %} <h6>Webmaster: <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>{% endblock %}
+

@@ -1,0 +1,9 @@
+{{ form.non_field_errors }}
+<table class="formtable">
+{% for field in form %}
+	
+		{% if field.errors %}<tr><td span=2>{{ field.errors }}</td></tr> {% endif %}
+		<tr>{% if field.help_text %}<td><label class="enfasi" for="{{ field.id_for_label }}">{{ field.label }}</label></td><td><div class="tooltip" style="width:100%;">{{ field }}<span class="tooltiptext">{{ field.help_text }}</span></div></td>{% else %}<td><label class="enfasi" for="{{ field.id_for_label }}">{{ field.label }}</label></td><td>{{ field }}</td>{% endif %}</tr>
+	
+{% endfor %}
+</table>

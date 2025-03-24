@@ -1,0 +1,44 @@
+{% extends "./base_gic.html" %}
+{% load static customform i18n parler_tags %}
+
+{% block headers %} 
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+{% endblock %}
+	
+{% block pagetitle %}GIC - Gestione Interventi Cantiere{% endblock %}
+
+{% block title %} GIC {% endblock %}
+
+{% block pageheader %} {% trans "Pagina principale" %} {% endblock %}
+
+{% block lang %} 
+<div>
+	{% get_available_languages as LANGUAGES %}
+	{% get_current_language as LANGUAGE_CODE %}
+	<h5 class = "centra">
+		{% for lang_code, title in LANGUAGES %}
+			{% get_language_info for lang_code as lang %}
+			{% get_translated_url lang_code as tr_url %}
+			{% if tr_url %}
+				{% if lang_code == LANGUAGE_CODE %}
+					{{ lang.name_local|capfirst }}
+				{% else %}
+					<form class="li-button" data-ajax="false" action="{{ tr_url }}{{ request.get_full_path|slice:"4:" }}" hreflang="{{ lang_code }}" method="post">
+						{% csrf_token %}
+						<input type="hidden" name="action" value="{{ action }}" />
+						<button type="submit" class="li-button">{{ lang.name_local|capfirst }}</button>
+						</form>
+				{% endif %}
+			{% endif %}
+			&nbsp;
+		{% endfor %}
+	</h5>
+</div>
+{% endblock %}
+
+{% block main %}
+<div id="cononna-cn">
+<iframe src="./operai/" style="height:1024px;width:100%;border:0px;" title="operai">
+</iframe>
+</div>
+{% endblock %}

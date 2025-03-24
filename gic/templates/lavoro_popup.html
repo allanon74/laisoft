@@ -1,0 +1,5 @@
+{% load static customform i18n %} <!-- context: lavoro: lavoro di cui renderizzare il pannello; attivabili: se renderizzare o meno i tasti di tempilavoro-->
+<div data-role="popup" id="lav_{{ lavoro.id }}" class="ui-content" data-transition="slide">
+	{% include 'lavoro_dettaglio.html' with lavoro=lav attivabili=attivabili fotoform=fotoform %}
+	<a href="#" data-rel="back" data-theme="{{ tema_l }}" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+</div>

@@ -1,0 +1,10 @@
+{% load i18n static imagefit %} <!-- contesto: capoverso: capoverso da renderizzare -->
+<div class="clearfix" style="border: 3px solid gray; padding: 5px;">
+    {% if capoverso.immagine %} 
+        <img class="istr" style="float:right" src={{ capoverso.immagine.img|media_resize:capoverso.immagine.risoluzione }} alt="{{ capoverso.immagine.descrizione }}"> 
+    {% endif %}
+    {{ cap.testo|safe }}
+    {% if capoverso.allegato %}
+        <br /><hr /><a href="{{ capoverso.allegato.file.url }}">{{ capoverso.allegato.descrizione|safe }}</a> 
+    {% endif %}
+</div>

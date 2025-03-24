@@ -1,0 +1,42 @@
+{% load i18n %}
+<div data-theme="{{ tema_l }}" data-role="collapsible"> <!-- coll  nuovo lavoro -->
+	<h1> {% trans 'Nuovo lavoro' %}</h1>
+	<p data-theme="{{ tema_l }}">
+		<form data-theme="{{ tema_l }}" data-ajax="false" action="" method="post"> <!-- form  nuovo lavoro -->
+			{% csrf_token %}
+			<table class="formtable" data-theme="{{ tema_l }}">
+				<tr data-theme="{{ tema_l }}">
+					<td data-theme="{{ tema_l }}"><label class="enfasi" for="id_oggetto" data-theme="{{ tema_l }}">{% trans 'Oggetto' %}</label></td>
+					<td data-theme="{{ tema_l }}"><input type="text" name="oggetto" data-theme="{{ tema_l }}" required id="id_oggetto"></td>
+				</tr>
+				<tr data-theme="{{ tema_l }}">
+					<td data-theme="{{ tema_l }}"><label class="enfasi" for="id_descrizione" data-theme="{{ tema_l }}">{% trans 'Descrizione' %}</label></td>
+					<td data-theme="{{ tema_l }}"><textarea cols="40" rows="10" name="descrizione" data-theme="{{ tema_l }}" required id="id_descrizione"></textarea></td>
+				</tr>
+				<tr data-theme="{{ tema_l }}">
+					<td data-theme="{{ tema_l }}"><label class="enfasi" for="id_collaboratore" data-theme="{{ tema_l }}">{% trans 'Collaboratore' %}</label></td>
+					<td data-theme="{{ tema_l }}">
+						<select name="collaboratore" data-theme="{{ tema_l }}" required id="id_collaboratore">{% for coll in team.attivita.collaboratori_validi %}
+							<option value="{{ coll.id }}">{{  coll }}</option>
+						{% endfor %}</select>
+					</td>
+				</tr>
+				<tr data-theme="{{ tema_l }}">
+					<td data-theme="{{ tema_l }}"><label class="enfasi" for="id_durata_prevista" data-theme="{{ tema_l }}">{% trans 'Durata prevista' %}</label></td>
+					<td data-theme="{{ tema_l }}"><div class="tooltip" style="width:100%;"><input type="number" name="durata_prevista" data-theme="{{ tema_l }}" step="1" required aria-describedby="id_durata_prevista_helptext" id="id_durata_prevista"><span class="tooltiptext">{% trans 'Il dato è inserito in ore/uomo.' %}</span></div></td>
+				</tr>
+				
+			</table>
+			<input type="hidden" name="model" value="Lavoro" />
+			<input type="hidden" name="action" value="new" />
+			<input type="hidden" name="stato" value="{{ team.intervento.stato }}" id="id_stato"/>
+			<input type="hidden" name="team" value="{{ team.id }}" id="id_team">
+			<input type="hidden" name="caposquadra" value="" id="id_caposquadra">
+			<input type="hidden" name="accessorio" value="False" id="id_accessorio">
+			<input type="hidden" name="urgenza" value="False" id="id_urgenza">
+			<input type="hidden" name="mod_priorita" value="0" id="id_mod_priorita">
+			<input type="hidden" name="note" value="" id="id_note">
+			<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value = "Salva" />
+		</form> <!-- form nuovo lavoro -->
+	</p>
+</div> <!-- coll nuovo lavoro -->

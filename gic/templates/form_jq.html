@@ -1,0 +1,11 @@
+{{ form.non_field_errors }}
+<div class="ui-field-contain">
+	{% for field in form %}
+		<div class="ui-field-contain">
+			{{ field.errors }}
+			<label class="enfasi" for="{{ field.id_for_label }}">{{ field.label }}</label>
+			{{ field }}
+			{% if field.help_text %}<div class="hint" style="text-align:right;font-size:x-small;font-style:italic;">{{ field.help_text }}</div>	{% endif %}
+		</div>
+	{% endfor %}
+</div>

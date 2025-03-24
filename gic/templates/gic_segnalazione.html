@@ -1,0 +1,35 @@
+{% extends "./base_gic_jq.html" %}
+{% load static customform i18n parler_tags thumbnail %}
+
+{% block headers %} 
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+{% endblock %}
+	
+{% block pagetitle %}GIC - Gestione interventi Cantiere{% endblock %}
+
+{% block title %}{% trans 'Segnalazione' %} {% endblock %}
+
+{% block pageheader %} {% trans "Gestione segnalazione" %} {% endblock %}
+
+{% block lang %} 
+{% include 'lang_button.html' %}
+{% endblock %}
+
+{% block main %}
+
+	{% tema "segnalazione" as tema_s %}
+	{% tema "intervento" as tema_i %}
+	{% tema "team" as tema_t %}
+	{% tema "lavoro" as tema_l %}
+	{% tema "salva" as tema_u %}
+	{% tema "foto" as tema_f %}
+	<div data-theme="{{ tema_s }} data-content-theme="{{ tema_i }}>
+		<h1 data-theme="{{ tema_s }}" class="centra">{% trans 'Modifica segnalazione' %}</h1>
+		{% include "d_segnalazione.html" with seg=segnalazione diritto=diritto gic_render=gic_render btn_dettaglio=False %}
+	</div> <!-- segnalazione -->
+	
+	
+{% endblock %}
+
+
+

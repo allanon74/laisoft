@@ -1,0 +1,40 @@
+{% load static customform i18n parler_tags thumbnail %} <!-- seg: segnalazione da renderizzare; diritto=schema diritti gic_render=cosa visualizzare btn_dettaglio: visualizzare o meno apri dettaglio -->
+<h2>{{ seg.data_creazione|date:"SHORT_DATE_FORMAT" }} - {{ seg.oggetto }} 
+	{{ seg.stato.icona|safe }}
+	<span style="float:right;">&nbsp;</span>
+	{{ seg.tipo.icona|safe }}
+	<span style="float:right;">&nbsp;</span>
+	{{ seg.origine.icona|safe }}
+	 <br />
+	<span class="minimal">{% trans "Interventi" %}: {{ seg.intervento_set.count }} - {% trans "Teams" %}: {{ seg.conta_teams }} - {% trans "Lavori" %}: {{ seg.conta_lavori }}</span>
+	{% for tag in seg.eventi.all %}
+	{{ tag.icona|safe }}<span style="float:right;">&nbsp;</span>
+	{% endfor %}
+</h2>
+<div data-theme="{{ tema_s }}" id="box"> <!-- box segnalazione -->
+	{% if btn_dettaglio %} <a class="ui-btn" href="{% url 'gic_segnalazione' %}?id={{ seg.id }}">{% trans 'Apri dettaglio...' %}</a>{% endif %}
+	<form action="" method="post"> <!-- form segnalazione --> 
+		<fieldset{% if diritto.segnalazioni_w == False %} disabled="True"{% endif %}>
+		{% csrf_token %}
+		{{ seg|form }}
+		<input type="hidden" name="model" value="Segnalazione" />
+		<input type="hidden" name="action" value="save" />
+		<input type="hidden" name="id" value="{{ seg.id }}" />
+		{% if diritto.segnalazioni_w == True %}<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui" value = "Salva" />{% endif %}
+		</fieldset>
+	</form> <!-- form segnalazione -->
+	
+	<div data-theme="{{ tema_s }}" data-role="collapsible" data-content-theme="{{ tema_s }}"> 
+		<h2> {% trans ' Allegati' %}</h2>
+		{% if seg.allegato_set.count > 0 %}
+			{% include "lista_allegati.html" with seg=seg %}
+		{% endif %}
+		{% if diritto.segnalazioni_w == True %}
+			{% include "inserisci_allegato.html" with seg=seg %}
+		{% endif %}
+	</div>
+		
+</div> <!-- box segnalazione -->
+ 
+	{% if gic_render.interventi and diritto.interventi_r %}{% include "lista_interventi.html" with segnalazione=seg interventi=seg.intervento_set.all diritti=diritti gic_render=gic_render %}{% endif %}
+	

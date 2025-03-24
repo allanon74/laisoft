@@ -1,0 +1,31 @@
+{% extends "./base_gic_jq.html" %}
+{% load static customform i18n parler_tags %}
+
+{% block headers %} 
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+{% endblock %}
+	
+{% block pagetitle %}GIC - Gestione Interventi Cantiere{% endblock %}
+
+{% block title %}{% trans 'Segnalazioni' %} {% endblock %}
+
+{% block pageheader %} {% trans "Pagina Segnalazioni" %} {% endblock %}
+
+{% block lang %} 
+{% include 'lang_button.html' %}
+{% endblock %}
+
+{% block main %}
+
+{% tema "segnalazione" as tema_s %}
+{% tema "intervento" as tema_i %}
+{% tema "team" as tema_t %}
+{% tema "lavoro" as tema_l %}
+{% tema "salva" as tema_u %}
+
+{% include 'lista_segnalazioni_link.html' with segnalazioni=segnalazioni diritto=diritto gic_render=gic_render %}
+
+{% endblock %}
+
+
+

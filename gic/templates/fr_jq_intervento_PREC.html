@@ -1,0 +1,110 @@
+{% load i18n customform %}
+{% tema "intervento" as tm %}
+{{ form.non_field_errors }}
+{% with div_f=' class="hint" style="text-align:right;font-size:x-small;font-style:italic;"' %}
+<div data-theme="{{ tm }}" data-content-theme="{{ tm }}">
+	{% if form.segnalazione.errors %}{{ form.segnalazione.errors }}<br />{% endif %}
+	<div class="ui-field-contain">
+		<label class="enfasi" for="{{ form.segnalazione.id_for_label }}" data-theme="{{ tm }}">{{ form.segnalazione.label }}</label>
+		{{ form.segnalazione }}
+		{% if form.segnalazione.help_text %}<div {{ div_f|safe }}>{{ form.segnalazione.help_text }}</div>{% endif %}
+	</div>
+	{% if form.oggetto.errors %}{{ form.oggetto.errors }}<br /> {% endif %}
+	<div class="ui-field-contain">
+		<label class="enfasi" for="{{ form.oggetto.id_for_label }}" data-theme="{{ tm }}">{{ form.oggetto.label }}</label>
+		{{ form.oggetto }}
+		{% if form.oggetto.help_text %}<div {{ div_f|safe }}>{{ form.oggetto.help_text }}</div>{% endif %}
+	</div>
+	{% if form.descrizione.errors %}{{ form.descrizione.errors }}<br /> {% endif %}
+	<div class="ui-field-contain">
+		<td><label class="enfasi" for="{{ form.descrizione.id_for_label }}" data-theme="{{ tm }}">{{ form.descrizione.label }}</label>
+		{{ form.descrizione }}
+		{% if form.descrizione.help_text %}	<div {{ div_f|safe }}>{{ form.descrizione.help_text }}</div>{% endif %}
+	</div>
+	{% if form.stato.errors %}{{ form.stato.errors }}<br />{% endif %}
+	<div class="ui-field-contain">
+		<label class="enfasi" for="{{ form.stato.id_for_label }}" data-theme="{{ tm }}">{{ form.stato.label }}</label>
+		{{ form.stato }}
+		{% if form.stato.help_text %}<div {{ div_f|safe }}>{{ form.stato.help_text }}</div>	{% endif %}
+	</div>
+	{% if form.struttura.errors %}{{ form.struttura.errors }}<br />{% endif %}
+	<div class="ui-field-contain">
+		<label class="enfasi" for="{{ form.struttura.id_for_label }}" data-theme="{{ tm }}">{{ form.struttura.label }}</label>
+		{{ form.struttura }}
+		{% if form.struttura.help_text %}<div {{ div_f|safe }}>{{ form.struttura.help_text }}</div>{% endif %}
+	</div>
+	{% if form.priorita.errors %}{{ form.priorita.errors }}<br /> {% endif %}
+	<div class="ui-field-contain">
+		<label class="enfasi" for="{{ form.priorita.id_for_label }}" data-theme="{{ tm }}">{{ form.priorita.label }}</label>
+		{{ form.priorita }}
+		{% if form.priorita.help_text %}<div {{ div_f|safe }}>{{ form.priorita.help_text }}</div>	{% endif %}
+	</div>
+	{% if form.preposto.errors %}{{ form.preposto.errors }}<br /> {% endif %}
+	<div class="ui-field-contain">
+		<label class="enfasi" for="{{ form.preposto.id_for_label }}" data-theme="{{ tm }}">{{ form.preposto.label }}</label>
+		{{ form.preposto }}
+		{% if form.preposto.help_text %}<div {{ div_f|safe }}>{{ form.preposto.help_text }}</div>	{% endif %}
+	</div>
+	{% if form.precedente.errors %}{{ form.precedente.errors }}<br /> {% endif %}
+	<div class="ui-field-contain">
+		<label class="enfasi" for="{{ form.precedente.id_for_label }}" data-theme="{{ tm }}">{{ form.precedente.label }}</label>
+		{{ form.precedente }}
+		{% if form.precedente.help_text %}<div {{ div_f|safe }}>{{ form.precedente.help_text }}</div>{% endif %}
+	</div>
+	{% if form.id_rabs.errors %}{{ form.id_rabs.errors }}<br /> {% endif %}
+	<div class="ui-field-contain">
+		<label class="enfasi" for="{{ form.id_rabs.id_for_label }}" data-theme="{{ tm }}">{{ form.id_rabs.label }}</label>
+		{{ form.id_rabs }}
+		{% if form.id_rabs.help_text %}<div {{ div_f|safe }}>{{ form.id_rabs.help_text }}</div>{% endif %}
+	</div>
+	<div data-role="collapsible" data-theme="{{ tm }}">
+		<h1>{% trans "Date di pianificazione" %}</h1>
+		{% if form.data_visibilita.errors %}{{ form.data_visibilita.errors }}<br /> {% endif %}
+		<div class="ui-field-contain">
+			<label class="enfasi" for="{{ form.data_visibilita.id_for_label }}" data-theme="{{ tm }}">{{ form.data_visibilita.label }}</label>
+			{{ form.data_visibilita }}
+			{% if form.data_visibilita.help_text %}<div {{ div_f|safe }}>{{ form.data_visibilita.help_text }}</div>{% endif %}
+		</div>
+		{% if form.data_esecuzione.errors %}{ form.data_esecuzione.errors }}<br /> {% endif %}
+		<div class="ui-field-contain">
+			<label class="enfasi" for="{{ form.data_esecuzione.id_for_label }}" data-theme="{{ tm }}">{{ form.data_esecuzione.label }}</label>
+			{{ form.data_esecuzione }}
+			{% if form.data_esecuzione.help_text %}<div {{ div_f|safe }}>{{ form.data_esecuzione.help_text }}</div>{% endif %}
+		</div>
+		{% if form.data_urgente.errors %}{{ form.data_urgente.errors }}<br />{% endif %}
+		<div class="ui-field-contain">
+			<label class="enfasi" for="{{ form.data_urgente.id_for_label }}" data-theme="{{ tm }}">{{ form.data_urgente.label }}</label>
+			{{ form.data_urgente }}
+			{% if form.data_urgente.help_text %}<div {{ div_f|safe }}>{{ form.data_urgente.help_text }}</div>{% endif %}
+		</div>
+	</div>
+	<div data-role="collapsible" data-theme="{{ tm }}">
+		<h1>{% trans "Dati per la periodicità" %}</h1>
+		{% if form.periodico.errors %}{{ form.periodico.errors }}<br /> {% endif %}
+		<div class="ui-field-contain">
+			<label class="enfasi" for="{{ form.periodico.id_for_label }}" data-theme="{{ tm }}">{{ form.periodico.label }}</label>
+			{{ form.periodico }}
+			{% if form.periodico.help_text %}<div {{ div_f|safe }}>{{ form.periodico.help_text }}</div>{% endif %}
+		</div>
+		{% if form.periodo.errors %}{{ form.periodo.errors }}<br />{% endif %}
+		<div class="ui-field-contain">
+			<label class="enfasi" for="{{ form.periodo.id_for_label }}" data-theme="{{ tm }}">{{ form.periodo.label }}</label>
+			{{ form.periodo }}
+			{% if form.periodo.help_text %}<div {{ div_f|safe }}>{{ form.periodo.help_text }}</div>{% endif %}
+		</div>
+		{% if form.cicli.errors %}{{ form.cicli.errors }}<br /> {% endif %}
+		<div class="ui-field-contain">
+			<label class="enfasi" for="{{ form.cicli.id_for_label }}" data-theme="{{ tm }}">{{ form.cicli.label }}</label>
+			{{ form.cicli }}
+			{% if form.cicli.help_text %}<div {{ div_f|safe }}>{{ form.cicli.help_text }}</div>{% endif %}
+		</div>
+		{% if form.duplicare.errors %}{{ form.duplicare.errors }}<br /> {% endif %}
+		<div class="ui-field-contain">
+			<label class="enfasi" for="{{ form.duplicare.id_for_label }}" data-theme="{{ tm }}">{{ form.duplicare.label }}</label>
+			{{ form.duplicare }}
+			{% if form.duplicare.help_text %}<div {{ div_f|safe }}>{{ form.duplicare.help_text }}</div>{% else %}
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endwith %}

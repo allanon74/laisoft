@@ -1,0 +1,55 @@
+{% extends "./base_gic_jq.html" %}
+{% load static customform i18n parler_tags %}
+
+{% block headers %} 
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+{% endblock %}
+	
+{% block pagetitle %}GIC - Gestione Interventi Cantiere{% endblock %}
+
+{% block title %} GIC {% endblock %}
+
+{% block pageheader %} {% trans "Pagina principale" %} {% endblock %}
+
+{% block lang %} 
+<div>
+	{% get_available_languages as LANGUAGES %}
+	{% get_current_language as LANGUAGE_CODE %}
+	<h5 class = "centra">
+		{% for lang_code, title in LANGUAGES %}
+			{% get_language_info for lang_code as lang %}
+			{% get_translated_url lang_code as tr_url %}
+			{% if tr_url %}
+				{% if lang_code == LANGUAGE_CODE %}
+					{{ lang.name_local|capfirst }}
+				{% else %}
+					<form class="li-button" data-ajax="false" action="{{ tr_url }}{{ request.get_full_path|slice:"4:" }}" hreflang="{{ lang_code }}" method="post">
+						{% csrf_token %}
+						<input type="hidden" name="action" value="{{ action }}" />
+						<button type="submit" class="li-button">{{ lang.name_local|capfirst }}</button>
+						</form>
+				{% endif %}
+			{% endif %}
+			&nbsp;
+		{% endfor %}
+	</h5>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1 class="centra">GIC - {% trans 'Pagina principale' %}</h1>
+	{% tema "segnalazione" as tema_s %}
+	{% tema "intervento" as tema_i %}
+	{% tema "team" as tema_t %}
+	{% tema "lavoro" as tema_l %}
+	{% tema "salva" as tema_u %}
+	{% tema "collaboratore" as tema_c %}
+	
+	<div class="ui-grid-b ui-responsive">
+		{% if diritto.segnalazioni_r %}<div class="ui-block-a">{% include 'lista_segnalazioni_link.html' with segnalazioni=segnalazioni diritto=diritto gic_render=gic_render %}</div>{% endif %}
+		{% if diritto.interventi_r %}<div class="ui-block-c">{% include 'lista_interventi_link.html' with interventi=interventi diritto=diritto gic_render=gic_render %}</div>{% endif %}
+		{% if diritto.collaboratori_r %}<div class="ui-block-b">{% include 'lista_collaboratori.html' with gic_render=coll_render %}</div>{% endif %}
+
+	</div>
+{% endblock %}
+

@@ -1,0 +1,200 @@
+﻿<!doctype html>
+{% load static %} 
+{% load i18n parler_tags %}
+
+
+<head>
+   <meta charset="UTF-8">
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+    <title>{% block pagetitle %}GIC - Gestione Interventi Cantiere{% endblock %}</title>
+ 	<meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- fondamentale per il responsive design -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- font library -->
+	<link type="text/css" href="{% static 'css/style_2.css' %}" rel="stylesheet" />
+	
+	<script>
+function myFunction() {
+	var x = document.getElementById("myTopnav");
+	if (x.className === "topnav") {
+		x.className += " responsive";
+	} else {
+		x.className = "topnav";
+	}
+}
+</script>
+	
+</head>
+<body>
+<div id="container">
+	<!-- Header -->
+    <div id="header">
+        <h1 id="titolo"><a href="#">Laisoft - <span style="color:#FFFF00">{% block title %}Gestione Interventi Cantiere{% endblock %}</span></a></h1>
+    </div> 
+<!--    
+    {% get_current_language as CURRENT_LANGUAGE %}
+      {% get_available_languages as AVAILABLE_LANGUAGES %}
+      {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+      <div class="languages">
+        <p>{% trans "Lingua" %}:</p>
+        <ul class="languages">
+          {% for language in languages %}
+            <li>
+              <a href="/{{ language.code }}/"
+                {% if language.code == CURRENT_LANGUAGE %} class="active"{% endif %}>
+                {{ language.name_local }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+        
+--> 
+
+    <!-- Menu -->
+    
+	<div class="topnav" id="myTopnav"> 
+{% block menu %}
+	 	<a href={% url 'logout' %}>{% trans "Logout" %}</a>
+		<a href={% url 'wiki' %} target="_blank">{% trans "Wiki Laives" %}</a>
+		{% if admin %}<a href={% url 'admin:index' %}>{% trans "Pagina di amministrazione" %}</a>{% endif %}
+		<a href={% url 'main' %}>{% trans "Menu Principale" %}
+		<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+			<i class="fa fa-bars"></i>
+		</a>
+{% endblock %}
+	</div> 
+    <!-- Main -->
+	<div id="main">
+		<div id="pagina">
+			{% block pageheader %}Home{% endblock %}
+		</div>
+	{% block main %}
+		<!-- colonna-sx -->
+		<div id="colonna-sx">
+			{% block leftcolumn %}
+            <h2>Benvenuti!</h2>
+            <img src="images/teramo.jpg" class="immagine"/>
+            <div class="giustifica">
+				<p>	La nostra azienda di fantasia GigaWebIIIBI si trova a Teramo (foto) e vanta un'esperienza decennale nella creazione di siti e portali Web a 
+					livello nazionale ed internazionale. Ci occupiamo di:
+					<ul>
+						<li>Siti Web Responsive</li>
+						<li>Posizionamento sui motori di ricerca</li>
+						<li>Web banner statici e dinamici</li>
+						<li>Grafica, animazioni e fotoritocco</li>
+					</ul>
+				</p>
+            </div> 
+            <hr /> 
+            <h2>Articolo 1</h2>
+            <div class="giustifica">
+				<p>	"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem 
+					aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+					Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores 
+					eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+					consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam 
+					quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, 
+					nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse 
+					quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+				</p>
+            </div> 
+            <hr /> 
+		    <h2>Articolo 2</h2>
+            <div class="giustifica">
+				<p>	"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem 
+					aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+					Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores 
+					eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+					consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam 
+					quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, 
+					nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse 
+					quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+				</p>
+            </div>   
+            <hr /> 
+            {% endblock %}
+    	</div> <!-- chiude <div id="colonna-sx"> -->
+		<!-- colonna-dx -->
+    	<div id="colonna-dx">
+    	{% block rightcolumn %}
+			<div class="row"> <!-- una riga per inserire due immagini con link-->
+				<h2>Immagini con link</h2>
+				<div id="colonna50-sx">
+					<a href="#"><img src="images/image1.jpg" class="immagine"></a>
+					<div class="linkpagina">Pagina x</div>
+				</div>
+				<div id="colonna50-dx">
+					<a href="#"><img src="images/image2.jpg" class="immagine"></a>
+					<div class="linkpagina">Pagina y</div>
+				</div>
+		    </div>
+			<!-- Inserisco un box -->
+			<div id="box">
+				<h2>Box</h2>
+				
+                <p class="giustifica">{% trans "Pagina di amministrazione" %} "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem 
+					aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+					Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores 
+					eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+					consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam 
+					quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, 
+					nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse 
+					quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+				</p>
+            </div>
+             <!-- Inserisco una lista di link a siti preferiti -->
+        	<div id="link">
+                <h2>Link</h2>
+                <ul>
+                    <li><a target="_new" href="http://www.maurodeberardis.it/">Sito Mauro De Berardis</a></li>
+                    <li><a href="#">Link sito 2</a></li>
+					<li><a href="#">Link sito 3</a></li>
+					<li><a href="#">Link sito 4</a></li> 
+                </ul>
+            </div> 
+            {% endblock %}
+    	</div> <!-- chiude <div id="colonna-dx"> -->
+    
+	</div> <!-- chiude <div id="main"> -->
+	{% endblock %}
+	<!-- footer -->
+ 	<div id="footer">
+ 	{% block lang %} 
+	<div id="lang">
+	<ul>
+	    {% get_available_languages as LANGUAGES %}
+	    {% get_current_language as LANGUAGE_CODE %}
+	    {% for lang_code, title in LANGUAGES %}{% get_language_info for lang_code as lang %}{% get_translated_url lang_code as tr_url %}{% if tr_url %}<li{% if lang_code == LANGUAGE_CODE %} class="is-selected"{% endif %}><a href="{{ tr_url }}" hreflang="{{ lang_code }}">{{ lang.name_local|capfirst }}</a></li>{% endif %}{% endfor %}
+	</ul>
+	</div>
+	{% endblock %}
+  {% block footer %}
+  <h6>Webmaster: <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>
+<!--
+  <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}">
+    <select name="language">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                {{ language.name_local }} ({{ language.code }})
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Go">
+</form>
+-->
+  {% endblock %}       
+    </div>
+
+ 
+    
+    <div class="clear"></div>
+
+</div> <!-- chiude <div id="container"> -->
+
+</body>
+</html>
+
+
+	

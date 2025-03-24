@@ -1,0 +1,91 @@
+{% extends "./base_p.html" %}
+{% load static %}
+
+{% block headers %} <script type="text/javascript" src="{% static 'script/div_update.js' %}"></script> {% endblock %}
+	
+{% block pagetitle %}Comune di Laives - Tabella Pratiche Attribuite{% endblock %}
+
+{% block title %}Lista pratiche assegnate{% endblock %}
+
+{% block leftcolumn %}
+
+<h3> Pratiche di {{ dipendente }}</h3>
+<div class="card">
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Ricerca">
+
+<table id="myTable">
+  <tr class="header">
+	<th>Richiedente</th>  
+    <th>Tipo Pratica</th>
+    <th>Data Assegnazione</th>
+    <th>Peso</th>
+	<th>D3 One</th>
+	<th>Note</th>
+	<th></th>
+  </tr>
+
+	{% for del in deleghe %}
+		<tr>
+			<td> {{ del.richiedente }} </td>
+			<td> {{ del.tipo_pratica }} </td>
+			<td> {{ del.data_assegnazione }} </td>
+			<td> {{ del.peso }}  </td>
+			<td> <a href="{{ del.url_pratica }}" target="_blank">{{ del.documento }}</a> </td>
+			<td> {{ del.note|linebreaksbr }} </td>
+			<td><form action="completato/{{ del.id }}/" method=POST>{% csrf_token %}<input type="submit" value="Completata"></form></td>
+		</tr>
+	{% endfor %} 
+
+  
+</table>
+</div>
+{% endblock %}
+
+{% block rightcolumn %}
+	<div class="card">
+		
+		<h3 align="center">Inserimento ferie personali</h3>
+		<form action="ferie/" method=POST> {% csrf_token %}
+			Scegliere il numero di settimane di ferie da inserire: <select id="setferie" name="setferie">
+				<option value=1> 1 settimana</option>
+				<option value=2> 2 settimane</option>
+				<option value=3> 3 settimane</option>
+			</select>
+			<br /><br />
+			<input type="submit" value="Inserire Ferie"></form>
+		</form>
+	</div>
+		{% if gestgruppo %}
+	<div class="card">
+			<form action="pratica_d_ufficio/" method=POST>{% csrf_token %}	
+				<h3 align="center">Assegnazione pratica d'ufficio</h3>
+				<table>
+				<tr><td align="right"><label for="dipendente">Selezionare dipendente:</label> </td>
+				<td><select id="dipendente" name="dipendente">
+				{% for g in gruppi_gestiti %}
+					{% for dp in g.delegato.all %}
+						<option value="{{ dp.id }}">{{ dp.cognome }} {{ dp.nome }}</option>
+					{% endfor %}
+				{% endfor %}
+	
+			</select> </td></tr>
+			<tr><td align="right"><label for="ID_documento">Inserire progressivo atto di assegnazione d'ufficio:</label></td>
+			
+			<td><input type="text" name="ID_documento" maxlength=10 ></td></tr>
+			<tr><td align="right"><label for="peso">Peso della pratica:</td>
+			<td><input type="text" name="peso", value="1"></td></tr>
+			<tr><td colspan=2 align="middle">note</td></tr>
+			<tr><td colspan=2><textarea style="width:100%;height:150px;" name="note" ></textarea></td></tr>
+			</table>
+			<br />
+			<input type="submit" value="Inserire pratica d'ufficio"></form>
+			
+	</div>
+		{% endif %}
+	<div class="card">
+		<p align="right"><a href="http://leifersdjango.leifers.gvcc.net/accounts/logout">Logout</a></p>
+	</div>	
+{% endblock %}
+
+{% block footer %} <h6>Webmaster: <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>{% endblock %}
+

@@ -1,0 +1,134 @@
+<!doctype html>
+{% load static %} 
+{% load i18n parler_tags %}
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- FontAwesome support  -->
+	<link rel="stylesheet" href="{% static 'fontawesomefree/css/fontawesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesomefree/css/brands.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesomefree/css/solid.css' %}"> 
+
+
+	
+	<!-- jquery support -->
+	
+	<link rel="stylesheet" href="{% static 'jquery/themes/laives-6.css' %}" />
+	<link rel="stylesheet" href="{% static 'jquery/themes/jquery.mobile.icons.min.css' %}" />
+
+	<link rel="stylesheet" href="{% static '/jquery/jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.css' %}"> 
+	<script src="{% static 'jquery/jquery-1.11.3.js' %}"></script>
+	<script src="{% static '/jquery/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js' %}"></script>
+
+	<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+	
+
+	
+	<link href="{% static 'css/leifers_simple.css' %}" rel="stylesheet" /> 
+	<title>{% block pagetitle %}Laisoft - GIC{% endblock %}</title>	
+
+
+{% block headers %}  {% endblock %}
+
+</head>
+<body>
+<div data-role="page" data-theme="g" id="root">
+	{% block panels %} {% endblock %}
+	<div data-role="header" style="background-color:#0000CD;color:white;background-image: linear-gradient(#0000CD ,#00FFFF);"> 
+	<a class="active" href={% url 'main' %} data-icon="home">{% trans 'Laisoft' %}</a>
+		<h1 style="font-size:xx-large;"><span style="color:yellow;font-weight:bold;">Laisoft</span> - GIC<br /><br />{% block title %}Gestione Interventi Cantiere{% endblock %}</h1>
+		{% if admin %}<a href={% url 'admin:index' %} data-ajax="false" data-icon="gear">{% trans "Admin" %}</a>{% endif %}
+		<div data-role="navbar">
+			
+				
+				<!--<li><a href={% url 'logout' %} data-ajax="false"><i class="icon_tt fa-solid fa-arrow-right-from-bracket"><span class="icon_text">&nbsp;{% trans "Logout" %}&nbsp;</span></i></a></li>-->
+				<!-- <li><a href={% url 'wiki' %} target="_blank"><i class="icon_tt fa-brands fa-wikipedia-w"><span class="icon_text">&nbsp;{% trans "Wiki Laives" %}&nbsp;</span></i></a></li> -->
+				
+			
+			<hr class="minimal" />
+			<ul>
+				<li><a class="ui-btn" data-ajax="false" href={% url 'gic_full' %}>{% trans 'Pagina principale' %}</a></li>
+				{% if diritto.segnalazioni_r %}<li><a class="ui-btn" data-ajax="false" href={% url 'gic_segnalazioni' %}>{% trans 'Segnalazioni' %}</a></li>{% endif %}
+				{% if diritto.interventi_r %}<li><a class="ui-btn" data-ajax="false" href={% url 'gic_interventi' %}>{% trans 'Interventi' %}</a></li>{% endif %}
+				{% if diritto.collaboratori_r %}<li><a class="ui-btn" data-ajax="false" href={% url 'gic_collaboratori' %}>{% trans 'Collaboratori' %}</a></li>{% endif %}
+				{% if diritto.report %}<li><a class="ui-btn" data-ajax="false" href={% url 'gic_report' %}>{% trans 'Report' %}</a></li>{% endif %}
+				{% if diritto.lavori_v %}<li><a class="ui-btn" data-ajax="false" href={% url 'gic_lavori_verifica' %}>{% trans 'Lavori da Verificare' %}</a></li>{% endif %}
+			</ul>
+			{% if diritto.orario %}<ul>
+			<li><a class="ui-btn" data-ajax="false" href={% url 'gic_operai' %}>{% trans 'Pagina registrazione lavori' %}</a></li>
+			</ul>
+			{% endif %}
+		</div><!-- navbar -->
+	</div><!-- header -->
+	
+	<div data-role="main" data-theme="a" class="ui-content">
+
+		{% block premain %} 
+
+		{% endblock %}
+
+		
+		
+		{% block main %}
+		<div class="ui-grid-a ui-responsive">
+			<div class="ui-block-a">
+				{% block leftcolumn %}
+					<p>	"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem 
+						aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+						Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores 
+						eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+						consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam 
+						quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, 
+						nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse 
+						quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+					</p>
+				{% endblock %} <!-- leftcolumn -->
+			</div> <!-- block-a -->
+			<div class="ui-block-b">
+				{% block rightcolumn %}
+					<div id="box">
+					<h2>Box</h2>
+					
+	                <p class="giustifica">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem 
+						aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+						Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores 
+						eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+						consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam 
+						quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, 
+						nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse 
+						quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+					</p>
+		            </div> <!-- box -->
+				{% endblock %} <!-- rightcolumn -->
+			</div> <!-- block-b -->
+		</div> <!-- grid -->
+		{% endblock %} <!-- main -->
+	</div> <!-- main -->
+
+	<div data-role="footer">
+	 	{% block lang %} 
+			<div> 
+				{% get_available_languages as LANGUAGES %}
+				{% get_current_language as LANGUAGE_CODE %}
+				<h5 class = "centra">
+					{% for lang_code, title in LANGUAGES %}
+						{% get_language_info for lang_code as lang %}
+						{% get_translated_url lang_code as tr_url %}
+						{% if tr_url %}{% if lang_code == LANGUAGE_CODE %}{{ lang.name_local|capfirst }}{% else %}<a href="{{ tr_url }}{{ request.get_full_path|slice:"4:" }}" hreflang="{{ lang_code }}">{{ lang.name_local|capfirst }}</a>{% endif %}{% if not forloop.last %} - {% endif %}{% endif %}
+					{% endfor %}
+				</h5>
+			</div>
+		{% endblock %} <!-- lang -->
+		{% block footer %}
+			<p class="centra minimal">Webmaster: <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></p>
+		{% endblock %} <!-- footer -->
+	</div><!-- footer -->
+		
+
+</div> <!-- page -->
+
+</body>
+</html>

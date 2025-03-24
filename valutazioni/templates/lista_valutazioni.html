@@ -1,0 +1,46 @@
+{% extends "./base_v.html" %}
+{% load static %}
+
+{% block headers %} <script type="text/javascript" src="{% static 'script/div_update.js' %}"></script> {% endblock %}
+	
+{% block pagetitle %}Comune di Laives -  formulario premio produzione {% endblock %}
+
+{% block leftcolumn %}
+
+<div class="card">
+<h3> Formulari di {{ dipendente }}</h3>
+<br />
+
+<table id="myTable">
+  <tr class="header">
+    <th>Formulario</th>
+    <th>Anno</th>
+	<th>Tipo</th>
+	<th>Stampa</th>
+	<th>Controlla e firma</th>
+	
+  </tr>
+
+	{% for frm in formulari %}
+		<tr>
+			<td> {{ frm.dipqual }} </td>
+			<td> {{ frm.anno }} </td>
+			<td>  {{ frm.tipo }}</div></td>
+			<td><a href="../stampaformulario/{{ frm.id }}/" target=_BLANK><b>it</a>   <a href="../stampaformularioted/{{ frm.id }}/" target=_BLANK>de</b></a></td>
+			<td><form action="dettaglio/" method=POST>{% csrf_token %}
+			<input type="hidden" name="id_formulario" value="{{ frm.id }}"> <input type="submit" value="Controlla e firma..."></form></td>
+		</tr>
+	{% endfor %} 
+
+  
+</table>
+</div>
+
+{% endblock %}
+
+{% block rightcolumn %}
+	
+{% endblock %}
+
+{% block footer %} <h6>Webmaster: <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>{% endblock %}
+

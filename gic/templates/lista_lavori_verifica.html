@@ -1,0 +1,17 @@
+{% load i18n customform %} <!-- contesto: team = team di riferimento lavori = lista lavori diritto: diritti dell'utente gic_render: cosa renderizzare -->
+<div data-role="collapsibleset">
+<!--	<p> lavori_new: {{ gic_render.lavori_new }} - diritto_lavori_w: {{ diritto.lavori_w }}</p>
+	<p>{% for k,v in gic_render.items %} {{ k }} = {{ v }}<br />{% endfor %}</p> -->
+	{% if gic_render.lavori_new == True and diritto.lavori_w == True %}{% include "nuovo_lavoro.html" with team=team %}{% endif %}
+	{% for lav in lavori %} <!-- for lavori -->
+		<div data-theme="{{  tema_l }}" data-role="collapsible"> <!-- coll lavoro -->
+			<h1>{{ lav.oggetto }} - {{ lav.collaboratore.sigla }}{{ lav.stato.icona|safe }}{{ lav.priorita.icona|safe }}</h1>
+			<div data-theme="{{ tema_t }}" id="box"> <!-- box lavoro -->
+				{% include 'lavoro_dettaglio.html' with lavoro=lav attivabili=False fotoform=foto_form %}
+			</div> <!-- box lavoro -->
+		</div><!-- coll lavoro -->
+	{% endfor %} <!-- for lavori -->
+	
+
+	
+</div> <!-- collapsibleset lavori -->

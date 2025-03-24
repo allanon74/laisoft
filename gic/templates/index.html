@@ -1,0 +1,146 @@
+﻿<!doctype html>
+<head>
+   <meta charset="UTF-8">
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+    <title>Home - Responsive Design MDB2020</title>
+ 	<meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- fondamentale per il responsive design -->
+    <link href="css/style.css" rel="stylesheet" />
+	<script src="js/jquery-1.7.1.min.js"></script>
+</head>
+<script>
+	/* Quando il dipositivo è  uno smartphone o un piccolo tablet, il menù (smartmenu) viene attivato o disattivato 
+	   cliccando sulla classica icona con 3 barre orizzontali tramite questo script JQuery*/
+  	$(document).ready(function(){   
+		$(".smartmenu").click(function() {
+		$("#menu").toggleClass("mostra-smartmenu");
+		});
+	});
+</script>
+<body>
+<div id="container">
+	<!-- Header -->
+    <div id="header">
+        <h1 id="titolo"><a href="#">GigaWeb<span style="color:#FFFF00">IIIBI</span></a></h1>
+        <div class="smartmenu">
+			<span class="icon-smartmenu"></span>
+			<span class="icon-smartmenu"></span>
+            <span class="icon-smartmenu"></span>
+        </div>
+    </div> 
+    <!-- Menu -->
+    <div id="menu">
+	 	<ul>
+        	<li><a href="#">Home</a></li>
+			<li><a href="#">Novità</a></li>
+            <li><a href="#">Chi siamo</a></li>
+            <li><a href="cosafacciamo.html"><span style="color:#0000cd">Cosa facciamo</span></a></li>
+			<li><a href="#">Contatti</a></li>
+        </ul>
+	</div> 
+    <!-- Main -->
+	<div id="main">
+		<div id="pagina">
+			Home
+		</div>
+	
+		<!-- colonna-sx -->
+		<div id="colonna-sx">
+            <h2>Benvenuti!</h2>
+            <img src="images/teramo.jpg" class="immagine"/>
+            <div class="giustifica">
+				<p>	La nostra azienda di fantasia GigaWebIIIBI si trova a Teramo (foto) e vanta un'esperienza decennale nella creazione di siti e portali Web a 
+					livello nazionale ed internazionale. Ci occupiamo di:
+					<ul>
+						<li>Siti Web Responsive</li>
+						<li>Posizionamento sui motori di ricerca</li>
+						<li>Web banner statici e dinamici</li>
+						<li>Grafica, animazioni e fotoritocco</li>
+					</ul>
+				</p>
+            </div> 
+            <hr /> 
+            <h2>Articolo 1</h2>
+            <div class="giustifica">
+				<p>	"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem 
+					aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+					Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores 
+					eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+					consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam 
+					quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, 
+					nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse 
+					quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+				</p>
+            </div> 
+            <hr /> 
+		    <h2>Articolo 2</h2>
+            <div class="giustifica">
+				<p>	"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem 
+					aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+					Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores 
+					eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+					consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam 
+					quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, 
+					nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse 
+					quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+				</p>
+            </div>   
+            <hr /> 
+    	</div> <!-- chiude <div id="colonna-sx"> -->
+		
+		<!-- colonna-dx -->
+    	<div id="colonna-dx">
+			<div class="row"> <!-- una riga per inserire due immagini con link-->
+				<h2>Immagini con link</h2>
+				<div id="colonna50-sx">
+					<a href="#"><img src="images/image1.jpg" class="immagine"></a>
+					<div class="linkpagina">Pagina x</div>
+				</div>
+				<div id="colonna50-dx">
+					<a href="#"><img src="images/image2.jpg" class="immagine"></a>
+					<div class="linkpagina">Pagina y</div>
+				</div>
+		    </div>
+			<!-- Inserisco un box -->
+			<div id="box">
+				<h2>Box</h2>
+                <p class="giustifica">"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem 
+					aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+					Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores 
+					eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+					consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam 
+					quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, 
+					nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse 
+					quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+				</p>
+            </div>
+             <!-- Inserisco una lista di link a siti preferiti -->
+        	<div id="link">
+                <h2>Link</h2>
+                <ul>
+                    <li><a target="_new" href="http://www.maurodeberardis.it/">Sito Mauro De Berardis</a></li>
+                    <li><a href="#">Link sito 2</a></li>
+					<li><a href="#">Link sito 3</a></li>
+					<li><a href="#">Link sito 4</a></li> 
+                </ul>
+            </div> 
+    	</div> <!-- chiude <div id="colonna-dx"> -->
+    
+	</div> <!-- chiude <div id="main"> -->
+	
+	<!-- footer -->
+ 	<div id="footer">
+		<p class="centra">
+			Prova a ridimensionare la finestra del browser per vedere come il contenuto si adatta alla nuova dimensione
+			<br/>&copy; 2020 Classe IIIBI Alessandrini Teramo - Prof. Mauro De Berardis  <br/><a href="#"><span style="color:#0000CD">Top</span></a>
+		</p>       
+    </div> 
+    
+    <div class="clear"></div>
+
+</div> <!-- chiude <div id="container"> -->
+
+</body>
+</html>
+
+
+	

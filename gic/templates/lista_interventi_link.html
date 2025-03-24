@@ -1,0 +1,18 @@
+{% load i18n customform %} <!-- contesto: segnalazione = segnalazione di riferimento (opzionale) interventi = lista interventi diritto: diritti dell'utente gic_render: cosa renderizzare-->
+<h1 class="centra">{% trans 'Elenco Interventi' %}</h1>
+	{% if gic_render.interventi_new and diritto.interventi_w %}{% include 'nuovo_intervento.html' with segnalazione=segnalazione %}{% endif %}
+	<form class="ui-filterable"><input id="filtroint" data-type="search"></form>
+	<ul data-role="listview" data-inset="true" data-filter="true" data-input="#filtroint">
+	{% for int in interventi.all %}
+		<li data-theme="{{ tema_i }}" data-filtertext="{{ int.oggetto }}"><a href="{% url 'gic_intervento' %}?id={{ int.id }}" data-theme="{{ tema_i }}">
+			<h1>{{ int.data_creazione|date:"SHORT_DATE_FORMAT" }} - {{ int.oggetto }} 
+				{{ int.stato.icona|safe }}
+				<span style="float:right;">&nbsp;</span>
+				{{ int.priorita.icona|safe }}
+				<br />
+				<span class="minimal">{% trans "Teams" %}: {{ int.conta_teams }} - {% trans "Lavori" %}: {{ int.conta_lavori }}</span>
+			</h1>
+		</a></li>
+	{% endfor %} <!-- for interventi -->
+	</ul>
+<!-- </div>  box interventi -->

@@ -1,0 +1,69 @@
+{% extends "./base_a_pr.html" %}
+{% load static %}
+	
+{% block pagetitle %}Comune di Laives - Designazione autorizzati {% endblock %}
+
+{% block logo %} "{% static 'img/1a-comune.jpg' %}" {% endblock %}
+
+{% block ufficio %} Ufficio VII - Servizi demografici - Sviluppo informatico<br>Amt VII - Demographische Dieste - Informatik {% endblock %}
+
+{% block title %}
+<table style="width:100%;">
+	<tr>
+		<td style="width:50%;"><h1>Designazione degli autorizzati</h1></td>
+		<td><h1>Ermächtigung zur Durchführung der Datenverarbeitung</h1></td>
+	</tr>
+</table>
+
+{% endblock %}
+
+{% block document %}
+	<table style="width:100%;">
+		{% for riga in capoversi %}
+		<tr>
+			<td class="tabella_t">{{ riga.testo_it|linebreaksbr }}</td>
+			<td class="tabella_t">{{ riga.testo_de|linebreaksbr }}</td>
+		</tr>
+		{% endfor %}
+		<tr>
+			<td colspan=2> <br />  </td>
+		</tr>
+		<tr>
+			<td class="tabella_t" colspan=2>Laives / Leifers, {{ atto.data_firma }}</td>
+		</tr>
+		<tr>
+			<td colspan=2> <br />  </td>
+		</tr>
+		<tr>
+			<td class="firma" style="width=50%;text-align: center;"><span >Firma del titolare:</span></td>
+			<td class="firma" style="text-align: center;"><span >Unterschrift des Verantwortlichen:</span></td>
+		</tr>
+		<tr>
+			<td colspan=2> <br />  </td>
+		</tr>
+		<tr>
+			<td colspan=2 class="firma" style="text-align:center;"><span class="bold">Giovanni Seppi</span><br /><span class="info_it">(firmato digitalmente)</span></td>
+		</tr>
+
+			<td colspan=2> <br />  </td>
+		</tr>
+		<tr>
+			<td class="firma" style="width=50%;text-align: center;"><span>Firma del dipendente autorizzato:</span></td>
+			<td class="firma" style="text-align: center;"><span>Unterschrift des zur Verarbeitung ermächtigten Mitarbeiters:</span></td>
+		</tr>
+		<tr>
+			<td colspan=2> <br />  </td>
+		</tr>
+		<tr>
+			<td class="tabella_t" colspan=2>Laives / Leifers, ___________________________</td>
+		</tr>
+		<tr>
+			<td colspan=2> <br />  </td>
+		</tr>
+		<tr>
+			<td colspan=2 class="firma" style="text-align:center;"><span class="bold">{{ atto.dipendente.nome }} {{ atto.dipendente.cognome }}</span><br /><br /> <br /><span class="info_it">_____________________________________________________________</span></td>
+		</tr>		
+	</table>
+
+{% endblock %}
+

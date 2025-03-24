@@ -1,0 +1,11 @@
+{% load i18n customform %} <!-- seg: segnalazione cui collegare; -->
+<div id="box" class="ui-corner-all">
+	<h3 class="centra">{% trans "Aggiungi un allegato" %}:</h3>
+	<form method="post" data-ajax="false" action="" enctype="multipart/form-data">{% csrf_token %}
+		<input type="hidden" name="id_segnalazione" value="{{ seg.id }}">
+		<input type="hidden" name="action" value="allegato">
+		<input type="hidden" name = "model" value="Allegato">
+		{{ seg|form_allegato }}
+		<button class="ui-btn ui-icon-tag ui-btn-icon-left">{% trans 'Acquisisci allegato' %}</button>
+	</form>
+</div>

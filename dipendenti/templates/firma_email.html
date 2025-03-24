@@ -1,0 +1,22 @@
+{% load i18n static imagefit %} <!-- contesto: dip: dipendente da cui renderizzare la firma logo: logo richiesto voce: voce istruzioni-->
+<link rel="stylesheet" type="text/css" href="{% static 'css/collapsible.css' %}">
+
+	<button type="button" class="collapsible">{% trans 'Istruzioni' %}</button>
+
+	<div class="content">
+		{% include 'firma_email_istruzioni.html' with voce=voce %}
+	</div> 
+
+	<button type="button" class="collapsible">{% trans 'Firma personale' %}</button>
+
+	<div class="content">
+		{% include 'firma_email_dipendente.html' with logo=logo dip=dipendente %}
+	</div>
+
+		<button type="button" class="collapsible">{% trans 'Firma del servizio' %}</button>
+
+		<div class="content">
+			{% include 'firma_email_servizio.html' with logo=logo serv=dip.servizio_al %}
+		</div> 
+
+<script type="text/javascript" src="{% static 'js/collapsible.js' %}"></script> 

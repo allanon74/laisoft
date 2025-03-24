@@ -1,0 +1,8 @@
+{% load i18n static imagefit %} <!-- contesto: voce: voce da renderizzare -->
+<div class="istr">
+<h2>{{ voce.titolo }}</h2>
+<div>{{ voce.testo|safe }}</div>
+{% for cap in voce.capoverso_set.all %}
+<div class="clearfix" style="border: 3px solid gray; padding: 5px;"><img class="istr" style="float:right" src={{ cap.immagine.img|media_resize:cap.immagine.risoluzione }}>{{ cap.testo|safe }}</div>
+{% endfor %}
+</div>

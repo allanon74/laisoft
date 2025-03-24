@@ -1,0 +1,17 @@
+{% load i18n customform %} <!-- contesto: collaboratori=elenco collaboratori da renderizzare gic_render= redering del componente -->
+<h1 class="centra">{% trans 'Elenco collaboratori' %}</h1>
+<div data-role="collapsibleset">
+{% for col in collaboratori %}
+	<div data-theme="{{ tema_c }}" data-content-theme="{{ tema_c }}" data-role="collapsible">
+		<h1>
+			{{ col.dipendente }}
+			{% for ass in col.qs_assente %}{{ ass.assenza.icona|safe }}<span style="float:right;">&nbsp;</span>{% endfor %}
+			{% for rep in col.qs_reperibile %}{{ rep.reperibilita.icona|safe }}<span style="float:right;">&nbsp;</span>{% endfor %}
+			<br />
+			<span class="minimal">{% if col.tempolavoro_attivo %}{{ col.tempolavoro_attivo }}{% else %}{% trans 'Nessun lavoro attivo' %}{% endif %}</span>
+		</h1>
+		{% include 'lista_lavori_breve.html' with lavori=col.lavori_da_svolgere gic_render=gic_render attivabili=False %}
+	</div>
+{% endfor %}
+</div>
+

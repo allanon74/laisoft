@@ -1,0 +1,73 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block headers %} <script type="text/javascript" src="{% static 'script/div_update.js' %}"></script> {% endblock %}
+	
+{% block pagetitle %}Comune di Laives - Tabella Turni volontariato COVID{% endblock %}
+
+{% block title %}Tabella Turni volontariato COVID{% endblock %}
+
+{% block leftcolumn %}
+<div class="card">
+<!-- <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Ricerca"> -->
+{% autoescape off %}
+	
+		  
+
+	{% for giorno, rl in elenco_turni.items %}
+		{% ifchanged rl.giorno %}
+			{% if forloop.first %}
+			{% else %}
+				</table><br>
+				
+			{% endif %}
+			<table id="myTable">
+		<tr><td colspan=8 style="text-align:center;">{{ rl.giorno|date:"l, d F Y" }}</td></tr>
+				<tr class="header">
+					<th style="font-size:100%;"> Orario </th>
+			{% for ruolo in elenco_ruoli %}
+						<th style="font-size:100%;text-align:center;"> {{ ruolo.descrizione }}{% if ruolo.richiesti %}<div style="font-size:60%;">(richiesti: {{ ruolo.richiesti }})</div>  {% endif %}</th>
+			{% endfor %}
+		  </tr>
+		{% endifchanged %}
+	
+	<tr>
+		<td style="font-size:90%;"> <div style="text-align:center;">{{ rl.fascia.desc_breve }}</div></td>
+			
+			<td style="font-size:70%;"> {{ rl.COO }}</td>
+			<td style="font-size:70%;"> {{ rl.ACC }}</td>
+			<td style="font-size:70%;"> {{ rl.PAC }}</td>
+			<td style="font-size:70%;"> {{ rl.ATV }}</td>
+			<td style="font-size:70%;"> {{ rl.ITM }}</td>
+			<td style="font-size:70%;"> {{ rl.IND }}</td>
+			<td style="font-size:70%;"> {{ rl.SRV }}</td>
+			
+
+	</tr>
+			{% if forloop.last %}
+				</table><br>
+			{% endif %}		
+	{% endfor %} 
+
+	</table>
+  {% endautoescape %}
+
+</div>
+{% endblock %}
+
+{% block rightcolumn %}
+
+<div class="do-not-print"> 
+
+<h2>Legenda</h2>
+
+<p><div style="font-style:italic;color:red">Il nome rosso in italico</div> indica che la persona non è stata avvisata</p>
+<p> <div style="color:blue">Il nome blu in caratteri normali</div> indica che la persona è stata avvisata ma non ha ancora confermato</p>
+<p><div style="font-weight: bold;">Il nome nero in grassetto</div> indica che la persona ha confermato la disponibilità</p>
+
+</div>
+
+{% endblock %}
+
+{% block footer %} <h6>Webmaster: <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>{% endblock %}
+

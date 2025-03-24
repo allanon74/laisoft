@@ -1,0 +1,64 @@
+{% extends "./base_d.html" %}
+{% load static i18n %}
+
+{% block headers %} 
+<script type="text/javascript" src="{% static 'script/div_update.js' %}"></script> 
+{% endblock %}
+	
+{% block pagetitle %}Comune di Laives{% endblock %}
+
+{% block title %}{% trans "Laisoft - Programmi di gestione del Comune di Laives" %} {% endblock %}
+
+
+
+{% block leftcolumn %}
+
+<div class="card">
+<h3> Benvenuto, {{ dipendente }}!</h3>
+<br />
+</div>
+
+<div class="card">
+
+  <h2>Servizi centrali</h2>
+  <ul style="font-size:1.5em;">
+    <li><a href="{% url 'lista_pratiche' %}">Lista pratiche assegnate</a></li>
+
+    </ul>
+  
+  <h2>Servizio informatico</h2>
+  <ul style="font-size:1.5em;">    
+    <li><a href="{% url 'inserisci_ticket' %}">Inserisci nuovo ticket di intervento</a></li>
+    <li><a href="{% url 'lista_ticket' %}">Lista dei propri ticket aperti</a></li>
+  </ul>
+  
+  <h2>Protocollo</h2>
+  <ul style="font-size:1.5em;">
+    <li><a href="{% url 'index' %}">Tabella di classificazione - in elaborazione</a></li>
+  </ul>
+
+  <h2>Ufficio personale</h2>
+  <ul style="font-size:1.5em;">
+    <li><a href="{% url 'lista_formulari' %}">Moduli di Valutazione II rata premio di produttività</a></li>
+  </ul>
+  
+  {% for pag in pagine %}
+    {% if forloop.first %}
+      <h2>Istruzioni</h2>
+      <ul style="font-size:1.5em;">
+    {% endif %}
+    <li><a href="{% url "istruzioni" %}/{{ pag.nome }}">{{ pag.titolo }}</a></li>
+    {% if forloop.last %}
+      </ul> 
+    {% endif %}
+  {% endfor %}
+
+</div>
+
+{% endblock %}
+
+{% block rightcolumn %}
+	
+{% endblock %}
+
+{% block footer %} <h6>Webmaster: <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>{% endblock %}

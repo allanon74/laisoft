@@ -1,0 +1,7 @@
+{% load i18n static imagefit %} <!-- contesto: dip: dipendente da cui renderizzare la firma logo: logo richiesto -->
+<table style="width:100%;">
+	<tr>
+		<td colspan=3><img src={{ logo.immagine.url|media_resize:"333x75" }}></td>
+	</tr>
+	<tr><td>a</td><td>b></td><td>c</td></tr>
+</table>

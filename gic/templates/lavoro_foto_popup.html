@@ -1,0 +1,4 @@
+{% load static customform i18n %} <!-- lavoro:lavoro  -->
+{% for foto in lavoro.team.intervento.foto_istruzioni %}
+	{% include 'foto_popup.html' with foto=foto %}
+{% endfor %}

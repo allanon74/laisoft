@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/print.css' %}">
+	{% block headers %} {% endblock %}		
+    <title>{% block pagetitle %}Comune di Laives{% endblock %}</title>
+</head>
+
+<body>
+
+<table class="intestazione">
+	<tr>
+		<td style="borderless"><div class="logo"> <img class="logo" src={% block logo %}"{% static 'img/1a-comune.jpg' %}"{% endblock %} alt="logo Laives comune"> </div></td>
+		<td style="borderless"><div class="intestazione_ufficio">{% block ufficio %}Comune di Laives - ufficio informatica<br>Gemeinde Leifers{% endblock %}</div></td>
+	</tr>
+</table>
+<div class="body">
+
+</div>
+{% block title %} <h1>Titolo</h1> {% endblock %}
+
+{% block document %}
+Testo del documento.
+{% endblock %}
+
+
+</body>
+</html>

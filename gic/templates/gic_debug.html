@@ -1,0 +1,132 @@
+{% extends "./base_gic.html" %}
+{% load static %}
+{% load i18n parler_tags %}
+{% load customform %}
+
+{% block headers %} <script type="text/javascript" src="{% static 'js/custom.js' %}"></script> {% endblock %}
+	
+{% block pagetitle %}GIC - Gestione Interventi Cantiere{% endblock %}
+
+{% block title %} GIC {% endblock %}
+
+{% block lang %} 
+<div>
+    {% get_available_languages as LANGUAGES %}
+    {% get_current_language as LANGUAGE_CODE %}
+<h5 class = "centra">
+    {% for lang_code, title in LANGUAGES %}
+        {% get_language_info for lang_code as lang %}
+        {% get_translated_url lang_code as tr_url %}
+        {% if tr_url %}{% if lang_code == LANGUAGE_CODE %}{{ lang.name_local|capfirst }}
+        {% else %}<form class="li-button" data-ajax="false" action="{{ tr_url }}{{ request.get_full_path|slice:"4:" }}" hreflang="{{ lang_code }}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="{{ action }}" />
+        
+        <button type="submit" class="li-button">{{ lang.name_local|capfirst }}</button>
+        </form>
+        {% endif %}
+        {% endif %}
+        &nbsp;
+    {% endfor %}
+</h5>
+</div>
+{% endblock %}
+
+{% block leftcolumn %}
+
+	<h3 class="centra">{% trans "Segnalazioni" %}</h3>
+	{% for seg, fs in segnalazioni_m %}
+	<div data-role="collapsible">
+	<h1>{{ seg.data_creazione|date:"SHORT_DATE_FORMAT" }} - {{ seg.oggetto }} <br />
+	<span class="minimal">{% trans "Interventi" %}: {{ seg.intervento_set.count }} - {% trans "Lavori" %}: {{ seg.conta_lavori }}</span>
+	<i class="fa-solid fa-circle icon_tt" style="color:{{ seg.stato.colore }};float:right;"><span class="icon_text">&nbsp;{% trans "Stato" %}:&nbsp;{{ seg.stato.nome_breve }}&nbsp;</span></i> 
+	<span style="float:right;">&nbsp;</span>
+	<i class="icon_tt fa-solid fa-square" style="color:{{ seg.tipo.colore }};float:right;"><span class="icon_text">&nbsp;{% trans "Tipologia" %}:&nbsp;{{ seg.tipo.nome_breve }}&nbsp;</span></i> 
+	</h1>
+	<div id="box">
+	<form data-ajax="false" action="{{ request.build_absolute_uri }}" method="post"> {% csrf_token %}
+		{{ fs }}
+		<input type="hidden" name="model" value="Segnalazione" />
+		<input type="hidden" name="action" value="save" />
+		<input type="hidden" name="id" value="{{ seg.id }}" />
+		<input type="submit" class="ui-btn ui-btn-b" value = "Salva" />
+	</form>
+	</div>
+ 
+		<div id="box">
+		<h3>{% trans "Interventi collegati" %}</h3>		
+		{% for int in seg.intervento_set.all %}
+			<div data-role="collapsible">
+			<h1>{{ int.data_creazione|date:"SHORT_DATE_FORMAT" }} - {{ int.oggetto }}
+			<i class="icon_tt fa-solid fa-circle" style="color:{{ int.stato.colore }};float:right;"><span class="icon_text">&nbsp;{% trans "Stato" %}:&nbsp;{{ int.stato.nome_breve }}&nbsp;</span></i>
+			<span style="float:right;">&nbsp;</span>
+			<i class="icon_tt fa-solid fa-bell" style="color:{{ int.priorita.colore }};float:right;"><span class="icon_text">&nbsp;{% trans "Priorità" %}:&nbsp;{{ int.priorita.nome_breve }}&nbsp;</span></i> 
+			</h1>
+	<form data-ajax="false" action="{{ request.build_absolute_uri }}" method="post"> {% csrf_token %}
+			{{ int|form }}
+		<input type="hidden" name="model" value="Intervento" />
+		<input type="hidden" name="action" value="save" />
+		<input type="hidden" name="id" value="{{ int.id }}" />
+		<input type="submit" class="ui-btn ui-btn-b" value = "Salva" />
+	</form>
+			</div>
+		{% endfor %}
+	<div data-role="collapsible">
+	<h1> Nuovo Intervento</h1>
+	<p>
+		<form data-ajax="false" action="{{ request.build_absolute_uri }}" method="post"> {% csrf_token %}
+			{{ intervento_new }}
+			<input type="hidden" name="model" value="Intervento" />
+			<input type="hidden" name="action" value="new" />
+			<input type="hidden" name="id_segnalazione" value="{{ seg.id }}">
+			<input type="submit" class="ui-btn ui-btn-b" value = "Salva" />
+		</form>
+	</p>
+	</div>
+		</div>
+
+	</div> 
+	{% endfor %}
+	<div data-role="collapsible">
+	<h1> Nuova segnalazione</h1>
+	<p>
+		<form data-ajax="false" action="{{ request.build_absolute_uri }}" method="post"> {% csrf_token %}
+			{{ segnalazione_new }}
+			<input type="hidden" name="model" value="Segnalazione" />
+			<input type="hidden" name="action" value="new" />
+			<input type="submit" class="ui-btn ui-btn-b" value = "Salva" />
+		</form>
+	</p>
+	</div>
+
+
+
+
+<hr />
+{% if capocantiere %} <div id='box'>{% trans "Capocantiere" %}</div> {% endif %}
+{% if caposquadra %} <div id='box'>{% trans "Caposquadra" %}</div> {% endif %}
+{% if coordinatore %} <div id='box'>{% trans "Coordinatore" %}</div> {% endif %}
+{% if operaio %} <div id='box'>{% trans "Operaio" %}</div> {% endif %}
+{% if struttura %} <div id='box'>{% trans "Struttura" %}</div> {% endif %}
+{% if ufficio %} <div id='box'>{% trans "Ufficio" %}</div> {% endif %}
+<hr />
+{% for key, value in diritto.items %}
+	<h5> diritto {{ key }} : {{ value }}</h2>
+{% endfor %}
+
+{{ request.get_full_path|slice:"1:4" }}
+
+{% endblock %}
+
+{% block rightcolumn %}
+
+
+
+<div>
+{% for s in seg_v %}
+{{ s|form }}
+{% endfor %}
+</div>
+
+
+{% endblock %}

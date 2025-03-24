@@ -1,0 +1,169 @@
+{% extends "./base_pr.html" %}
+{% load static %}
+	
+{% block pagetitle %}Gemeinde Leifers - Drucke Leistungspremieformular {% endblock %}
+
+{% block logo %} "{% static 'img/1a-comune.jpg' %}" {% endblock %}
+
+{% block ufficio %} Ufficio I - Affari generali - Personale<br>Amt I - Allgemeine Angelegenheiten - Personal {% endblock %}
+
+{% block title %}
+
+	<h2>ANLAGE 2{% if ruolo.responsabile %}A{% endif %}</h2>
+	<div class="box">
+		<h1>Leistungsprämie Jahr {{ Formulario.anno }}<br />Beurteilung der MitarbeiterInnen{% if ruolo.responsabile %} mit Führungsfunktionen{% endif %}</h1>
+		<h5>(Die Beurteilung erfolgt durch die/den jeweils direkte/n Vorgesetzte/n)</h5>
+	</div>
+{% endblock %}
+
+{% block document %}
+	<br />
+	
+	<div class="box">
+		<div class="info">
+			Beurteilungsmassstab: <br />
+			{% for voto in Voto %}
+				Livello {{ voto.valore }}: <span class="bold">{{ voto.descrizione_td }}</span> ({{ voto.desc_estesa_td }})<br />
+				
+			{% endfor %}
+		</div>
+	</div>
+	<br />
+	<div class="dipendente">
+		MitarbeiterIn: {{ Formulario.dipqual.dipendente.cognome|upper }} {{ Formulario.dipqual.dipendente.nome }} seit {{ data_ass|date:"SHORT_DATE_FORMAT" }}<br />
+		Berufsbild (FE): {{ qualifica.nome_dt_m }} (FE {{ qualifica.livello.livello }})
+		{% if Formulario.dipqual.determinato %} befristet{% else %} Stammrolle{% endif %}<br />
+		Aufgabenbereich oder Dienstbereich: {{ servizio.nome_dt_m }} <br />
+		Führungsstruktur: {{ ufficio.nome_dt_m }} <br />
+		Vorgesetzte/r: {{ responsabile }} <br />
+		<br />
+	</div>
+	<div class="main">
+		<h2>A. Zielvereinbarung – Zielerreichung (Gewichtung: 40% der Gesamtbeurteilung)</h2>
+		<table class="taballa_n">
+			<tr class="valutazione">
+				<th class="valutazione" style="width:40%;">Zielvereinbarung<br><div class="note">(im voraus festlegen anhand welcher Indikatoren, die Zielerreichung gemessen wird)</div></th>
+				<th class="valutazione" style="width:40%;">Beschreibung der Zielerreichung<br><div class="note">(im Nachhinein festzulegen)</div></th>
+				<th class="valutazione">Bewertung</th>
+			</tr>
+			{% for obt in obiettivi %}
+				<tr class="valutazione">
+					<td class="valutazione">{{ obt.descrizione }}</td>
+					<td class="valutazione">{{ obt.risultato|default_if_none:"-" }}</td>
+					<td class="valutazione">{{ obt.voto.descrizione_td }}</td>
+				</tr>
+			{% endfor %}
+			<tr class="valutazione">
+				<th class="valutazione" colspan=2>Mittelwert Abschnitte A</th>
+				<th class="valutazione">{{ Formulario.media_a|floatformat:2|default_if_none:"(Mittelwert * Gewichtung)" }}</th>
+			</tr>
+		</table>
+		<br />
+	</div>
+	<div class="main">
+		<h2>B. Beurteilung der erbrachten Leistung (Gewichtung: {% if ruolo.responsabile %}20%{% else %}30%{% endif %} der Gesamtbeurteilung)</h2>
+		<table class="tabella_n">
+			<tr>
+				<th class="valutazione" style="width:40%;">Kategorie<br></th>
+				<th class="valutazione" style="width:40%;">Leistung<br></th>
+				<th class="valutazione">Bewertung</th>
+			</tr>
+			{% for obt in prestazioni %}
+				<tr>
+					<td class="valutazione">{{ obt.prestazione.categoria.indice }}.{{ obt.prestazione.categoria.descrizione_td }}</td>
+					<td class="valutazione">{{ obt.prestazione.indice }}. {{ obt.prestazione.descrizione_td }}</td>
+					<td class="valutazione">{{ obt.voto.descrizione_td }}</td>
+				</tr>
+			{% endfor %}
+			<tr>
+				<th class="valutazione" colspan=2>Mittelwert Abschnitte B</th>
+				<th class="valutazione">{{ Formulario.media_b|floatformat:2|default_if_none:"(Mittelwert * Gewichtung)" }}</th>
+			</tr>
+		</table>
+		<br />
+	</div>
+	<div class="main">
+		<h2>C. Soziale Kompetenz (Gewichtung: {% if ruolo.responsabile %}20%{% else %}30%{% endif %} der Gesamtbeurteilung)</h2>
+		<table class="tabella_n" style="width:100%;">
+			<tr>
+				<th class="valutazione" style="width:40%;">Kategorie<br></th>
+				<th class="valutazione" style="width:40%;">Soziale Kompetenz<br></th>
+				<th class="valutazione">Bewertung</th>
+			</tr>
+			{% for obt in sociali %}
+				<tr>
+					<td class="valutazione">{{ obt.sociale.categoria.indice }}.{{ obt.sociale.categoria.descrizione_td }}</td>
+					<td class="valutazione">{{ obt.sociale.indice }}. {{ obt.sociale.descrizione_td }}</td>
+					<td class="valutazione">{{ obt.voto.descrizione_td }}</td>
+				</tr>
+			{% endfor %}
+			<tr>
+				<th class="valutazione" colspan=2>Mittelwert Abschnitte C</th>
+				<th class="valutazione">{{ Formulario.media_c|floatformat:2|default_if_none:"(Mittelwert * Gewichtung)" }}</th>
+			</tr>				
+		</table>
+	</div>	
+		{% if ruolo.responsabile %}
+		
+		<br />
+	
+	<div class="main">	
+		<h2>D. Führungskompetenz  (Gewichtung: 20% der Gesamtbeurteilung)</h2>
+		<table class="tabella_n" style="width:100%;">
+			<tr>
+				<th class="valutazione" style="width:40%;">Kategorie<br></th>
+				<th class="valutazione" style="width:40%;">Führungskompetenz<br></th>
+				<th class="valutazione">Bewertung</th>
+			</tr>
+			{% for obt in coordinamenti %}
+				<tr>
+					<td class="valutazione">{{ obt.coordinamento.categoria.indice }}.{{ obt.coordinamento.categoria.descrizione_td }}</td>
+					<td class="valutazione">{{ obt.coordinamento.indice }}. {{ obt.coordinamento.descrizione_td }}</td>
+					<td class="valutazione">{{ obt.voto.descrizione_td }}</td>
+				</tr>
+			{% endfor %}
+			<tr>
+				<th class="valutazione" colspan=2>Mittelwert Abschnitte D</th>
+				<th class="valutazione">{{ Formulario.media_d|floatformat:2|default_if_none:"(Mittelwert * Gewichtung)" }}</th>
+			</tr>						
+		</table>
+	</div>	
+		{% endif %}
+	<div class="main">
+		<br>
+		<table class="tabella_n" style="width:100%;">
+			<tr>
+				<th class="valutazione" style="width:80%;">Gesamtbewertung<br>Abschnitte A + B + C{% if ruolo.responsabile %} + D{% endif %}</th>
+				<th class="valutazione" style="width:20%;">{{ val_tot }}</th>
+			</tr>
+		</table>
+
+		<br />
+		{% if Formulario.data_valutazione is None %}
+			<p class="main">Die Zielvereinbarungen und die Bewertungskriterien wurde bescprochen am {{ Formulario.data_obiettivo|date:"SHORT_DATE_FORMAT"|default_if_none:"_____" }}.</p>
+		{% else %}
+		<p class="main">Die Beurteilung wurde besprochen am {{ Formulario.data_valutazione|date:"SHORT_DATE_FORMAT"|default_if_none:"_____" }}.</p>
+		{% endif %}
+		<br /><br />
+		<table class="firma" style="width:100%;">
+			<tr>
+				<td class="firma">der Mitarbeiter</td>
+				<td class="firma">Der Vorgesetzte</td>
+			</tr>
+			<tr>
+				<td class="firma"><span class="bold">{{ Formulario.testo_firma_de|linebreaksbr }}</span></td>
+				<td class="firma"><span class="bold">{{ responsabile }}</span></td>
+			</tr>
+			<tr>
+				<td class="firma"><span class="info_it">-</span></td>
+				<td class="firma"><span class="info_it">(digital signiert)</span></td>
+			</tr>			
+		</table>
+		<br /><br />
+		<p class="main">Kommentar des Mitarbeiters:</class>
+		<p class="main">{{ Formulario.firma.note }}</class>
+		
+	</div>
+	
+{% endblock %}
+

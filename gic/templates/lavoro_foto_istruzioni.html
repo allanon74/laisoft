@@ -1,0 +1,15 @@
+{% load static customform i18n thumbnail %} <!-- lavoro:lavoro  -->
+<div data-role="collapsible" data-theme="{{ tema_l }}"><!-- foto -->
+	<h1>Foto allegate: {{ lavoro.team.intervento.foto_istruzioni.count }}</h1>
+	{% for foto in lavoro.team.intervento.foto_istruzioni %}
+		{% if forloop.first %}<div class="ui-grid-d">{% endif %}
+		<div class="ui-block-{% cycle 'a' 'b' 'c' 'd' 'e' %}">
+			{{ foto.tipologia }}<br />
+			{% thumbnail foto.foto "250x250" padding=True as im %}
+				<a href="#foto_{{ foto.id }}" data-rel="popup"><img src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"></a><br />
+			{% endthumbnail %}
+			{{ foto.data_creazione }}
+		</div>
+		{% if forloop.last %}</div>{% endif %}
+	{% endfor %}
+</div> <!-- foto -->

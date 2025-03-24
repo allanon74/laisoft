@@ -1,0 +1,16 @@
+{% load static customform i18n %}
+<div class="ui-field-contain">
+	<label class="enfasi" for="id_oggetto">{% trans 'Oggetto del lavoro accessorio' %}:</label>
+	<input type="text" id="id_oggetto" required name="oggetto">
+</div>
+<div class="ui-field-contain">
+	<label class="enfasi" for="id_descrizione">{% trans 'Descrizione del lavoro accessorio' %}:</label>
+	<textarea name="descrizione" cols="40" rows="10" id="id_descrizione"></textarea>
+</div>
+<div class="ui-field-contain">
+	<label class ="enfasi" for="id_durata_prevista">{% trans 'Durata prevista' %}:</label>
+	<input type="number" id="id_durata_prevista" required name= "durata_prevista">
+</div>
+<input type="hidden" name="stato" value="{{ assegnato.id }}">
+<input type="hidden" name="mod_priorita" value="0">
+

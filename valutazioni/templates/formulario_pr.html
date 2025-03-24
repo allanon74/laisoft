@@ -1,0 +1,168 @@
+{% extends "./base_pr.html" %}
+{% load static %}
+	
+{% block pagetitle %}Comune di Laives - stampa formulario premio produzione {% endblock %}
+
+{% block logo %} "{% static 'img/1a-comune.jpg' %}" {% endblock %}
+
+{% block ufficio %} Ufficio I - Affari generali - Personale<br>Amt I - Allgemeine Angelegenheiten - Personal {% endblock %}
+
+{% block title %}
+
+	<h2>ALLEGATO 2{% if ruolo.responsabile %}A{% endif %}</h2>
+	<div class="box">
+		<h1>Premio di produttività per l'anno {{ Formulario.anno }}<br />Valutazione del personale{% if ruolo.responsabile %} con mansioni direttive o di coordinamento{% endif %}</h1>
+		<h5>(la valutazione viene effettuata dal diretto superiore)</h5>
+	</div>
+{% endblock %}
+
+{% block document %}
+	<br />
+	
+	<div class="box">
+		<div class="info">
+			Scala di valutazione:<br />
+			{% for voto in Voto %}
+				Livello {{ voto.valore }}: <span class="bold">{{ voto.descrizione_it }}</span> ({{ voto.desc_estesa_it }})<br />
+				
+			{% endfor %}
+		</div>
+	</div>
+	<br />
+	<div class="dipendente">
+		Dipendente: {{ Formulario.dipqual.dipendente.cognome|upper }} {{ Formulario.dipqual.dipendente.nome }} dal {{ data_ass|date:"SHORT_DATE_FORMAT" }}<br />
+		Profilo Professionale (QF): {{ qualifica.nome_it_m }} (q.f. {{ qualifica.livello.livello }})
+		{% if Formulario.dipqual.determinato %} a tempo determinato{% else %} di ruolo{% endif %}<br />
+		Servizio: {{ servizio.nome_it_m }} <br />
+		Struttura dirigenziale: {{ ufficio.nome_it_m }} <br />
+		Superiore: {{ responsabile }} <br />
+		<br />
+	</div>
+	<div class="main">
+				
+			<h2>A. Concertazione e conseguimento degli obiettivi (pesatura: 40% per la valutazione complessiva)</h2>
+			<table class="taballa_n" style="width:100%;">
+				<tr class="valutazione">
+					<th class="valutazione" style="width:40%;">Concertazione degli obiettivi<br><div class="note">(definizione a priori degli indicatori per la misurazione del conseguimento)</div></th>
+					<th class="valutazione" style="width:40%;">Descrizione del consegimento degli obiettivi<br><div class="note">(da indicare a posteriori)</div></th>
+					<th class="valutazione">Valutazione</th>
+				</tr>
+				{% for obt in obiettivi %}
+					<tr class="valutazione">
+						<td class="valutazione">{{ obt.descrizione }}</td>
+						<td class="valutazione">{{ obt.risultato|default_if_none:"-" }}</td>
+						<td class="valutazione">{{ obt.voto.descrizione_it }}</td>
+					</tr>
+				{% endfor %}
+				<tr class="valutazione">
+					<th class="valutazione" colspan=2>Punteggio medio sezione A</th>
+					<th class="valutazione">{{ Formulario.media_a|floatformat:2|default_if_none:"(media * pesatura)" }}</th>
+				</tr>
+			</table>
+			<br />
+		</div>
+		<div class="main">
+			<h2>B. Valutazione delle prestazioni (pesatura: {% if ruolo.responsabile %}20%{% else %}30%{% endif %} per la valutazione complessiva)</h2>
+			<table class="tabella_n" style="width:100%;">
+				<tr>
+					<th class="valutazione" style="width:40%;">Categoria<br></th>
+					<th class="valutazione" style="width:40%;">Prestazione<br></th>
+					<th class="valutazione">Valutazione</th>
+				</tr>
+				{% for obt in prestazioni %}
+					<tr>
+						<td class="valutazione">{{ obt.prestazione.categoria.indice }}.{{ obt.prestazione.categoria.descrizione_it }}</td>
+						<td class="valutazione">{{ obt.prestazione.indice }}. {{ obt.prestazione.descrizione_it }}</td>
+						<td class="valutazione">{{ obt.voto.descrizione_it }}</td>
+					</tr>
+				{% endfor %}
+				<tr>
+					<th class="valutazione" colspan=2>Punteggio medio sezione B</th>
+					<th class="valutazione">{{ Formulario.media_b|floatformat:2|default_if_none:"(media * pesatura)" }}</th>
+				</tr>
+			</table>
+			<br />
+		</div>
+		<div class="main">
+			<h2>C. Competenza sociale (pesatura: {% if ruolo.responsabile %}20%{% else %}30%{% endif %} per la valutazione complessiva)</h2>
+			<table class="tabella_n" style="width:100%;">
+				<tr>
+					<th class="valutazione" style="width:40%;">Categoria<br></th>
+					<th class="valutazione" style="width:40%;">Competenza sociale<br></th>
+					<th class="valutazione">Valutazione</th>
+				</tr>
+				{% for obt in sociali %}
+					<tr>
+						<td class="valutazione">{{ obt.sociale.categoria }}</td>
+						<td class="valutazione">{{ obt.sociale.indice }}. {{ obt.sociale.descrizione_it }}</td>
+						<td class="valutazione">{{ obt.voto.descrizione_it }}</td>
+					</tr>
+				{% endfor %}
+				<tr>
+					<th class="valutazione" colspan=2>Punteggio medio sezione C</th>
+					<th class="valutazione">{{ Formulario.media_c|floatformat:2|default_if_none:"(media * pesatura)" }}</th>
+				</tr>				
+			</table>
+		</div>
+			{% if ruolo.responsabile %}
+			<br />
+		<div class="main">			
+			<h2>D. Competenza direttiva/di coordinamento (pesatura: 20% per la valutazione complessiva)</h2>
+			<table class="tabella_n" style="width:100%;">
+				<tr>
+					<th class="valutazione" style="width:40%;">Categoria<br></th>
+					<th class="valutazione" style="width:40%;">Competenza sociale<br></th>
+					<th class="valutazione">Valutazione</th>
+				</tr>
+				{% for obt in coordinamenti %}
+					<tr>
+						<td class="valutazione">{{ obt.coordinamento.categoria }}</td>
+						<td class="valutazione">{{ obt.coordinamento.indice }}. {{ obt.coordinamento.descrizione_it }}</td>
+						<td class="valutazione">{{ obt.voto.descrizione_it }}</td>
+					</tr>
+				{% endfor %}
+				<tr>
+					<th class="valutazione" colspan=2>Punteggio medio sezione D</th>
+					<th class="valutazione">{{ Formulario.media_d|floatformat:2|default_if_none:"(media * pesatura)" }}</th>
+				</tr>						
+			</table>
+		</div>	
+			{% endif %}
+		<div class="main">
+			<br>
+			<table class="tabella_n" style="width:100%;">
+				<tr>
+					<th class="valutazione" style="width:80%;">Valutazione complessiva<br>sezione A + B + C{% if ruolo.responsabile %} + D{% endif %}</th>
+					<th class="valutazione" style="width:20%;">{{ val_tot }}</th>
+				</tr>
+			</table>
+	
+			<br />
+			{% if Formulario.data_valutazione is None %}
+				<p class="main">Gli obiettivi ed i criteri di valutazione sono stati discussi in data {{ Formulario.data_obiettivo|date:"SHORT_DATE_FORMAT"|default_if_none:"_____" }}.</p>
+			{% else %}
+			<p class="main">La valutazione è stata discussa in data {{ Formulario.data_valutazione|date:"SHORT_DATE_FORMAT"|default_if_none:"_____" }}.</p>
+			{% endif %}
+			<br /><br />
+			<table class="firma" style="width:100%;">
+				<tr>
+					<td class="firma">Il dipendente</td>
+					<td class="firma">Il superiore</td>
+				</tr>
+				<tr>
+					<td class="firma"><span class="bold">{{ Formulario.testo_firma|linebreaksbr }}</span></td>
+					<td class="firma"><span class="bold">{{ responsabile }}</span></td>
+				</tr>
+				<tr>
+					<td class="firma"><span class="info_it">-</span></td>
+					<td class="firma"><span class="info_it">(firmato digitalmente)</span></td>
+				</tr>			
+			</table>
+			<br /><br />
+			<p class="main">Annotazioni del dipendente:</class>
+			<p class="main">{{ Formulario.firma.note|linebreaksbr }}</class>
+		
+	</div>
+	
+{% endblock %}
+

@@ -1,0 +1,11 @@
+{% load i18n customform %} <!-- segnalazioni: lista di segnalazioni da visualizzare; diritto diritti dell'utente; gic_render: cosa renderizzare -->
+<h1 class="centra" data-theme="a">{% trans "Elenco Segnalazioni" %}</h1>
+<div data-role="collapsibleset" data-content-theme="{{ tema_s }}">
+	{% if gic_render.segnalazioni_new and diritto.segnalazioni_w %}{% include 'nuova_segnalazione.html' %}{% endif %}
+	{% for seg in segnalazioni %}
+		<div data-theme="{{ tema_s }}" data-role="collapsible"> <!-- coll segnalazione -->
+			{% include "d_segnalazione.html" with seg=seg diritto=diritto gic_render=gic_render btn_dettaglio=True %}
+		</div> <!-- coll segnalazione -->
+	{% endfor %}
+
+</div> <!-- collapsibleset segnalazioni -->

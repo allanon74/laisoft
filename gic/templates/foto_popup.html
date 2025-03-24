@@ -1,0 +1,8 @@
+{% load static customform i18n %} <!-- foto:foto  -->
+<div data-role="popup" id="foto_{{ foto.id }}" class="ui-content" data-theme="{{ tema_f }}">
+	<a href= "" class="ui-btn" data-rel="back">{% trans 'Chiudi' %}</a>
+	<h2>Tipologia: {{ foto.tipologia }}</h2>
+	<img src="{{ foto.foto.url }}">
+	<p>Inserita da: {{ foto.collaboratore }} {{ foto.data_creazione }}.</p>
+	{% if foto.note %}<h4>Note:</h4><p>{{ foto.note }}</p>{% endif %}
+</div>

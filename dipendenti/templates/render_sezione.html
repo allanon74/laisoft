@@ -1,0 +1,8 @@
+{% load i18n static imagefit %} <!-- contesto: sezione: sezione da renderizzare -->
+<div>
+    <h2>{{ sezione.titolo }}</h2>
+    <div>{{ sezione.testo|safe }}</div>
+    {% for voc in sezione.voci %}
+        {% include "render_voce.html" with voce=voc %}
+    {% endfor %}
+</div>

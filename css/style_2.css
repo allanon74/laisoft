@@ -1,0 +1,371 @@
+
+body {
+	font: 16px/28px;
+	font-family: 'Arial';
+	background: #D2D2D2;
+	line-height:25px;
+}
+hr{
+	border-bottom: 0.5px solid #008000;
+	border-top:none;
+	margin:20px 0px 15px 0px;
+}
+#container {
+	width: 960px;
+	margin: 0 auto;
+	background:#FFFFFF;
+}
+#header 	{
+	width: 920px;
+	float:left;
+	padding: 20px;
+	background:#0000CD;
+	background-image: linear-gradient(#0000CD ,#00FFFF);
+} 
+#menu{
+	width: 100%;
+	float:right;
+	background: #F0F0F0;
+}
+#main {
+	width: 920px;
+	float:left;
+	padding: 20px;
+}
+#footer{
+	width: 920px;
+	float:left;
+	padding: 10px;
+	background:#F0F0F0;
+	color: #222222;
+}
+#footer a {
+	font: 14px;
+	text-decoration:none;
+}
+#titolo a {
+	font-weight: bold; 
+	font-size:48px;
+	float:left;
+	color:#FFFFFF;
+	margin-bottom:20px;
+	text-decoration:none;
+}
+#menu ul {
+	margin: 0px 0 0px 0px;
+	float:right;
+	width:100%; 
+	list-style: none;
+}
+#menu ul li {
+	float: right;
+	margin: 0px;
+	poisition: relative;}
+#menu a {
+	color: #222222;
+	text-decoration:none;	
+	display: block;
+	font: 14px;
+	padding: 14px 20px;}
+#menu a:hover {
+	background:#000000;
+	color:#FFFFFF;
+}
+#pagina{
+		width:100%;
+		float:left;
+		display: block;
+		font: 14px;
+		color:#0000CD;
+		font-weight:bold;	
+	}
+#link {
+  	padding: 10px;
+	margin-top:20px;
+	width:auto;
+	height:auto;
+}
+#box {
+	margin-top:10px;
+  	padding: 10px;
+	border:1px dashed #0000CD;
+	width:auto;
+	height:auto;
+}
+#colonna50-sx{
+	float:left;
+	width:48%;
+	margin-right:2%;
+	height:auto;
+	margin-bottom:10px;
+}
+#colonna50-dx{
+	float:left;
+	width:48%;
+	margin-left:1%;
+	height:auto;
+	margin-bottom:10px;
+}
+.immagine{
+	width:100%;
+	height:auto;
+	margin-bottom:10px
+}
+.centra {
+	text-align:center;
+}
+.giustifica {
+	text-align:justify;
+}
+.evidenzia {
+	color:#000000;
+	background:#FFFFA0;
+	padding:5px;
+	border-radius:4px
+}
+.linkpagina{
+	width:100%;
+	font:10px;
+	margin-top:-20px;
+	background:#777777;
+	color:#FFFFFF;
+	text-align:center;
+}
+.clear {
+	clear: both;
+}
+.row::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+.topnav {
+	background-color: #333;
+	overflow: hidden;
+}
+.topnav a {
+	float: left;
+	display: block;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+}
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+.topnav .icon {
+  display: none;
+}
+/*Media queries per il responsive design 
+ 
+colonna-sx: posizionata a sinistra contiene i contenuti più importanti
+colonna-dx: posizionata a destra, in pratica una sidebar
+colonna-cn: contenuti in una sola riga
+*/
+@media (min-width: 1200px) {
+/* quando lo schermo, o la finestra del browser, ha una dimensione >= di 1200px */
+	#container{
+		width: 1170px;
+		margin: 0 auto;
+	}
+	#header,#main,#footer{
+		width: 1130px;
+		float:left;
+		padding: 20px;
+	} 
+	#menu{
+		width: 100%;
+		float:right;
+		display:block;
+	}
+	#colonna-cn {
+		width: 98%;
+		float:left;
+	}
+	#colonna-sx {
+		width: 65%;
+		float:left;
+	}
+	#colonna-dx {
+		width: 30%;
+		float:right;
+	}
+	.topnav{
+		background-color: #333;
+		overflow: hidden;
+	}
+	.topnav .icon {
+	display: none;
+	}
+}
+@media (min-width: 980px) and (max-width: 1199px) {
+/* quando lo schermo, o la finestra del browser, ha una dimensione compresa tra 980 e 1199px */
+	#container {
+		width: 960px;
+		margin: 0 auto;
+	}
+	#header, #main,#footer,#colonna-cn {
+		width: 920px;
+		float:left;
+		padding: 20px;
+	} 
+	#menu{
+		width: 100%;
+		float:right;
+		display:block;
+	}
+	#colonna-cn {
+		width: 98%;
+		float:left;
+	}
+	#colonna-sx {
+		width: 65%;
+		float:left;
+	}
+	#colonna-dx {
+		width: 30%;
+		float:right;
+	}
+	.topnav{
+		background-color: #333;
+		overflow: hidden;
+	}
+	.topnav .icon {
+	display: none;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+/* quando lo schermo, o la finestra del browser, ha una dimensione compresa tra 768 e 979px */
+	#container {
+		width: 748px;
+		margin: 0 auto;
+	}
+	#header, #main,#footer,#colonna-cn {
+		width: 708px;
+		float:left;
+		padding: 20px;
+	} 
+	#menu{
+		width: 100%;
+		float:right;
+		display:block;
+	}
+	#colonna-cn {
+		width: 98%;
+		float:left;
+	}
+	#colonna-sx {
+		width: 65%;
+		float:left;
+	}
+	#colonna-dx {
+		width: 30%;
+		float:right;
+	}
+	.topnav{
+		background-color: #333;
+		overflow: hidden;
+	}
+	.topnav .icon {
+	display: none;
+	}
+}
+
+@media screen and (max-width: 767px) {
+/* quando lo schermo, o la finestra del browser, diventa minore di  768px */
+	
+	body{
+		padding:10px;
+		background:#FFFFFF;
+	}
+	#container {
+		width:100%;
+		margin: 0 auto;
+	}
+	#header, #main,#footer {
+		width:100%;
+		padding: 10px 0 10px 0px;} 
+	#menu{
+		width:100%;
+		float:right;
+	}
+	#colonna-cn {
+		width: 100%;
+		float:left;
+		padding: 10px 0px 0px 0px;
+	}
+	#colonna-sx {
+		width:100%;
+		float:left;	
+		padding: 10px 0px 0px 0px;
+	}
+	#colonna-dx {
+		width:100%;
+		float:right;
+		padding: 10px 0px 0px 0px;
+	}
+	#titolo a {
+		font-size:30px;
+		margin-left:10px;
+	}
+	#footer{
+		width:100%;
+		float:left;
+		padding: 10px 0px 0px 0px;
+	}
+	#footer p    {
+		margin-left:10px;
+	}
+	/* 	
+		in questo caso (smartphone e piccoli tablet) non viene visualizzato il menu classico  e viene visualizzato invece 
+		il menù con la classica icona a barre orizzontali
+	*/
+	#menu{
+		display:none;
+	}
+	#menu ul li {
+		float: none;
+	}	
+	.smartmenu{	
+		display: block;
+		float: right;
+		padding:5px;
+		cursor:pointer;
+		margin:  -15px 20px 0 0;
+		color: #FFFFFF;
+		background:#006FFFF;
+	}
+	.icon-smartmenu{
+		display: block;
+		width: 18px;
+		height: 2px;
+		margin:5px;
+		background-color: #FFFFFF;	
+	}
+	.mostra-smartmenu{
+		display:block!important;
+	}
+	.topnav a:not(:first-child) {display: none;}
+	.topnav a.icon {
+		float: right;
+		display: block;
+	}
+}
+@media screen and (max-width: 767px) {
+	.topnav.responsive {position: relative;}
+	.topnav.responsive a.icon {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+	.topnav.responsive a {
+		float: none;
+		display: block;
+		text-align: left;
+	}
+}
+

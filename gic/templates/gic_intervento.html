@@ -1,0 +1,99 @@
+{% extends "./base_gic_jq.html" %}
+{% load static customform i18n parler_tags thumbnail %}
+
+{% block headers %} 
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+{% endblock %}
+	
+{% block pagetitle %}GIC - Gestione interventi Cantiere{% endblock %}
+
+{% block title %}{% trans 'intervento' %} {% endblock %}
+
+{% block pageheader %} {% trans "Gestione intervento" %} {% endblock %}
+
+{% block lang %} 
+{% include 'lang_button.html' %}
+{% endblock %}
+
+{% block main %} 
+
+	{% tema "segnalazione" as tema_s %}
+	{% tema "intervento" as tema_i %}
+	{% tema "team" as tema_t %}
+	{% tema "lavoro" as tema_l %}
+	{% tema "salva" as tema_u %}
+	{% tema "foto" as tema_f %}
+	<div class="ui-grid-solo" data-theme="{{ tema_i }}" data-content-theme="{{ tema_i }}">
+		<div class="ui-block-a" data-theme="{{ tema_i }}" data-content-theme="{{ tema_i }}">
+			<h1 data-theme="{{ tema_i }}" class="centra">{% trans 'Modifica intervento' %}</h1>
+			<h2 data-theme="{{ tema_i }}">
+				{{ intervento.data_creazione|date:"SHORT_DATE_FORMAT" }} - {{ intervento.oggetto }} 
+				{{ intervento.stato.icona|safe }}
+				<span style="float:right;">&nbsp;</span>
+				{{ intervento.priorita.icona|safe }}
+				<br />
+				<span class="minimal">{% trans "Teams" %}: {{ intervento.conta_teams }} - {% trans "Lavori" %}: {{ intervento.conta_lavori }}</span>
+			</h2>
+		</div> <!-- block a -->
+		<div class="ui-block-a" data-theme="{{ tema_i }}" data-content-theme="{{ tema_i }}">
+	
+			{% if intervento.precedente %} <a href="#precedente" class="ui-btn ui-btn-{{ tema_i }}" data-position="right">{% trans 'Apri intervento precedente...' %}</a>{% endif %}
+			<form action="" method="post" data-ajax="false" > <!-- form intervento -->
+				<fieldset{% if diritto.interventi_w == False %} disabled="True"{% endif %} data-content-theme="{{ tema_i }}">
+					{% csrf_token %}
+					{{ intervento|form }}
+					<input type="hidden" name="model" value="Intervento" />
+					<input type="hidden" name="action" value="save" />
+					<input type="hidden" name="id" value="{{ intervento.id }}" />
+					{% if diritto.interventi_w == True %}<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value = "Salva" />{% endif %}
+				</fieldset>
+			</form> <!-- form intervento -->
+			</div> <!-- block a form dati intervento -->
+		<div class="ui-block-a" data-theme="{{ tema_i }}" data-content-theme="{{ tema_i }}">
+			<div data-role="collapsible" data-theme="{{ tema_i }}"><!-- foto -->
+				<h1>Foto raccolte: {{ intervento.foto_set.all.count }}</h1>
+				{% for foto in intervento.foto_set.all %}
+					{% if forloop.first %}<div class="ui-grid-d">{% endif %}
+					<div class="ui-block-{% cycle 'a' 'b' 'c' 'd' 'e' %}">
+						{{ foto.tipologia }}<br />
+						{% thumbnail foto.foto "250x250" padding=True as im %}
+							<a href="#foto_{{ foto.id }}" data-rel="popup"><img src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"></a><br />
+						{% endthumbnail %}
+						{{ foto.data_creazione }}
+					</div>
+					{% if forloop.last %}</div>{% endif %}
+				{% endfor %}
+			</div> <!-- foto -->
+	
+		</div><!-- block a box singolo intervento -->
+	
+		{% if gic_render.teams and diritto.teams_r %}{% include 'lista_teams.html' with teams=intervento.team_set.all intervento=intervento diritti=diritti gic_render=gic_render %}{% endif %}
+
+	</div> <!--grid -->
+	{% for foto in intervento.foto_set.all %}
+		{% include 'foto_popup.html' with foto=foto %}
+	{% endfor %}
+	
+{% endblock %}
+{% block panels %}
+	{% if intervento.precedente %}
+		<div data-role="panel" data-display="overlay" id="precedente" data-dismissible="false" data-position="right">
+			<h2>{{ intervento.precedente.data_creazione|date:"SHORT_DATE_FORMAT" }} - {{ intervento.precedente.oggetto }} 
+				{{ intervento.precedente.stato.icona|safe }}
+				<span style="float:right;">&nbsp;</span>
+				{{ intervento.precedente.priorita.icona|safe }}
+				<br />
+				<span class="minimal">{% trans "Teams" %}: {{ intervento.precedente.conta_teams }} - {% trans "Lavori" %}: {{ intervento.precedente.conta_lavori }}</span>
+			</h2>
+			<a href="#root" data-rel="close" class="ui-btn ui-btn-inline">{% trans "Chiudi il pannello..." %}</a>
+			<p>
+				<fieldset disabled="True" data-content-theme="{{ tema_i }}">
+					{{ intervento.precedente|form_nr }}
+				</fieldset>
+			</p>
+		</div>
+	{% endif %}
+
+{% endblock %}
+
+

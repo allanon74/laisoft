@@ -1,0 +1,195 @@
+{% extends "./base_gic.html" %}
+{% load static %}
+{% load i18n parler_tags %}
+{% load customform %}
+
+{% block headers %} 
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+{% endblock %}
+	
+{% block pagetitle %}GIC - Gestione Interventi Cantiere{% endblock %}
+
+{% block title %} GIC {% endblock %}
+
+{% block pageheader %} {% trans "Pagina principale" %} {% endblock %}
+
+{% block lang %} 
+<div>
+	{% get_available_languages as LANGUAGES %}
+	{% get_current_language as LANGUAGE_CODE %}
+	<h5 class = "centra">
+		{% for lang_code, title in LANGUAGES %}
+			{% get_language_info for lang_code as lang %}
+			{% get_translated_url lang_code as tr_url %}
+			{% if tr_url %}
+				{% if lang_code == LANGUAGE_CODE %}
+					{{ lang.name_local|capfirst }}
+				{% else %}
+					<form class="li-button" data-ajax="false" action="{{ tr_url }}{{ request.get_full_path|slice:"4:" }}" hreflang="{{ lang_code }}" method="post">
+						{% csrf_token %}
+						<input type="hidden" name="action" value="{{ action }}" />
+						<button type="submit" class="li-button">{{ lang.name_local|capfirst }}</button>
+						</form>
+				{% endif %}
+			{% endif %}
+			&nbsp;
+		{% endfor %}
+	</h5>
+</div>
+{% endblock %}
+
+{% block main %}
+<div id="colonna-cx">
+{% tema "segnalazione" as tema_s %}
+{% tema "intervento" as tema_i %}
+{% tema "team" as tema_t %}
+{% tema "lavoro" as tema_l %}
+{% tema "salva" as tema_u %}
+	<h3 class="centra">{% trans "Segnalazioni" %}</h3>
+<div data-role="collapsibleset">
+	{% for seg, fs in segnalazioni_m %}
+		<div data-theme="{{ tema_s }}" data-role="collapsible"> <!-- coll segnalazione -->
+			<h1>{{ seg.data_creazione|date:"SHORT_DATE_FORMAT" }} - {{ seg.oggetto }} 
+				<i class="fa-solid fa-circle icon_tt" style="color:{{ seg.stato.colore }};float:right;"><span class="icon_text">&nbsp;{% trans "Stato" %}:&nbsp;{{ seg.stato.nome_breve }}&nbsp;</span></i> 
+				<span style="float:right;">&nbsp;</span>
+				<i class="icon_tt fa-solid fa-square" style="color:{{ seg.tipo.colore }};float:right;"><span class="icon_text">&nbsp;{% trans "Tipologia" %}:&nbsp;{{ seg.tipo.nome_breve }}&nbsp;</span></i> <br />
+					<span class="minimal">{% trans "Interventi" %}: {{ seg.intervento_set.count }} - {% trans "Teams" %}: {{ seg.conta_teams }} - {% trans "Lavori" %}: {{ seg.conta_lavori }}</span>
+			</h1>
+			<div data-role="panel" data-theme="{{ tema_s }}" id="S-{{ seg.id }}" data-display="overlay" style="width:350px;"> <!-- box segnalazione -->
+				<form data-ajax="false" action="{{ request.build_absolute_uri }}" method="post"> <!-- form segnalazione --> 
+					{% csrf_token %}
+					{{ fs }}
+					<input type="hidden" name="model" value="Segnalazione" />
+					<input type="hidden" name="action" value="save" />
+					<input type="hidden" name="id" value="{{ seg.id }}" />
+					<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui" value = "Salva" />
+				</form> <!-- form segnalazione --> 
+			</div> <!-- box segnalazione -->
+			 <a href="{{ request.get_full_path }}#S-{{ seg.id }}" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Mostra dati</a>
+			<!-- <div id="box">  box interventi -->
+				<h3>{% trans "Interventi collegati" %}</h3>
+				<div data-role="collapsibleset"> 
+				{% for int in seg.intervento_set.all %}
+					<div data-theme="{{ tema_i }}" data-role="collapsible"> <!-- coll intervento -->
+						<h1>{{ int.data_creazione|date:"SHORT_DATE_FORMAT" }} - {{ int.oggetto }} 
+							<i class="icon_tt fa-solid fa-circle" style="color:{{ int.stato.colore }};float:right;"><span class="icon_text">&nbsp;{% trans "Stato" %}:&nbsp;{{ int.stato.nome_breve }}&nbsp;</span></i>
+							<span style="float:right;">&nbsp;</span>
+							<i class="icon_tt fa-solid fa-bell" style="color:{{ int.priorita.colore }};float:right;"><span class="icon_text">&nbsp;{% trans "Priorità" %}:&nbsp;{{ int.priorita.nome_breve }}&nbsp;</span></i> 
+							<br />
+							<span class="minimal">{% trans "Teams" %}: {{ int.conta_teams }} - {% trans "Lavori" %}: {{ int.conta_lavori }}</span>
+						</h1>
+						<div data-theme="{{ tema_i }}" id="box"> <!-- box singolo intervento -->
+							<form data-ajax="false" action="{{ request.build_absolute_uri }}" method="post"> <!-- form intervento -->
+								{% csrf_token %}
+								{{ int|form }}
+								<input type="hidden" name="model" value="Intervento" />
+								<input type="hidden" name="action" value="save" />
+								<input type="hidden" name="id" value="{{ int.id }}" />
+								<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value = "Salva" />
+							</form> <!-- form intervento -->
+						</div><!-- box singolo intervento -->
+						<h3>{% trans "Team di intervento collegati" %}</h3>
+						<div data-role="collapsibleset">
+							{% for tm in int.team_set.all %}
+								<div data-theme="{{ tema_t }}" data-role="collapsible"> <!-- coll team -->
+									<h1>{{ tm.data_creazione|date:"SHORT_DATE_FORMAT" }} - {{ tm }}
+										<i class="icon_tt fa-solid fa-briefcase" style="color:{{ tm.attivita.colore }};float:right;"><span class="icon_text">&nbsp;{% trans "Attività" %}:&nbsp;{{ tm.attivita.nome_breve }}&nbsp;</span></i>
+										{% for man in tm.attivita.mansioni.all %}
+										<span style="float:right;">&nbsp;</span>
+										<i class="icon_tt fa-solid fa-user-gear" style="color:{{ man.colore }};float:right;"><span class="icon_text">&nbsp;{% trans "Mansione" %}:&nbsp;{{ man.nome_breve }}&nbsp;</span></i>
+										{% endfor %}
+									</h1>
+									<div data-theme="{{ tema_t }}" id="box"> <!-- box singolo team -->
+										<form data-ajax="false" action="{{ request.build_absolute_uri }}" method="post"> <!-- form team -->
+											{% csrf_token %}
+											{{ tm|form }}
+											<input type="hidden" name="model" value="Team" />
+											<input type="hidden" name="action" value="save" />
+											<input type="hidden" name="id" value="{{ tm.id }}" />
+											<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui" value = "Salva" />
+										</form> <!-- form team -->
+									</div><!-- box singolo team -->
+									<div data-role="collapsibleset">
+										{% for lav in tm.lavoro_set.all %} <!-- for lavori -->
+											<div data-theme="{{  tema_l }}" data-role="collapsible"> <!-- coll lavoro -->
+												<h1>{{ lav.collaboratore }} <i class="fa-solid fa-circle icon_tt" style="color:{{ lav.stato.colore }};float:right;"><span class="icon_text">&nbsp;{% trans "Stato" %}:&nbsp;{{ lav.stato.nome_breve }}&nbsp;</span></i></h1>
+												<div data-theme="{{ tema_t }}" id="box"> <!-- box lavoro -->
+													<form data-ajax="false" action="{{ request.build_absolute_uri }}" method="post"> <!-- form lavoro -->
+													{% csrf_token %}
+													{{ lav|form }}
+													<input type="hidden" name="model" value="Lavoro" />
+													<input type="hidden" name="action" value="save" />
+													<input type="hidden" name="id" value="{{ lav.id }}" />
+													<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui" value = "Salva" />
+													</form><!-- form lavoro -->
+												</div> <!-- box lavoro -->
+											</div><!-- coll lavoro -->
+										{% endfor %} <!-- for lavori -->
+										
+										<div data-theme="{{ tema_l }}" data-role="collapsible"> <!-- coll  nuovo team -->
+											<h1> {% trans 'Nuovo lavoro' %}</h1>
+											<p data-theme="{{ tema_l }}">
+												<form data-theme="{{ tema_l }}" data-ajax="false" action="{{ request.build_absolute_uri }}" method="post"> <!-- form  nuovo lavoro -->
+													{% csrf_token %}
+													{{ lavoro_new }}
+													<input type="hidden" name="model" value="Lavoro" />
+													<input type="hidden" name="action" value="new" />
+													<input type="hidden" name="team" value="{{ tm.id }}">
+													<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value = "Salva" />
+												</form> <!-- form nuovo lavoro -->
+											</p>
+										</div> <!-- coll nuovo lavoro -->
+										
+									</div> <!-- collapsibleset lavori -->
+								</div> <!-- coll teams -->
+							{% endfor %} <!-- for teams -->
+							<div data-theme="{{ tema_t }}" data-role="collapsible"> <!-- coll  nuovo team -->
+								<h1> {% trans 'Nuovo Team di intervento' %}</h1>
+								<p data-theme="{{ tema_t }}">
+									<form data-theme="{{ tema_t }}" data-ajax="false" action="{{ request.build_absolute_uri }}" method="post"> <!-- form  nuovo team -->
+										{% csrf_token %}
+										{{ team_new }}
+										<input type="hidden" name="model" value="Team" />
+										<input type="hidden" name="action" value="new" />
+										<input type="hidden" name="intervento" value="{{ int.id }}">
+										<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value = "Salva" />
+									</form> <!-- form nuovo team -->
+								</p>
+							</div> <!-- coll  nuovo team -->
+						</div> <!-- collapsibleset teams-->
+					</div> <!-- coll intervento -->
+				{% endfor %} <!-- for interventi -->
+				<div data-theme="{{ tema_i }}" data-role="collapsible"> <!-- coll  nuovo intervento -->
+					<h1> Nuovo Intervento</h1>
+					<p data-theme="{{ tema_i }}">
+						<form data-theme="{{ tema_i }}" data-ajax="false" action="{{ request.build_absolute_uri }}" method="post"> <!-- form  nuovo intervento -->
+							{% csrf_token %}
+							{{ intervento_new }}
+							<input type="hidden" name="model" value="Intervento" />
+							<input type="hidden" name="action" value="new" />
+							<input type="hidden" name="segnalazione" id = "id_segnalazione" value="{{ seg.id }}">
+							<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value = "Salva" />
+						</form> <!-- form nuovo intervento -->
+					</p>
+				</div> <!-- coll  nuovo intervento -->
+			<!-- </div>  box interventi -->
+			</div> <!-- collapsibleset interventi -->
+		</div> <!-- coll segnalazione -->
+	{% endfor %}
+
+	<div data-theme="{{ tema_s }}" data-role="collapsible"> <!-- coll nuova segnalazione --> 
+		<h1> Nuova segnalazione</h1> <!-- form nuova segnalazione --> 
+			<p data-theme="{{ tema_s }}">
+				<form data-theme="{{ tema_s }}" data-ajax="false" action="{{ request.build_absolute_uri }}" method="post"> {% csrf_token %}
+					{{ segnalazione_new }}
+					<input type="hidden" name="model" value="Segnalazione" />
+					<input type="hidden" name="action" value="new" />
+					<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value = "Salva" />
+				</form> <!-- form nuova segnalazione --> 
+			</p>
+	</div> <!-- coll nuova segnalazione --> 
+</div> <!-- collapsibleset segnalazioni -->
+</div> <!-- colonna centrale -->
+{% endblock %}
+
+

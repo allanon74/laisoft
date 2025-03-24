@@ -1,0 +1,28 @@
+{% load i18n customform %} <!-- contesto: intervento = intervento di riferimento teams: lista di teams da renderizzare diritto: diritti dell'utente gic_render: cosa renderizzare -->
+<h3>{% trans "Team di intervento collegati" %}</h3>
+<div data-role="collapsibleset">
+	{% if gic_render.teams_new and diritto.teams_w %}{% include 'nuovo_team.html' with intervento=intervento %}{% endif %}
+	{% for tm in teams %}
+		<div data-theme="{{ tema_t }}" data-role="collapsible"> <!-- coll team -->
+			<h1>{{ tm.data_creazione|date:"SHORT_DATE_FORMAT" }} - {{ tm }}
+				<i class="icon_tt fa-solid fa-briefcase" style="color:{{ tm.attivita.colore }};float:right;"><span class="icon_text">&nbsp;{% trans "Attività" %}:&nbsp;{{ tm.attivita.nome_breve }}&nbsp;</span></i>
+				<br /><span class="minimal">{% trans "Lavori" %}:&nbsp;{{ tm.lavoro_set.count }}&nbsp;</span>
+			</h1>
+			<div data-theme="{{ tema_t }}" id="box"> <!-- box singolo team -->
+				<form action=""  data-ajax="{{ diritto.ajax|lower }}" method="post"> <!-- form team -->
+					<fieldset{% if diritto.teams_w == False %} disabled="True"{% endif %}>
+						{% csrf_token %}
+						{{ tm|form }}
+						<input type="hidden" name="model" value="Team" />
+						<input type="hidden" name="action" value="save" />
+						<input type="hidden" name="id" value="{{ tm.id }}" />
+						{% if diritto.teams_w == True %}<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui" value = "Salva" />{% endif %}
+					</fieldset>
+				</form> <!-- form team -->
+			</div><!-- box singolo team -->
+				{% if gic_render.lavori and diritto.lavori_r %}{% include 'lista_lavori.html' with team=tm lavori=tm.lavoro_set.all diritto=diritto gic_render=gic_render %}{% endif %}
+				
+		</div> <!-- coll teams -->
+	{% endfor %} <!-- for teams -->
+
+</div> <!-- collapsibleset teams -->

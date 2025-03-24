@@ -1,0 +1,41 @@
+{% extends "./base_d.html" %}
+{% load static i18n %}
+
+{% block headers %} 
+<link rel="stylesheet" type="text/css" href="{% static 'css/collapsible.css' %}">
+<script type="text/javascript" src="{% static 'script/div_update.js' %}"></script> 
+{% endblock %}
+	
+{% block pagetitle %}Comune di Laives{% endblock %}
+
+{% block title %}{% trans "Laisoft - Istruzioni" %} {% endblock %}
+
+
+
+{% block leftcolumn %}
+
+    {% include 'render_pagina.html' with pagina=pagina %}
+
+{% endblock %}
+
+{% block rightcolumn %}
+<div class="card">
+    <h2>Firme</h2>
+    <button type="button" class="collapsible">{% trans 'Firma personale' %}</button>
+    
+    <div class="content">
+        {% include 'firma_email_dipendente.html' with logo=logo dip=dipendente %}
+    </div>
+    
+    <button type="button" class="collapsible">{% trans 'Firma del servizio' %}</button>
+    
+    <div class="content">
+        {% include 'firma_email_servizio.html' with logo=logo serv=dipendente.servizio_al %}
+    </div>
+</div> 
+{% endblock %}
+
+{% block footer %} <h6>Webmaster: 
+    <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>
+    <script type="text/javascript" src="{% static 'js/collapsible.js' %}"></script> 
+{% endblock %}

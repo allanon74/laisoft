@@ -1,0 +1,6 @@
+{% extends "./collapsible_base.html" %}
+{% load i18n static imagefit %} <!-- contesto: pagina: pagina da renderizzare -->
+
+{% block main %}
+    {% include "render_pagina.html" with pagina=pagina %}
+{% endblock %}

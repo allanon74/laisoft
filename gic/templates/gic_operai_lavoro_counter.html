@@ -1,0 +1,50 @@
+{% extends "./base_gic_operai.html" %}
+{% load static customform i18n %}
+
+{% block main_title %}<h1>GIC - dettaglio lavoro</h1>{% endblock %}
+
+{% block headers %}
+ {{ foto_form.media }}
+{% endblock %}
+
+
+{% block body %}
+{% tema "segnalazione" as tema_s %}
+{% tema "intervento" as tema_i %}
+{% tema "team" as tema_t %}
+{% tema "lavoro" as tema_l %}
+{% tema "salva" as tema_u %}
+{% tema "tempilavoro" as tema_tl %}
+
+
+<div data-role="page" id="attivi" data-theme="{{ tema_l }}">
+	<div data-role="header" style="background-color:#0000CD;color:white;background-image: linear-gradient(#0000CD ,#00FFFF);">
+		<a href="../operai/" data-transition="flip" class="ui-btn ui-icon-arrow-l ui-btn-icon-left ui-btn-active">{% trans 'Lista lavori' %}</a>
+		<h1 style="font-size:x-large;">{% trans 'GIC Operai - Dettaglio Lavoro' %}</h1><br />
+		
+	</div>
+	
+	<div data-role="main" data-theme="{{ tema_l }}" class="ui-content">
+		<p style="color:#ff0000;">{{ debug }}</p>
+		{% if dipendente.collaboratore.lavoro_attivo %}
+			<div id="box" class="ui-corner-all">
+			<h2 class="centra">Lavoro attivo</h2>
+			
+			{% include 'counter.html' with delta=delta %}
+			</div>
+		{% endif %}
+		
+			{% include "lavoro_dettaglio.html" with lavoro=lavoro attivabili=True fotoform=foto_form %}
+
+	</div>
+	
+	<div data-role="footer">
+		{% include 'lang_button.html' %}
+	</div>
+	
+	{% include 'lavoro_foto_popup.html' with lavoro=lavoro %}
+
+</div>
+
+{% endblock %}
+

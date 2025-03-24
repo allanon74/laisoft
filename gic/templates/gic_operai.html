@@ -1,0 +1,96 @@
+{% extends "./base_gic_operai.html" %}
+{% load static customform i18n %}
+
+{% block main_title %}<h1>GIC - operai</h1>{% endblock %}
+
+{% block headers %}
+ {{ foto_form.media }}
+{% endblock %}
+
+
+{% block body %}
+{% tema "segnalazione" as tema_s %}
+{% tema "intervento" as tema_i %}
+{% tema "team" as tema_t %}
+{% tema "lavoro" as tema_l %}
+{% tema "salva" as tema_u %}
+{% tema "tempilavoro" as tema_tl %}
+
+
+<div data-role="page" id="attivi" data-theme="{{ tema_l }}">
+	<div data-role="header" style="background-color:#0000CD;color:white;background-image: linear-gradient(#0000CD ,#00FFFF);">
+		<a href="#attivi" data-transition="flip" class="ui-btn ui-icon-arrow-l ui-btn-icon-left ui-btn-active">Attivi</a>
+		<h1 style="font-size:x-large;">GIC Operai - Lavori attivi</h1><br />
+		<a href="#pianificati" data-transition="flip" class="ui-btn ui-icon-arrow-r ui-btn-icon-right">Pianificati</a>
+	</div>
+	
+	<div data-role="main" data-theme="{{ tema_l }}" class="ui-content">
+		<p style="color:#ff0000;">{{ debug }}</p>
+		{% if dipendente.collaboratore.lavoro_attivo %}
+			<div id="box" class="ui-corner-all">
+			<h1 class="centra" style="color:red;"><i class="fa-solid fa-circle fa-fading"style="color:green;">&nbsp;</i>  Lavoro attivo    <i class="fa-solid fa-circle fa-fading"style="color:green;">&nbsp;</i></h1>
+			
+			
+
+			{% include "lavoro_dettaglio.html" with lavoro=dipendente.collaboratore.lavoro_attivo attivabili=True fotoform=foto_form %}
+			</div>
+
+		{% endif %}
+		<ul data-role="listview" data-inset="true">
+			{% for lav in lavori %}
+				<li><a href="../operailavoro/?id={{ lav.id }}" data-theme="{{ tema_l }}">{{ lav }}{{ lav.priorita.icona|safe }}<br /><span class="minimal">Testo</span></a></li>
+			{% endfor %}
+		</ul>
+		<hr />
+		<div data-role="collapsible" data-theme="{{ tema_u }}" data-content-theme="{{ tema_u }}">
+			<h2>{% trans "Inserisci intervento urgente" %}</h2>
+			<form method="post" data-ajax="false" action="" enctype="multipart/form-data">{% csrf_token %} 
+				<input type="hidden" name="action" value="urgente">
+				<input type="hidden" name="collaboratore" value="{{ dipendente.collaboratore.id }}">
+				{% include 'form_lavoro_accessorio.html' %}
+				<button class="ui-btn ui-icon-tag ui-btn-icon-left">{% trans 'Inserisci lavoro urgente' %}</button>
+			</form>
+		</div>
+	</div>
+	
+	<div data-role="footer">
+		{% include 'lang_button.html' %}
+	</div>
+	
+
+</div>
+
+<div data-role="page" id="pianificati">
+
+{% tema "segnalazione" as tema_s %}
+{% tema "intervento" as tema_i %}
+{% tema "team" as tema_t %}
+{% tema "lavoro" as tema_l %}
+{% tema "salva" as tema_u %}
+{% tema "tempilavoro" as tema_tl %}
+
+	<div data-role="header" data-fullscreen="true" data-theme="{{ tema_l }}" data-content-theme="{{ tema_l }}" style="background-color:#0000CD;color:white;background-image: linear-gradient(#0000CD ,#00FFFF);">
+		<a href="#attivi" data-transition="flip" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Attivi</a>
+		<h1 style="font-size:x-large;">GIC Operai - Lavori pianificati</h1>
+		<a href="#pianificati" data-transition="flip" class="ui-btn ui-icon-arrow-r ui-btn-icon-right  ui-btn-active">Pianificati</a>
+	</div>
+	<div data-role="main" data-theme="{{ tema_l }}" data-content-theme="{{ tema_l }}" class="ui-content">
+		<ul data-role="listview" data-inset="true">
+			{% for lav in lavori_pianificati %}
+				<li><a href="#lav_{{ lav.id }}" data-theme="{{ tema_l }}" data-rel="popup">{{ lav }}{{ lav.priorita.icona|safe }}<br /><span class="minimal">Testo</span></a></li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div data-role="footer">
+		{% include 'lang_button.html' %}
+	</div>
+	{% for lav in lavori_pianificati %}
+		{% include 'lavoro_popup.html' with lavoro=lav attivabili=False fotoform=foto_form %}
+
+	{% endfor %}
+</div>
+
+
+
+{% endblock %}
+

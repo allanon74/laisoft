@@ -1,0 +1,23 @@
+{% load static %}
+
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'css/tabella.css' %}">
+</head>
+<h1>Inviare suggerimento</h1>
+{% if messaggio %} <p id="errore"> {{ messaggio }} </p>{% endif %}
+<body>
+
+<form action="{% url 'suggerimento' %}" method="post">
+{% csrf_token %}
+Nome del documento da suggerire:
+<input type="text" name="nome"{% if nome %} value="{{ nome }}"{% endif %} >
+Suggerimento:
+<input type="text" name="nota"{% if nota %} value="{{ nota }}"{% endif %} >
+<br><br>
+<input type="submit" value="Invia">
+</form>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% extends "./base_gic.html" %}
+{% load static %}
+{% load i18n parler_tags %}
+
+{% block headers %} <script type="text/javascript" src="{% static 'script/div_update.js' %}"></script> {% endblock %}
+	
+{% block pagetitle %}GIC - Gestione Interventi Cantiere{% endblock %}
+
+{% block title %} GIC {% endblock %}
+
+{% block lang %} 
+<div>
+    {% get_available_languages as LANGUAGES %}
+    {% get_current_language as LANGUAGE_CODE %}
+<h5 class = "centra">
+    {% for lang_code, title in LANGUAGES %}
+        {% get_language_info for lang_code as lang %}
+        {% get_translated_url lang_code as tr_url %}
+        {% if tr_url %}{% if lang_code == LANGUAGE_CODE %}{{ lang.name_local|capfirst }}{% else %}<a href="{{ tr_url }}{{ request.get_full_path|slice:"4:" }}" hreflang="{{ lang_code }}">{{ lang.name_local|capfirst }}</a>{% endif %}{% if not forloop.last %} - {% endif %}{% endif %}
+    {% endfor %}
+</h5>
+</div>
+{% endblock %}
+
+{% block leftcolumn %}
+
+	<h3 class="centra">Segnalazioni</h3>
+	{% for seg in segnalazioni %}
+	<button class="collapsible" style="background-color:{{ seg.stato.colore }};color:{{ seg.stato.colore_testo }}">{{ seg.oggetto }}</button>
+	<div class="content">{{ seg.descrizione }}
+		{% for int in seg.intervento_set.all %}
+				<button class="collapsible" style="background-color:{{ int.stato.colore }};color:{{ int.stato.colore_testo }}">{{ int.oggetto }}</button>
+				<div class="content">{{ int.descrizione }}</div>
+		{% endfor %}
+		</div> 
+	{% endfor %}
+<hr />
+{% if capocantiere %} <div id='box'>{% trans "Capocantiere" %}</div> {% endif %}
+{% if caposquadra %} <div id='box'>{% trans "Caposquadra" %}</div> {% endif %}
+{% if coordinatore %} <div id='box'>{% trans "Coordinatore" %}</div> {% endif %}
+{% if operaio %} <div id='box'>{% trans "Operaio" %}</div> {% endif %}
+{% if struttura %} <div id='box'>{% trans "Struttura" %}</div> {% endif %}
+{% if ufficio %} <div id='box'>{% trans "Ufficio" %}</div> {% endif %}
+
+{% for key, value in diritto.items %}
+	<h5> diritto {{ key }} : {{ value }}</h2>
+{% endfor %}
+
+{{ request.get_full_path|slice:"1:4" }}
+
+{% endblock %}
+
+{% block rightcolumn %}
+<div class="center">{{ loggeduser }}</div>
+{% endblock %}

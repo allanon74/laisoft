@@ -1,0 +1,16 @@
+{% load i18n static imagefit %} <!-- contesto: serv: servizio da cui renderizzare la firma logo: logo richiesto -->
+<table style="width:100%;font-family:Verdana, sans-serif;font-size:15px;">
+	<tr>
+		<td><img src="{{ logo.immagine|media_resize:"266x60" }}"></td>
+	</tr>
+	<tr>
+		<td style="font-size:16px;"><p>{{ serv.ufficio_al.nome_it_m }} - <span style="font-weight:bold;">{{ serv.nome_it_m }}</span><br />{{ serv.ufficio_al.nome_dt_m }} - <span style="font-weight:bold;">{{ serv.nome_dt_m }}</span></td>
+	</tr>
+	<tr>
+		<td style="font-size:11px;">Telefono - Telefon: {{ serv.telefono }}</td>
+	</tr>
+
+	<tr>
+		<td style="font-size:12px;"><a href="https://www.comune.laives.bz.it">Comune di Laives</a> - <a href="https://www.gemeinde.leifers.bz.it">Gemeinde Leifers</a></td>
+	</tr>
+</table>

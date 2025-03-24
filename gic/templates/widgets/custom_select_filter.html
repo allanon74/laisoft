@@ -1,0 +1,7 @@
+{% load i18n %}
+<input list="optlist" placeholder = "{% trans 'scrivi qui...' %}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}><br /><span class="minimal">{{ widget.label }}</span>
+	<datalist id="optlist" label="{{ group_name }}">{% for group_name, group_choices, group_index in widget.optgroups %}
+	{% for option in group_choices %}
+	{% include option.template_name with widget=option %}{% endfor %}
+	{% endfor %}</datalist>
+

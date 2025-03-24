@@ -1,0 +1,53 @@
+<!doctype html>
+{% load static %} 
+{% load i18n parler_tags %}
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- FontAwesome support  -->
+	<link rel="stylesheet" href="{% static 'fontawesomefree/css/fontawesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesomefree/css/brands.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesomefree/css/solid.css' %}"> 
+
+
+	
+	<!-- jquery support -->
+	
+	<link rel="stylesheet" href="{% static 'jquery/themes/laives-6.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'jquery/themes/jquery.mobile.icons.min.css' %}" />
+
+	<link rel="stylesheet" href="{% static '/jquery/jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.css' %}"> 
+	<script src="{% static 'jquery/jquery-1.11.3.js' %}"></script>
+		<script src="{% static '/jquery/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js' %}"></script>
+
+	<link href="{% static 'css/leifers_simple.css' %}" rel="stylesheet" />	
+
+
+	<title>{% block pagetitle %}Laisoft - GIC{% endblock %}</title>	
+
+
+{% block headers %}  {% endblock %}
+
+</head>
+<body>
+
+{% block body %}
+	<div data-role="page">
+		<div data-role="header" style="background-color:#0000CD;color:white;background-image: linear-gradient(#0000CD ,#00FFFF);">
+			<a class="ui-btn ui-icon-home ui-btn-icon-left" href={% url 'main' %}>Home</a>
+			{% block main_title %}{% endblock %}
+		</div>
+		<div data-role="main" class="ui-content">
+			{% block main_body %}{% endblock %}
+		</div>
+		
+		<div data-role="footer">
+			{% block main_footer %}{% endblock %}
+		</div>
+	</div>
+	{% block add_pages %} {% endblock %}
+{% endblock %}	
+</body>
+</html>

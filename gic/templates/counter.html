@@ -1,0 +1,66 @@
+{% load static customform i18n %} <!-- context: delta: intervallo di partenza del lavoro -->
+
+<style>
+#seconds {
+  font-size: 3em;}
+
+#minutes {
+  font-size: 3em;
+}
+#colon {
+  font-size: 3em;
+}
+#hours {
+  font-size: 3em;
+  
+.center {
+  margin: auto;
+  width: 60%;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+
+</style>
+
+<table class="center" width="100%" id="timer" data-startvalue="{{ delta }}">
+<tr>
+<td>&nbsp;</td>
+<td width="15px"><label id="hours">00</label></td>
+<td width="15px"><label id="colon">:</label></td>
+<td width="15px"><label id="minutes">00</label></td>
+<td width="15px"><label id="colon">:</label></td>
+<td width="15px"><label id="seconds">00</label></td>
+<td>&nbsp;</td>
+</table>
+
+	<script  type="text/javascript">
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var hoursLabel = document.getElementById("hours");
+var timer = document.getElementById("timer");
+var totalSeconds = parseInt(timer.dataset.startvalue);
+setInterval(setTime, 1000);
+
+        function setTime()
+        {
+            ++totalSeconds;
+            secondsLabel.innerHTML = pad(totalSeconds%60);
+            minutesLabel.innerHTML = pad(parseInt((totalSeconds%3600)/60));
+            hoursLabel.innerHTML = pad(parseInt(totalSeconds/3600));
+        }
+
+        function pad(val)
+        {
+            var valString = val + "";
+            if(valString.length < 2)
+            {
+                return "0" + valString;
+            }
+            else
+            {
+                return valString;
+            }
+        }
+	</script>
+
+

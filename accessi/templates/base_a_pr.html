@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/print.css' %}">
+	{% block headers %} {% endblock %}		
+    <title>{% block pagetitle %}Comune di Laives{% endblock %}</title>
+</head>
+
+<body>
+
+<table class="intestazione">
+	<tr>
+		<td style="borderless"><div class="logo"> <img class="logo" src={% block logo %}"{% static 'img/1a-comune.jpg' %}"{% endblock %} alt="logo Laives comune"> </div></td>
+		<td style="borderless"><div class="intestazione_ufficio">{% block ufficio %}Comune di Laives - servizio informatico<br>Gemeinde Leifers{% endblock %}</div></td>
+	</tr>
+</table>
+<div class="body">
+
+</div>
+{% block title %} <h1>Titolo</h1> {% endblock %}
+
+{% block persona %}
+	<table class="tabella_t" style="width:100%;">
+		<tr>
+			<td class="tabella_pl">Nome e cognome:<br />Name und Vorname:</td>
+			<td class="tabella_pr">{{ atto.dipendente.nome }} {{ atto.dipendente.cognome }}</td>
+		</tr>
+
+		<tr>
+			<td class="tabella_pl"">Numero di matricola:<br />Matrikelnummer:</td>
+			<td class="tabella_pr">{{ atto.dipendente.matricola }}</td>
+		</tr>
+		<tr>	
+			<td class="tabella_pl">Codice fiscale:<br /> Steuernummer:</td>
+			<td class="tabella_pr">{{ atto.dipendente.codicefiscale|upper }}</td>
+		</tr>
+		<tr>	
+			<td class="tabella_pl">Descrizione posizione:<br /> Stellenbeschreibung:</td>
+			<td class="tabella_pr">{{ ufficio.nome_it_m }}<br />{{ ufficio.nome_dt_m }}</td>
+		</tr>
+	</table>
+{% endblock %}
+<br />
+{% block document %}
+Testo del documento.
+{% endblock %}
+
+
+</body>
+</html>

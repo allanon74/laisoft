@@ -1,0 +1,26 @@
+{% extends "./base_gic_jq.html" %}
+{% load static customform i18n parler_tags %}
+
+{% block headers %} 
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+{% endblock %}
+	
+{% block pagetitle %}GIC - Gestione Interventi Cantiere{% endblock %}
+
+{% block title %}{% trans 'Collaboratori' %} {% endblock %}
+
+{% block pageheader %} {% trans "Pagina Collaboratori" %} {% endblock %}
+
+{% block lang %} 
+{% include 'lang_button.html' %}
+{% endblock %}
+
+{% block main %}
+{% tema "collaboratore" as tema_c %}
+{% tema "salva" as tema_u %}
+{% include 'lista_collaboratori.html' with gic_render=coll_render %}
+
+{% endblock %}
+
+
+

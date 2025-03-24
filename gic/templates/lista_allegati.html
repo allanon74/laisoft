@@ -1,0 +1,12 @@
+{% load i18n customform %} <!-- seg: segnalazione cui collegare; -->
+<div id="box" class="ui-corner-all">
+	<h3 class="centra">{% trans "Allegati" %}:</h3>
+	<div class="ui-grid-b">
+	{% for alg in seg.allegato_set.all %}
+		<div class="ui-block-{% cycle 'a' 'b' 'c' %}">
+			{{ alg.descrizione }} (<a href="{{ alg.file.url }}" data-ajax="false" target="_NEW">{{ alg.file.name }}</a>)
+		</div>
+	{% endfor %}
+	</div>
+	</form>
+</div>

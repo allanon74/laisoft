@@ -1,0 +1,98 @@
+<!doctype html>
+{% load static %} 
+{% load i18n parler_tags %}
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- FontAwesome support  -->
+	<link rel="stylesheet" href="{% static 'fontawesomefree/css/fontawesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesomefree/css/brands.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesomefree/css/solid.css' %}"> 
+
+
+	
+	<!-- jquery support -->
+	
+	<link rel="stylesheet" href="{% static 'jquery/themes/laives-6.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'jquery/themes/jquery.mobile.icons.min.css' %}" />
+
+	<link rel="stylesheet" href="{% static '/jquery/jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.css' %}"> 
+	<script src="{% static 'jquery/jquery-1.11.3.js' %}"></script>
+	<script src="{% static '/jquery/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js' %}"></script>
+
+<!-- Select2 support
+
+	<link rel="stylesheet" href="{% static 'css/select2.min.css' %}"> 
+	<script src="{% static 'js/select2.min.js' %}"></script> 	 -->
+	<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	
+
+	
+	<link href="{% static 'css/leifers_resp.css' %}" rel="stylesheet" />
+	<title>{% block pagetitle %}Laisoft - GIC{% endblock %}</title>	
+
+
+{% block headers %}  {% endblock %}
+
+</head>
+<body>
+
+	<div id="container">
+		<div id="header"> 
+			<h1 id="titolo"><a href="#">Laisoft - <span style="color:#FFFF00">{% block title %}Gestione Interventi Cantiere{% endblock %}</span></a></h1>
+		</div><!-- header -->
+	
+	
+		<hr class="minimal" />
+		<div class="topnav" id="myTopnav">
+		<a class="active" href="{% url 'main' %}"><i class="fa-solid fa-house"></i></a>
+		{% if diritto.segnalazioni_r %}<a href="{% url 'segnalazioni' %}">{% trans 'Segnalazioni' %}</a>{% endif %}
+		{% if diritto.interventi_r %}<a href="{% url 'interventi' %}">{% trans 'Interventi' %}</a>{% endif %}
+		{% block menu %} {% endblock %}
+			<a href={% url 'logout' %} style="float:right;"><i class="icon_tt fa-solid fa-arrow-right-from-bracket"><span class="icon_text">&nbsp;{% trans "Logout" %}&nbsp;</span></i></a>
+			<a href={% url 'wiki' %} target="_blank" style="float:right;"><i class="icon_tt fa-brands fa-wikipedia-w"><span class="icon_text">&nbsp;{% trans "Wiki Laives" %}&nbsp;</span></i></a>
+		{% if admin %}<a href={% url 'admin:index' %} style="float:right;"><i class="icon_tt fa-solid fa-toolbox"><span class="icon_text">&nbsp;{% trans "Pagina di amministrazione" %}&nbsp;</span></i></a>{% endif %}
+		<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+			<i class="fa fa-bars"></i>
+		</a>
+		</div> <!-- topbar -->
+		<hr class="minimal" />
+
+
+
+		<div date-role="main" id="main">
+			<div id="pagina" class="centra">
+			{% block pageheader %}Titolo della pagina{% endblock %}
+			</div> <!-- pagina -->
+			{% block main %}
+			<div id="colonna-sx">
+			{% block leftcolumn %}
+		
+				{% endblock %} <!-- leftcolumn -->
+			</div> <!-- colonna-sx -->
+			<div id="colonna-dx">
+				{% block rightcolumn %}
+		
+				{% endblock %} <!-- rightcolumn -->
+			</div> <!-- colonna-dx -->
+			{% endblock %} <!-- main -->
+		</div> <!-- main -->
+		<div id="footer">
+		 	{% block lang %} 
+		
+			{% endblock %} <!-- lang -->
+			{% block footer %}
+			<h6>Webmaster: <a class="centra" href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>
+			{% endblock %} <!-- footer -->
+		</div><!-- footer -->
+		<div class="clear"></div>
+		<script type="text/javascript" src="{% static 'script/active_elements.js' %}"></script>
+	</div> <!-- container -->
+
+</body>
+</html>

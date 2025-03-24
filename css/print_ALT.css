@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+  font-family: Tahoma, Verdana, sans-serif;
+}
+ 
+
+.logo {
+	width: 225px;
+	height: 50px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.intestazione_ufficio {
+	font-style: normal; 
+	font-weight: normal;
+	font-size: 8px;
+	text-align: right;
+	position: absolute;
+	top: 15px;
+	right: 5px;
+	left: 250px;
+	width: 400px;
+	line-height: 12px;
+}
+ 
+@media print {
+	div.do-not-print {display: none;}
+}

@@ -1,0 +1,130 @@
+{% extends "./base_h.html" %}
+{% load static %}
+
+{% block headers %} <script type="text/javascript" src="{% static 'script/div_update.js' %}"></script> {% endblock %}
+	
+{% block pagetitle %}Comune di Laives - Gestione ticket di intervento tecnico{% endblock %}
+
+{% block title %}Dettaglio Ticket{% endblock %}
+
+{% block leftcolumn %}
+
+<div class="card">
+<table width="100%">
+	<tr><td width="30%" class=intest> <p style="padding:5px;text-align:right;vertical-align:top;font-weight:bold">Nome Ticket</p></td><td>{{ ticket.nome }}</td></tr>
+	<tr><td class=intest> <p style="padding:5px;text-align:right;vertical-align:top;font-weight:bold">Tipologia</p></td><td>{{ ticket.tipologia }}</td></tr>
+	<tr><td class=intest> <p style="padding:5px;text-align:right;vertical-align:top;font-weight:bold">Persona richiedente</p></td><td>
+		<div class="tooltip">{{ ticket.persona }}<span class="tooltiptext">{{ ticket.persona.dettaglio|linebreaksbr }}</span></div>
+	</td></tr>
+		<tr><td class=intest> <p style="padding:5px;text-align:right;vertical-align:top;font-weight:bold">Incaricato</p></td><td>{{ ticket.incaricato }}</td></tr>
+	<tr><td class=intest> <p style="padding:5px;text-align:right;vertical-align:top;font-weight:bold">Descrizione del problema</p></td><td>{{ ticket.testo|linebreaksbr }}</td></tr>
+	<tr><td class=intest> <p style="padding:5px;text-align:right;vertical-align:top;font-weight:bold">Data apertura ticket</p></td><td>{{ ticket.data_apertura }}</td></tr>
+	<tr><td class=intest> <p style="padding:5px;text-align:right;vertical-align:top;font-weight:bold">Utente apertura ticket</p></td><td>{{ ticket.utente_apertura.last_name }} {{ ticket.utente_apertura.first_name }}</td></tr>
+	{% if not ticket.chiuso %}
+	<tr><td class=intest> <p style="padding:5px;text-align:right;vertical-align:top;font-weight:bold">Data ultima modifica</p></td><td>{{ ticket.data_modifica }}</td></tr>
+	<tr><td class=intest> <p style="padding:5px;text-align:right;vertical-align:top;font-weight:bold">Utente ultima modifica</p></td><td>{{ ticket.utente_modifica.last_name }} {{ ticket.utente_modifica.first_name }}</td></tr>
+	{% endif %}
+	{% if ticket.chiuso %}
+	<tr><td class=intest> <p style="padding:5px;text-align:right;vertical-align:top;font-weight:bold">Soluzione</p></td><td>{{ ticket.soluzione|linebreaksbr }}</td></tr>
+	<tr><td class=intest> <p style="padding:5px;text-align:right;vertical-align:top;font-weight:bold">Data della Soluzione</p></td><td>{{ ticket.data_chiusura }}</td></tr>
+	<tr><td class=intest> <p style="padding:5px;text-align:right;vertical-align:top;font-weight:bold">Autore della Soluzione</p></td><td>{{ ticket.utente_chiusura.last_name }} {{ ticket.utente_chiusura.first_name }}</td></tr>
+	{% elif admin %}
+	<tr>
+		<td class=intest> <p style="padding:5px;text-align:right;vertical-top:middle;font-weight:bold">Soluzione</p></td>
+		<td><form action="" method=POST>{% csrf_token %}
+		<textarea style="width:100%;height:150px;" name="soluzione" ></textarea>
+		<input type="hidden" name="id_ticket" value="{{ ticket.id }}">
+		<input type="hidden" name="to_do" value="soluzione">
+		<input type="submit" value="Aggiungi soluzione e chiudi ticket">
+		</form></td>
+	</tr>
+	{% endif %}
+</table>
+</div>
+{% if alleg %}
+<div class = card>
+<h3> Allegati</h3>
+<table width=100%>
+	<tr>
+		<th width="30% style="padding:5px;"">Nome</th>
+		<th style="padding:5px;">File</th>
+	</tr>
+	{% for alleg in allegati %}
+	<tr>
+		<td style="padding:5px;">{{ alleg.nome }}</td>
+		<td style="padding:5px;"><a href="{{ base_url }}media/{{ alleg.file }}">{{ alleg.file }} </a></td>
+	</tr>
+	{% endfor %}
+</table>
+</div>
+{% endif %}
+
+{% if az %}
+<div class = card>
+<h3> Azioni</h3>
+<table width=100%>
+	<tr>
+		<th width="20%" style="padding:5px;">Data dell'azione</th>
+		<th width="20%" style="padding:5px;">Utente</th>
+				{% if admin %}<th style="padding:5px;">Tipo</th>{% endif %}
+		<th style="padding:5px;">Descrizione</th>
+	</tr>
+	{% for azione in azioni %}
+	<tr>
+		<td style="padding:5px;vertical-align:top;">{{ azione.data_azione }}</td>
+		<td style="padding:5px;vertical-align:top;">{{ azione.utente.last_name }} {{ azione.utente.first_name }}</td>
+				{% if admin %}<td style="padding:5px;vertical-align:top;">{% if azione.interna %} Interna {% else %} Pubblica {% endif %} </td>{% endif %}
+		<td style="padding:5px;">{{ azione.nota|linebreaksbr }}</td>
+	</tr>
+	{% endfor %}
+</table>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block rightcolumn %}
+	{% if not ticket.chiuso %}
+	<div class="card">
+	<h3>Aggiungi risposta</h3>
+		<form action="" method=POST>{% csrf_token %}
+			<label>Testo dell'azione</label><br />
+			<textarea style="width:100%;height:150px;" name="nota" ></textarea>
+			{% if admin %} 
+				<table>
+					<tr><td width="20%"><input type="radio" name="tipologia" id="interna" value="interna" checked></td><td><label for="interna">annotazione interna</label></td></tr> 
+					<tr><td><input type="radio" name="tipologia" id="pubblica" value="pubblica"></td><td><label for="pubblica">annotazione pubblica</label></td></tr>
+				</table>  
+			 {% endif %}
+			<input type="hidden" name="id_ticket" value="{{ ticket.id }}">
+			<input type="hidden" name="to_do" value="azione">
+			<input type="submit" value="Aggiungi azione">
+		</form>	
+		{% if admin %}
+		<br />
+		<form action="" method=POST>{% csrf_token %}
+						<input type="hidden" name="id_ticket" value="{{ ticket.id }}">
+						<input type="hidden" name="to_do" value="incarico">
+						<input type="hidden" name="nota" value="Preso in carico.">
+						<input type="hidden" name="tipologia" value="interna">
+						<input type="submit" value="presa in carico">
+		</form>
+		{% endif %}
+	</div>
+	
+	<div class="card">
+		<h3>Aggiungi file allegato</h3>
+		<form action="" method=POST enctype="multipart/form-data">{% csrf_token %}
+		{{ form_allegato.as_p }}
+		<input type="hidden" name="id_ticket" value="{{ ticket.id }}">
+		<input type="hidden" name="to_do" value="allegato">
+		<input type="submit" value="Aggiungi allegato">
+		</form>
+	</div>
+	<a href="/helpdesk/">prova link </a>
+	{% endif %}
+	
+{% endblock %}
+
+{% block footer %} <h6>Webmaster: <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>{% endblock %}
+

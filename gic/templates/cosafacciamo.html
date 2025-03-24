@@ -1,0 +1,104 @@
+﻿<!doctype html>
+<head>
+   <meta charset="UTF-8">
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+    <title>Che facciamo - Responsive Design MDB2020</title>
+ 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="css/style.css" rel="stylesheet" />
+	 <script src="js/jquery-1.7.1.min.js"></script>
+</head>
+  <script>
+  	$(document).ready(function(){   
+		$(".smartmenu").click(function() {
+		$("#menu").toggleClass("mostra-smartmenu");
+		});
+	});
+	</script>
+<body>
+<div id="container">
+    <div id="header">
+        <h1 id="titolo"><a href="index.html">GigaWeb<span style="color:#FFFF00">IIIBI</span></a></h1>
+        <div class="smartmenu">
+			<span class="icon-smartmenu"></span>
+			<span class="icon-smartmenu"></span>
+            <span class="icon-smartmenu"></span>
+        </div>
+    </div> 
+    
+    <div id="menu">
+	 	<ul>
+        	<li><a href="index.html"><span style="color:#0000cd">Home</a></li>
+			<li><a href="#">Novità</a></li>
+            <li><a href="#">Chi siamo</a></li>
+            <li><a href="#">Cosa facciamo</a></li>
+			<li><a href="#">Contatti</a></li>
+        </ul>
+	</div> 
+    
+	<div id="main">
+		<div id="pagina">Cosa facciamo</div>
+		<br/><br/>
+		<div id="colonna-cn">
+			<div class="row"> <!-- una riga per inserire due immagini-->
+				<div id="colonna50-sx">
+					<img src="images/responsivedesign.jpg" class="immagine">
+				</div> 
+				<div id="colonna50-dx">
+					<img src="images/imgseo.jpg" class="immagine">
+				</div> 
+			</div>
+			<h2>Siti Web responsive</h2>
+			<div class="giustifica">
+				<p>	"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem 
+				aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+				Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores 
+				eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+				consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam 
+				quaerat voluptatem. 
+				</p>
+			</div>
+			<h2>Posizionamento sui motori di ricerca</h2>
+			<div class="giustifica">
+				<p>	Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis 
+				dis parturient montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida.
+				</p>
+			</div> 
+			<h2>Web banner statici e dinamici</h2>
+            <div class="giustifica">
+				<p>	"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem 
+					aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+					Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores 
+					eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+					consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam 
+					quaerat voluptatem. 
+				</p>
+            </div> 
+			<h2>Grafica, animazioni e fotoritocco</h2>
+            <div class="giustifica">
+				<p>	"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem 
+					aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+					Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores 
+					eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+					consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam 
+					quaerat voluptatem. 
+				</p>
+            </div> 
+    	</div> <!-- chiude <div id="colonna-cn"> -->
+	</div> <!-- chiude <div id="main"> -->
+
+ 	<div id="footer">
+		<p class="centra">
+		Prova a ridimensionare la finestra del browser per vedere come il contenuto si adatta alla nuova dimensione
+			<br/>&copy; 2020 Classe IIIBI Alessandrini Teramo - Prof. Mauro De Berardis <br/><a href="#"><span style="color:#0000CD">Top</span></a>
+		</p>       
+    </div> 
+    
+    <div class="clear"></div>
+
+</div> <!-- chiude <div id="container"> -->
+
+</body>
+</html>
+
+
+	

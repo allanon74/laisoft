@@ -1,0 +1,60 @@
+{% extends "./base_h.html" %}
+{% load static %}
+
+{% block headers %} <script type="text/javascript" src="{% static 'script/div_update.js' %}"></script> {% endblock %}
+	
+{% block pagetitle %}Comune di Laives - Gestione ticket di intervento tecnico{% endblock %}
+
+{% block title %}Inserisci nuovo Ticket{% endblock %}
+
+{% block leftcolumn %}
+
+<div class="card">
+
+<form action="inserito/" method=POST>{% csrf_token %}
+	<table width="100%">
+		<tr>
+			<td class=intest> <p style="padding:5px;text-align:right;vertical-align:middle;font-weight:bold">Tipologia</p></td>
+			<td>
+				<select name="tipologia">
+					{% for tip in tipologie %}
+						<option value={{ tip.id }}{% if tip.principale %} selected{% endif %}>{{ tip.nome }} ({{ tip.sigla }}): {{ tip.descrizione }}</option>
+					{% endfor %}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class=intest> <p style="padding:5px;text-align:right;vertical-align:middle;font-weight:bold">Persona richiedente</p></td>
+			{% if admin %}
+				<td>
+					<input list="dipendenti" name="persona" placeholder="Seleziona un dipendente..">
+						<datalist id="dipendenti">
+						{% for dip in dipendenti %}
+							<option value="{{ dip.userid }}"{% if dip.userid == username %} selected{% endif %}>{{ dip }}</option>
+						{% endfor %}
+						</datalist>
+					</select>
+				</td>
+			{% else %}
+			<td>{{ loggeduser.last_name }} {{ loggeduser.first_name }}<input type="hidden" name="persona" value="{{ userid }}"></td>
+			{% endif %}
+		</tr>
+		<tr>
+			<td class=intest> <p style="padding:5px;text-align:right;vertical-align:middle;font-weight:bold">Descrizione problema</p></td>
+			<td><textarea style="width:100%;height:150px;" name="testo" ></textarea></td>
+		</tr>
+
+	</table>
+	 <input type="submit" value="Salva Ticket">
+</form>
+
+</div>
+
+{% endblock %}
+
+{% block rightcolumn %}
+
+{% endblock %}
+
+{% block footer %} <h6>Webmaster: <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>{% endblock %}
+

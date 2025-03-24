@@ -1,0 +1,93 @@
+{% load i18n customform %}
+{% tema "segnalazione" as tm %}
+{{ form.non_field_errors }}
+<div data-role="main" class="ui-content">
+	<div class="fieldWrapper" data-theme="{{ tm }}">
+		{{ form.oggetto.errors }}
+		{% if form.oggetto.help_text %}<label class="enfasi" for="{{ form.oggetto.id_for_label }}" data-theme="{{ tm }}">{{ form.oggetto.label }}</label><div class="tooltip">{{ form.oggetto }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.oggetto.help_text }}</span></div>
+		{% else %}<label class="enfasi" for="{{ form.oggetto.id_for_label }}" data-theme="{{ tm }}">{{ form.oggetto.label }}</label>{{ form.oggetto }}{% endif %}
+	</div>
+	<div class="fieldWrapper" data-theme="{{ tm }}">
+		{{ form.descrizione.errors }}
+		{% if form.descrizione.help_text %}<label class="enfasi" for="{{ form.descrizione.id_for_label }}" data-theme="{{ tm }}">{{ form.descrizione.label }}</label><div class="tooltip">{{ form.descrizione }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.descrizione.help_text }}</span></div>
+		{% else %}<label class="enfasi" for="{{ form.descrizione.id_for_label }}" data-theme="{{ tm }}">{{ form.descrizione.label }}</label>{{ form.descrizione }}{% endif %}
+	</div>
+	
+	<div class="fieldWrapper" data-theme="{{ tm }}">
+		{{ form.tipo.errors }}
+		{% if form.tipo.help_text %}<label class="enfasi" for="{{ form.tipo.id_for_label }}" data-theme="{{ tm }}">{{ form.tipo.label }}</label><div class="tooltip">{{ form.tipo }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.tipo.help_text }}</span></div>
+		{% else %}<label class="enfasi" for="{{ form.tipo.id_for_label }}" data-theme="{{ tm }}">{{ form.tipo.label }}</label>{{ form.tipo }}{% endif %}
+	</div>	
+	<div class="fieldWrapper" data-theme="{{ tm }}">
+		{{ form.data_pianificazione.errors }}
+		{% if form.data_pianificazione.help_text %}<label class="enfasi" for="{{ form.data_pianificazione.id_for_label }}" data-theme="{{ tm }}">{{ form.data_pianificazione.label }}</label><div class="tooltip">{{ form.data_pianificazione }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.data_pianificazione.help_text }}</span></div>
+		{% else %}<label class="enfasi" for="{{ form.data_pianificazione.id_for_label }}" data-theme="{{ tm }}">{{ form.data_pianificazione.label }}</label>{{ form.data_pianificazione }}{% endif %}
+	</div>	
+	<div class="fieldWrapper" data-theme="{{ tm }}">
+		{{ form.struttura.errors }}
+		{% if form.struttura.help_text %}<label class="enfasi" for="{{ form.struttura.id_for_label }}" data-theme="{{ tm }}">{{ form.struttura.label }}</label><div class="tooltip">{{ form.struttura }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.struttura.help_text }}</span></div>
+		{% else %}<label class="enfasi" for="{{ form.struttura.id_for_label }}" data-theme="{{ tm }}">{{ form.struttura.label }}</label>{{ form.struttura }}{% endif %}
+	</div>
+	<div class="fieldWrapper" data-theme="{{ tm }}">
+		{{ form.stato.errors }}
+		{% if form.stato.help_text %}<label class="enfasi" for="{{ form.stato.id_for_label }}" data-theme="{{ tm }}">{{ form.stato.label }}</label><div class="tooltip">{{ form.stato }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.stato.help_text }}</span></div>
+		{% else %}<label class="enfasi" for="{{ form.stato.id_for_label }}" data-theme="{{ tm }}">{{ form.stato.label }}</label>{{ form.stato }}{% endif %}
+	</div>
+	<div class="fieldWrapper" data-theme="{{ tm }}">
+		{{ form.origine.errors }}
+		{% if form.origine.help_text %}<label class="enfasi" for="{{ form.origine.id_for_label }}" data-theme="{{ tm }}">{{ form.origine.label }}</label><div class="tooltip">{{ form.origine }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.origine.help_text }}</span></div>
+		{% else %}<label class="enfasi" for="{{ form.origine.id_for_label }}" data-theme="{{ tm }}">{{ form.origine.label }}</label>{{ form.origine }}{% endif %}
+	</div>
+	<div class="fieldWrapper" data-theme="{{ tm }}">
+		{{ form.segnalatore.errors }}
+		{% if form.segnalatore.help_text %}<label class="enfasi" for="{{ form.segnalatore.id_for_label }}" data-theme="{{ tm }}">{{ form.segnalatore.label }}</label><div class="tooltip">{{ form.segnalatore }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.segnalatore.help_text }}</span></div>
+		{% else %}<label class="enfasi" for="{{ form.segnalatore.id_for_label }}" data-theme="{{ tm }}">{{ form.segnalatore.label }}</label>{{ form.segnalatore }}{% endif %}
+		</div>
+	</div>
+	
+	<div data-role="collapsible" data-theme="{{ tm }}">
+	<h1>{% trans "Dati del messaggio di segnalazione" %}</h1>
+		<div class="fieldWrapper" data-theme="{{ tm }}">
+			{{ form.email.errors }}
+			{% if form.email.help_text %}<label class="enfasi" for="{{ form.email.id_for_label }}" data-theme="{{ tm }}">{{ form.email.label }}</label><div class="tooltip">{{ form.email }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.email.help_text }}</span></div>
+			{% else %}<label class="enfasi" for="{{ form.email.id_for_label }}" data-theme="{{ tm }}">{{ form.email.label }}</label>{{ form.email }}{% endif %}
+		</div>
+		<div class="fieldWrapper" data-theme="{{ tm }}">
+			{{ form.telefono.errors }}
+			{% if form.telefono.help_text %}<label class="enfasi" for="{{ form.telefono.id_for_label }}" data-theme="{{ tm }}">{{ form.telefono.label }}</label><div class="tooltip">{{ form.telefono }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.telefono.help_text }}</span></div>
+			{% else %}<label class="enfasi" for="{{ form.telefono.id_for_label }}" data-theme="{{ tm }}">{{ form.telefono.label }}</label>{{ form.telefono }}{% endif %}
+		</div>
+		<div class="fieldWrapper" data-theme="{{ tm }}">
+			{{ form.risposta.errors }}
+			{% if form.risposta.help_text %}<label class="enfasi" for="{{ form.risposta.id_for_label }}" data-theme="{{ tm }}">{{ form.risposta.label }}</label><div class="tooltip">{{ form.risposta }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.risposta.help_text }}</span></div>
+			{% else %}<label class="enfasi" for="{{ form.risposta.id_for_label }}" data-theme="{{ tm }}">{{ form.risposta.label }}</label>{{ form.risposta }}{% endif %}
+		</div>
+		<div class="fieldWrapper" data-theme="{{ tm }}">
+			{{ form.id_documento.errors }}
+			{% if form.id_documento.help_text %}<label class="enfasi" for="{{ form.id_documento.id_for_label }}" data-theme="{{ tm }}">{{ form.id_documento.label }}</label><div class="tooltip">{{ form.id_documento }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.id_documento.help_text }}</span></div>
+			{% else %}<label class="enfasi" for="{{ form.id_documento.id_for_label }}" data-theme="{{ tm }}">{{ form.id_documento.label }}</label>{{ form.id_documento }}{% endif %}
+		</div>
+	</div>
+	<div data-role="collapsible" data-theme="{{ tm }}">
+	<h1>{% trans "Dati per la periodicità" %}</h1>
+		<div class="fieldWrapper" data-theme="{{ tm }}">
+			{{ form.periodico.errors }}
+			{% if form.periodico.help_text %}<label class="enfasi" for="{{ form.periodico.id_for_label }}" data-theme="{{ tm }}">{{ form.periodico.label }}</label><div class="tooltip">{{ form.periodico }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.periodico.help_text }}</span></div>
+			{% else %}<label class="enfasi" for="{{ form.periodico.id_for_label }}" data-theme="{{ tm }}">{{ form.periodico.label }}</label>{{ form.periodico }}{% endif %}
+		</div>
+		<div class="fieldWrapper" data-theme="{{ tm }}">
+			{{ form.periodo.errors }}
+			{% if form.periodo.help_text %}<label class="enfasi" for="{{ form.periodo.id_for_label }}" data-theme="{{ tm }}">{{ form.periodo.label }}</label><div class="tooltip">{{ form.periodo }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.periodo.help_text }}</span></div>
+			{% else %}<label class="enfasi" for="{{ form.periodo.id_for_label }}">{{ form.periodo.label }}</label>{{ form.periodo }}{% endif %}
+		</div>
+		<div class="fieldWrapper" data-theme="{{ tm }}">
+			{{ form.cicli.errors }}
+			{% if form.cicli.help_text %}<label class="enfasi" for="{{ form.cicli.id_for_label }}" data-theme="{{ tm }}">{{ form.cicli.label }}</label><div class="tooltip">{{ form.cicli }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.cicli.help_text }}</span></div>
+			{% else %}<label class="enfasi" for="{{ form.cicli.id_for_label }}" data-theme="{{ tm }}">{{ form.cicli.label }}</label>{{ form.cicli }}{% endif %}
+		</div>
+		<div class="fieldWrapper" data-theme="{{ tm }}">
+			{{ form.duplicare.errors }}
+			{% if form.duplicare.help_text %}<label class="enfasi" for="{{ form.duplicare.id_for_label }}" data-theme="{{ tm }}">{{ form.duplicare.label }}</label><div class="tooltip">{{ form.duplicare }}<span class="tooltiptext" data-theme="{{ tm }}">{{ form.duplicare.help_text }}</span></div>
+			{% else %}<label class="enfasi" for="{{ form.duplicare.id_for_label }}" data-theme="{{ tm }}">{{ form.duplicare.label }}</label>{{ form.duplicare }}{% endif %}
+		</div>
+</div>

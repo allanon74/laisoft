@@ -1,0 +1,91 @@
+{% load static customform i18n %} <!-- context: lavoro: lavoro di cui renderizzare il pannello; attivabili: se renderizzare o meno i tasti di tempilavoro-->
+<fieldset disabled=True data-theme="{{ tema_l }}">
+	<div class="fieldWrapper">
+		<label class="enfasi" for="struttura" data-theme="{{ tema_l }}">{% trans "Struttura di riferimento:" %}</label> <input type="text" name="struttura" value="{{ lavoro.team.intervento.struttura }}" data-theme="{{ tema_l }}">
+	</div>
+	{{ lavoro|jqform }}
+</fieldset>
+<div id="box" class="ui-corner-all"><h3 class="centra"> {% trans "Partecipanti" %}: </h3><ul>{% for tm in lavoro.team.intervento.team_set.all %}{% for lv in tm.lavoro_set.all %}<li>{{ lv.collaboratore }} ({{ tm.attivita }})</li>{% endfor %}{% endfor %}</ul></div>
+{% include 'lavoro_foto_istruzioni.html' with lavoro=lavoro %}
+{% if attivabili %}
+	
+	{% if lavoro.attivo %}
+		<div class="ui-grid-a ui-responsive">
+			<div class="ui-block-a">
+				<form method="post" data-ajax="false" action="">
+					{% csrf_token %}
+					<button class="ui-btn ui-corner-all"><i class="fa-solid fa-stop" style="float:left;"></i>{% trans 'Termina lavoro' %}</button>
+					<input type="hidden" name="action" value="termina">
+					<input type="hidden" name="id_lavoro" value="{{ lavoro.id }}">
+					<input type="text" name="note" placeholder="annotazione...">
+				</form>
+			</div>
+			<div class="ui-block-b">
+				<form method="post" data-ajax="false" action="">
+					{% csrf_token %}
+					<button class="ui-btn ui-corner-all"><i class="fa-solid fa-pause" style="float:right;"></i>{% trans 'Sospendi lavoro' %}</button>
+					<input type="hidden" name="action" value="pausa">
+					<input type="hidden" name="id_lavoro" value="{{ lavoro.id }}">
+					<input type="text" name="note" placeholder="annotazione...">
+				</form>
+			</div>
+		</div>
+	{% else %}
+		<form method="post" data-ajax="false" action="">
+			{% csrf_token %}
+			<input type="hidden" name="action" value="avvia">
+			<input type="hidden" name="id_lavoro" value="{{ lavoro.id }}">
+			<input type="hidden", name="note" value="">
+			<button class="ui-btn"><i class="fa-solid fa-play" style="float:left;"></i>{% trans 'Avvia Lavoro' %}</button>
+		</form>
+	{% endif %}
+		
+	
+	<div id="box" class="ui-corner-all">
+		<h3 class="centra">{% trans "Aggiungi un'immagine" %}:</h3>
+		<form method="post" data-ajax="false" action="" enctype="multipart/form-data">{% csrf_token %}
+			<input type="hidden" name="id_lavoro" value="{{ lavoro.id }}">
+			<input type="hidden" name="action" value="foto">
+			{{ foto_form }}
+			<button class="ui-btn ui-icon-video ui-btn-icon-left">{% trans 'Acquisisci immagine' %}</button>
+		</form>
+	</div>
+	<div id="box" class="ui-corner-all">
+		<h3 class="centra">{% trans "Aggiungi un lavoro accessorio" %}:</h3>
+		<form method="post" data-ajax="false" action="" enctype="multipart/form-data">{% csrf_token %}
+			<input type="hidden" name="team" value="{{ lavoro.team.id }}">
+			<input type="hidden" name="action" value="accessorio">
+			<input type="hidden" name="collaboratore" value="{{ lavoro.collaboratore.id }}">
+			{% include 'form_lavoro_accessorio.html' %}
+			<button class="ui-btn ui-icon-tag ui-btn-icon-left">{% trans 'Inserisci lavoro accessorio' %}</button>
+		</form>
+	</div>
+	<div class="ui-corner-all" data-theme="{{ tema_tl }}" data-content-theme="{{ tema_tl }}" data-role="collapsible">
+		<style>
+			th {
+				border-bottom: 1px solid #d6d6d6;
+				text-align:center;
+			}
+
+			tr:nth-child(even) {
+				background: #e9e9e9;
+			}
+		</style>
+		<h1 class="centra">{% trans "Tempi di lavoro" %}:</h1>
+		{% for tl in lavoro.tempilavoro_set.all %}
+			{% if forloop.first %}
+				<table data-role="table" data-theme="{{ tema_lt }}" data-mode="columntoggle" class="t_lavoro ui-responsive ui-mini" id="{{ lavoro.id }}_tl_table" data-theme="{{ tema_tl }}" data-column-btn-text="">
+					<thead><tr class="center"><th>{% trans "Inizio" %}</th><th>{% trans "Fine" %}</th><th>{% trans "Note" %}</th></tr></thead>
+					<tbody>
+			{% endif %}
+						<tr><td>{{ tl.inizio|date:"d.m.y H:i" }}</td><td>{{ tl.fine|date:"d.m.y H:i" }}</td><td>{{ tl.note }}</td></tr>
+			{% if forloop.last %}
+					</tbody>
+				</table>
+
+			{% endif %}		
+		{% endfor %}
+	</div>
+{% endif %}
+
+

@@ -1,0 +1,1078 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-08 08:16+0200\n"
+"PO-Revision-Date: 2024-03-18 13:49+0100\n"
+"Last-Translator: Giorgio Bertoluzza <giorgio.bertoluzza@comune.laives.bz."
+"it>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.1\n"
+
+#: _old/settings.py:242 laisoft/settings.py:249
+msgid "English"
+msgstr "Englisch"
+
+#: _old/settings.py:243 laisoft/settings.py:250
+msgid "Italiano"
+msgstr "Italienisch"
+
+#: _old/settings.py:244 laisoft/settings.py:251
+msgid "Deutsch"
+msgstr "Deutsch"
+
+#: gic/admin.py:48 gic/models.py:238
+msgid "Colore"
+msgstr "Farbe"
+
+#: gic/forms.py:218
+msgid "Seleziona un'immagine"
+msgstr "Wählen Sie ein Bild"
+
+#: gic/forms.py:224
+msgid "Tipologia di foto"
+msgstr "Art der Bild"
+
+#: gic/forms.py:234 gic/models.py:269 gic/models.py:321 gic/models.py:1574
+#: gic/models_parler_NW.py:203 gic/models_prev.py:175
+#: gic/templates/nuovo_lavoro.html:13
+msgid "Descrizione"
+msgstr "Beschreibung"
+
+#: gic/forms.py:238
+#, fuzzy
+#| msgid "Seleziona un'immagine"
+msgid "Seleziona un allegato"
+msgstr "Wählen Sie ein Bild"
+
+#: gic/models.py:87 gic/models_parler_NW.py:50 gic/models_prev.py:49
+#: gic/templates/gic_debug.html:42 gic/templates/gic_debug.html:61
+#: gic/templates/gic_segnalazioni_OLD.html:53
+#: gic/templates/gic_segnalazioni_OLD.html:75
+#: gic/templates/gic_segnalazioni_OLD.html:115
+msgid "Stato"
+msgstr "Status"
+
+#: gic/models.py:88 gic/models_parler_NW.py:51 gic/models_prev.py:50
+msgid "Origine Segnalazione"
+msgstr "Herkunft Berichterstattung"
+
+#: gic/models.py:89 gic/models_parler_NW.py:52 gic/models_prev.py:51
+msgid "Tipologia Segnalazione"
+msgstr "Berichtstyp"
+
+#: gic/models.py:90 gic/models_parler_NW.py:53 gic/models_prev.py:52
+msgid "Tipologia di Foto"
+msgstr "Art des Fotos"
+
+#: gic/models.py:91 gic/models_parler_NW.py:54 gic/models_prev.py:53
+msgid "Tipologia di assenza"
+msgstr "Art der Abwesenheit"
+
+#: gic/models.py:92 gic/models_parler_NW.py:55 gic/models_prev.py:54
+msgid "Tipologia di Reperibilità"
+msgstr "Art der Verfügbarkeit"
+
+#: gic/models.py:93
+msgid "Interno"
+msgstr "Intervention"
+
+#: gic/models.py:108
+msgid "Sì"
+msgstr "Ja"
+
+#: gic/models.py:109
+msgid "No"
+msgstr "nein"
+
+#: gic/models.py:122 gic/models.py:1086 gic/models.py:1635
+#: gic/models_parler_NW.py:626 gic/models_parler_NW.py:960
+#: gic/models_prev.py:598 gic/models_prev.py:932
+#: gic/templates/gic_segnalazione.html:10
+msgid "Segnalazione"
+msgstr "Bericht"
+
+#: gic/models.py:123 gic/models.py:1231 gic/models_parler_NW.py:695
+#: gic/models_prev.py:667
+msgid "Intervento"
+msgstr "Intervention"
+
+#: gic/models.py:124
+msgid "Team"
+msgstr "Team"
+
+#: gic/models.py:125 gic/models.py:1511 gic/models.py:1512
+#: gic/models_parler_NW.py:841 gic/models_parler_NW.py:842
+#: gic/models_prev.py:813 gic/models_prev.py:814
+msgid "Lavoro"
+msgstr "Arbeit"
+
+#: gic/models.py:126
+msgid "Tempi di Lavoro"
+msgstr "Arbeitszeiten"
+
+#: gic/models.py:127 gic/models.py:844 gic/models.py:1658 gic/models.py:1687
+#: gic/models.py:1720 gic/models_parler_NW.py:486 gic/models_parler_NW.py:989
+#: gic/models_parler_NW.py:1018 gic/models_parler_NW.py:1050
+#: gic/models_prev.py:458 gic/models_prev.py:961 gic/models_prev.py:990
+#: gic/models_prev.py:1022 gic/templates/nuovo_lavoro.html:17
+msgid "Collaboratore"
+msgstr "Mitarbeiter"
+
+#: gic/models.py:128
+msgid "Pulsante \"Salva\""
+msgstr "Taste \"Speichern\""
+
+#: gic/models.py:129 gic/models.py:1361 gic/models.py:1362
+#: gic/models_parler_NW.py:786 gic/models_parler_NW.py:787
+#: gic/models_prev.py:758 gic/models_prev.py:759
+msgid "Foto"
+msgstr "Foto"
+
+#: gic/models.py:133 gic/models.py:134 gic/models.py:135 gic/models.py:136
+#: gic/models.py:137 gic/models.py:138 gic/models.py:139 gic/models.py:140
+#: gic/models.py:141 gic/models.py:142
+msgid "Tema"
+msgstr "Thema"
+
+#: gic/models.py:165 gic/models.py:186 gic/models_parler_NW.py:79
+#: gic/models_parler_NW.py:100 gic/models_prev.py:78
+msgid "Codice Identificativo"
+msgstr "Identifizierungscode"
+
+#: gic/models.py:167 gic/models.py:188 gic/models_parler_NW.py:81
+#: gic/models_parler_NW.py:102 gic/models_prev.py:80
+msgid "Data di creazione"
+msgstr "Datum der Erstellung"
+
+#: gic/models.py:171 gic/models.py:192 gic/models_parler_NW.py:85
+#: gic/models_parler_NW.py:106 gic/models_prev.py:84
+msgid "Data di ultima modifica"
+msgstr "Datum der letzten Änderung"
+
+#: gic/models.py:265
+msgid "Nome Breve"
+msgstr "Kurzname"
+
+#: gic/models.py:286 gic/models_parler_NW.py:168 gic/models_prev.py:140
+msgid "Elemento Periodico"
+msgstr "Periodisches Element"
+
+#: gic/models.py:290 gic/models_parler_NW.py:172 gic/models_prev.py:144
+msgid "Periodo"
+msgstr "Zeitraum"
+
+#: gic/models.py:291 gic/models_parler_NW.py:173 gic/models_prev.py:145
+msgid ""
+"Numero di giorni successivi alla chiusura dopo i quali ripetere l'elemento"
+msgstr ""
+"Anzahl der Tage nach dem Abschluss, nach denen die Position wiederholt "
+"werden soll"
+
+#: gic/models.py:295 gic/models_parler_NW.py:177 gic/models_prev.py:149
+msgid "Cicli"
+msgstr "Zyklen"
+
+#: gic/models.py:296 gic/models_parler_NW.py:178 gic/models_prev.py:150
+msgid ""
+"Numero di volte che si intende ripetere l'elemento. Se non valorizzato, "
+"allora si ripete all'infinito."
+msgstr ""
+"Anzahl der Wiederholungen, die das Element haben soll. Wenn nicht "
+"festgelegt, wird es unendlich oft wiederholt."
+
+#: gic/models.py:300 gic/models_parler_NW.py:182 gic/models_prev.py:154
+msgid "Duplicare elementi sottostanti"
+msgstr "zugrunde liegende Elemente doppeln"
+
+#: gic/models.py:317 gic/models_parler_NW.py:199 gic/models_prev.py:171
+#: gic/templates/nuovo_lavoro.html:9
+msgid "Oggetto"
+msgstr "Betreff"
+
+#: gic/models.py:325 gic/models.py:1347 gic/models_parler_NW.py:207
+#: gic/models_parler_NW.py:772 gic/models_prev.py:179 gic/models_prev.py:744
+#: gic/templates/lavoro_dettaglio.html:76
+msgid "Note"
+msgstr "Hinweis"
+
+#: gic/models.py:345 gic/models_parler_NW.py:227 gic/models_prev.py:199
+msgid "Data inizio validità"
+msgstr "Datum des Beginns der Gültigkeit"
+
+#: gic/models.py:348 gic/models_parler_NW.py:230 gic/models_prev.py:202
+msgid "Data fine validità"
+msgstr "Datum des Endes der Gültigkeit"
+
+#: gic/models.py:365 gic/models_parler_NW.py:247 gic/models_prev.py:219
+msgid "Stato dell'elemento"
+msgstr "Elementsstatus"
+
+#: gic/models.py:382 gic/models_parler_NW.py:263 gic/models_prev.py:235
+msgid "ID D.3 del documento collegato"
+msgstr "D.3-ID des verlinkten Dokuments"
+
+#: gic/models.py:398 gic/models_parler_NW.py:279 gic/models_prev.py:251
+msgid "ID D.3 della RABS collegata"
+msgstr "D.3-ID der angeschlossenen RABS"
+
+#: gic/models.py:413
+msgid "Modello"
+msgstr "Modell"
+
+#: gic/models.py:472
+#, fuzzy
+#| msgid "Nome del diritto"
+msgid "Nome della vista"
+msgstr "Name des Rechtes"
+
+#: gic/models.py:473
+#, fuzzy
+#| msgid "Nome del diritto"
+msgid "Nome del Modello"
+msgstr "Name des Rechtes"
+
+#: gic/models.py:480
+msgid "Vista"
+msgstr ""
+
+#: gic/models.py:481
+msgid "Viste"
+msgstr ""
+
+#: gic/models.py:493 gic/models.py:1663 gic/models_parler_NW.py:300
+#: gic/models_parler_NW.py:994 gic/models_prev.py:272 gic/models_prev.py:966
+#: gic/templates/gic_segnalazioni_OLD.html:99 gic/templates/lista_teams.html:11
+msgid "Mansione"
+msgstr "Stellenbeschreibung"
+
+#: gic/models.py:494 gic/models_parler_NW.py:301 gic/models_prev.py:273
+msgid "Mansioni"
+msgstr "Aufgaben"
+
+#: gic/models.py:511 gic/models_parler_NW.py:316 gic/models_prev.py:288
+msgid "Obbligo foto"
+msgstr "Fotoverpflichtung"
+
+#: gic/models.py:513 gic/models_parler_NW.py:318 gic/models_prev.py:290
+msgid ""
+"Se selezionato, impedisce di chiudere un lavoro se non sono caricate le foto "
+"iniziale e finale."
+msgstr ""
+"Wenn diese Option aktiviert ist, wird verhindert, dass ein Auftrag "
+"geschlossen wird, wenn die Start- und Endfotos nicht hochgeladen wurden."
+
+#: gic/models.py:516 gic/models_parler_NW.py:321 gic/models_prev.py:293
+msgid "Chiusura automatica dei lavori"
+msgstr "Automatischer Auftragsabschluss"
+
+#: gic/models.py:518 gic/models_parler_NW.py:323 gic/models_prev.py:295
+msgid ""
+"Se selezionato, rende non obbligatoria la verifica del caposquadra per la "
+"chiusura dei lavori."
+msgstr ""
+"Wenn diese Option gewählt wird, ist der Vorarbeiter nicht verpflichtet, die "
+"Fertigstellung der Arbeiten zu überprüfen."
+
+#: gic/models.py:521 gic/models.py:1272 gic/models_parler_NW.py:326
+#: gic/models_parler_NW.py:721 gic/models_prev.py:298 gic/models_prev.py:693
+msgid "Tempo stimato di soluzione"
+msgstr "Geschätzte Lösungszeit"
+
+#: gic/models.py:522 gic/models.py:1273 gic/models_parler_NW.py:327
+#: gic/models_parler_NW.py:722 gic/models_prev.py:299 gic/models_prev.py:694
+msgid "Il valore si intende indicato in ore/uomo"
+msgstr "Der Wert wird in Arbeitsstunden angegeben."
+
+#: gic/models.py:525 gic/models.py:1276 gic/models_parler_NW.py:330
+#: gic/models_parler_NW.py:725 gic/models_prev.py:302 gic/models_prev.py:697
+msgid "Tempo di aumento della priorità"
+msgstr "Prioritätserhöhungszeit"
+
+#: gic/models.py:526 gic/models.py:1277 gic/models_parler_NW.py:331
+#: gic/models_parler_NW.py:726 gic/models_prev.py:303 gic/models_prev.py:698
+msgid ""
+"Tempo dopo il quale la priorità aumenta di grado. Il valore si intende "
+"indicato in giornate"
+msgstr ""
+"Zeit, nach der die Priorität im Rang steigt. Der Wert wird in Tagen "
+"angegeben."
+
+#: gic/models.py:531 gic/models_parler_NW.py:336 gic/models_prev.py:308
+msgid "Mansioni capaci di svolgere l'attività"
+msgstr "Aufgaben, mit denen die Tätigkeit ausgeführt werden kann"
+
+#: gic/models.py:540 gic/models.py:541 gic/models_parler_NW.py:341
+#: gic/models_parler_NW.py:342 gic/models_prev.py:313 gic/models_prev.py:314
+#: gic/templates/gic_segnalazioni_OLD.html:96 gic/templates/lista_teams.html:8
+msgid "Attività"
+msgstr "Aktivität"
+
+#: gic/models.py:554 gic/models_parler_NW.py:353 gic/models_prev.py:325
+msgid "Valore della Priorità"
+msgstr "Wert der Priorität"
+
+#: gic/models.py:560 gic/models.py:568 gic/models.py:569
+#: gic/models_parler_NW.py:357 gic/models_parler_NW.py:358
+#: gic/models_prev.py:329 gic/models_prev.py:330
+#: gic/templates/gic_debug.html:63 gic/templates/gic_segnalazioni_OLD.html:77
+msgid "Priorità"
+msgstr "Priorität"
+
+#: gic/models.py:582 gic/models.py:588 gic/models.py:591
+#: gic/models_parler_NW.py:369 gic/models_parler_NW.py:375
+#: gic/models_parler_NW.py:378 gic/models_prev.py:341 gic/models_prev.py:347
+#: gic/models_prev.py:350
+msgid "Anno"
+msgstr "Jahr"
+
+#: gic/models.py:592 gic/models_parler_NW.py:379 gic/models_prev.py:351
+msgid "Anni"
+msgstr "Jahren"
+
+#: gic/models.py:615 gic/models.py:736 gic/models_parler_NW.py:392
+#: gic/models_parler_NW.py:449 gic/models_prev.py:364 gic/models_prev.py:421
+msgid "Squadra"
+msgstr "Mannschaft"
+
+#: gic/models.py:616 gic/models_parler_NW.py:393 gic/models_prev.py:365
+msgid "Squadre"
+msgstr "Mannschaften"
+
+#: gic/models.py:630 gic/models_parler_NW.py:405 gic/models_prev.py:377
+msgid "Tipo"
+msgstr "Typ"
+
+#: gic/models.py:635 gic/models_parler_NW.py:410 gic/models_prev.py:382
+msgid "Abbreviazione"
+msgstr "Abkürzung"
+
+#: gic/models.py:639
+msgid "Ordine"
+msgstr "Ordnung"
+
+#: gic/models.py:707 gic/models_parler_NW.py:423 gic/models_prev.py:395
+#: gic/templates/gic_debug.html:44 gic/templates/gic_segnalazioni_OLD.html:55
+msgid "Tipologia"
+msgstr "Typ"
+
+#: gic/models.py:708 gic/models_parler_NW.py:424 gic/models_prev.py:396
+msgid "Tipologie"
+msgstr "Typen"
+
+#: gic/models.py:731 gic/models_parler_NW.py:444 gic/models_prev.py:416
+msgid "Dipendente collegato"
+msgstr "Angestellter"
+
+#: gic/models.py:739 gic/models_parler_NW.py:452 gic/models_prev.py:424
+msgid "Telefono"
+msgstr "Telefonnummer"
+
+#: gic/models.py:743 gic/models_parler_NW.py:456 gic/models_prev.py:428
+msgid "Responsabile di strutture"
+msgstr "Strukturverantwortlicher"
+
+#: gic/models.py:748 gic/models_parler_NW.py:461 gic/models_prev.py:433
+msgid "Mansioni assegnate"
+msgstr "Zugewiesene Aufgaben"
+
+#: gic/models.py:754 gic/models_parler_NW.py:467 gic/models_prev.py:439
+msgid "Periodi di assenza"
+msgstr "Zeiträume der Abwesenheit"
+
+#: gic/models.py:760 gic/models_parler_NW.py:473 gic/models_prev.py:445
+msgid "Periodi di reperibilità"
+msgstr "Zeiten des Bereitschaftsdienstes"
+
+#: gic/models.py:765
+msgid "Sigla"
+msgstr "Abkürzung"
+
+#: gic/models.py:845 gic/models_parler_NW.py:487 gic/models_prev.py:459
+#: gic/templates/base_gic_jq.html:56 gic/templates/gic_collaboratori.html:10
+msgid "Collaboratori"
+msgstr "MItarbeitern"
+
+#: gic/models.py:857 gic/models.py:1540 gic/models_parler_NW.py:498
+#: gic/models_parler_NW.py:870 gic/models_prev.py:470 gic/models_prev.py:842
+msgid "Annotazioni"
+msgstr "Anmerkungen"
+
+#: gic/models.py:862 gic/models.py:887 gic/models_parler_NW.py:503
+#: gic/models_parler_NW.py:526 gic/models_prev.py:475 gic/models_prev.py:498
+msgid "Centro di costo"
+msgstr "Kostenstelle"
+
+#: gic/models.py:863 gic/models_parler_NW.py:504 gic/models_prev.py:476
+msgid "Centri di costo"
+msgstr "Kostenstellen"
+
+#: gic/models.py:881 gic/models_parler_NW.py:520 gic/models_prev.py:492
+msgid "Responsabile di struttura"
+msgstr "Leiter der Struktur"
+
+#: gic/models.py:891 gic/models_parler_NW.py:537 gic/models_prev.py:509
+msgid "Numero di telefono"
+msgstr "Rufnummer"
+
+#: gic/models.py:896 gic/models_parler_NW.py:542 gic/models_prev.py:514
+#: gic/templates/gic_debug.html:110 gic/templates/gic_start_jq.html:42
+msgid "Struttura"
+msgstr "Struktur"
+
+#: gic/models.py:897 gic/models_parler_NW.py:543 gic/models_prev.py:515
+msgid "Strutture"
+msgstr "Einrichtungen"
+
+#: gic/models.py:903
+msgid "Indirizzo"
+msgstr "Adresse"
+
+#: gic/models.py:908
+msgid "Nome del diritto"
+msgstr "Name des Rechtes"
+
+#: gic/models.py:909 gic/templates/gic_debug.html:106
+#: gic/templates/gic_start_jq.html:38
+msgid "Capocantiere"
+msgstr "Bauhofsleiter"
+
+#: gic/models.py:910 gic/templates/gic_debug.html:107
+#: gic/templates/gic_start_jq.html:39
+msgid "Caposquadra"
+msgstr "Mannschaftsleifer"
+
+#: gic/models.py:911 gic/templates/gic_debug.html:108
+#: gic/templates/gic_start_jq.html:40
+msgid "Coordinatore"
+msgstr "Koordinator"
+
+#: gic/models.py:912 gic/templates/gic_debug.html:109
+#: gic/templates/gic_start_jq.html:41
+msgid "Operaio"
+msgstr "Arbeiter"
+
+#: gic/models.py:913
+msgid "Referente di struttura"
+msgstr "Leiter der Struktur"
+
+#: gic/models.py:914 gic/templates/gic_debug.html:111
+#: gic/templates/gic_start_jq.html:43
+msgid "Ufficio"
+msgstr "Büro"
+
+#: gic/models.py:949 gic/models.py:1630 gic/models_parler_NW.py:558
+#: gic/models_parler_NW.py:955 gic/models_prev.py:530 gic/models_prev.py:927
+msgid "Evento"
+msgstr "Veranstaltung"
+
+#: gic/models.py:950 gic/models_parler_NW.py:559 gic/models_prev.py:531
+msgid "Eventi"
+msgstr "Veranstaltungen"
+
+#: gic/models.py:962
+msgid "Tag Evento"
+msgstr "Veranstaltung"
+
+#: gic/models.py:966
+msgid "Tag"
+msgstr "Tag"
+
+#: gic/models.py:967
+msgid "Tags"
+msgstr "Tags"
+
+#: gic/models.py:988 gic/models_parler_NW.py:578 gic/models_prev.py:550
+msgid "Data di pianificazione"
+msgstr "Datum der Planung"
+
+#: gic/models.py:995 gic/models.py:1114 gic/models_parler_NW.py:584
+#: gic/models_parler_NW.py:654 gic/models_prev.py:556 gic/models_prev.py:626
+msgid "Struttura di riferimento"
+msgstr "Referenzstruktur"
+
+#: gic/models.py:1000 gic/models_parler_NW.py:589 gic/models_prev.py:561
+msgid "Origine della segnalazione"
+msgstr "Ursprung des Berichts"
+
+#: gic/models.py:1005 gic/models_parler_NW.py:594 gic/models_prev.py:566
+msgid "Nome e cognome del segnalatore"
+msgstr "Vor- und Nachname des Reporters"
+
+#: gic/models.py:1009 gic/models_parler_NW.py:598 gic/models_prev.py:570
+msgid "E-mail della segnalazione"
+msgstr "E-Mail des Reporters"
+
+#: gic/models.py:1010 gic/models_parler_NW.py:599 gic/models_prev.py:571
+msgid "Se valorizata, la chiusura della segnalazione invia una risposta."
+msgstr "Wenn gesetzt, wird beim Schließen des Berichts eine Antwort gesendet."
+
+#: gic/models.py:1014 gic/models_parler_NW.py:603 gic/models_prev.py:575
+msgid "Telefono del segnalatore"
+msgstr "Telefon des Reporters"
+
+#: gic/models.py:1019 gic/models_parler_NW.py:608 gic/models_prev.py:580
+msgid "Risposta alla segnalazione"
+msgstr "Antwort auf den Bericht"
+
+#: gic/models.py:1024 gic/models_parler_NW.py:613 gic/models_prev.py:585
+msgid "Eventi collegati"
+msgstr "Verwandte Ereignisse"
+
+#: gic/models.py:1030
+msgid "Tag collegati"
+msgstr "Verwandte Ereignisse"
+
+#: gic/models.py:1037 gic/models_parler_NW.py:620 gic/models_prev.py:592
+msgid "Tipo di segnalazione"
+msgstr "Meldungsart"
+
+#: gic/models.py:1087 gic/models_parler_NW.py:627 gic/models_prev.py:599
+#: gic/templates/base_gic.html:54 gic/templates/base_gic_jq.html:54
+#: gic/templates/gic_debug.html:37 gic/templates/gic_segnalazioni.html:10
+#: gic/templates/gic_segnalazioni_OLD.html:48
+msgid "Segnalazioni"
+msgstr "Berichte"
+
+#: gic/models.py:1108 gic/models.py:1568 gic/models_parler_NW.py:648
+#: gic/models_parler_NW.py:898 gic/models_prev.py:620 gic/models_prev.py:870
+msgid "Segnalazione relativa"
+msgstr "Relative Berichterstattung"
+
+#: gic/models.py:1120 gic/models_parler_NW.py:660 gic/models_prev.py:632
+msgid "Priorità iniziale"
+msgstr "Erste Priorität"
+
+#: gic/models.py:1125 gic/models_parler_NW.py:665 gic/models_prev.py:637
+msgid "Preposto all'intervento"
+msgstr "Interventionist"
+
+#: gic/models.py:1130 gic/models_parler_NW.py:670 gic/models_prev.py:642
+msgid "Intervento precedente"
+msgstr "Frühere Intervention"
+
+#: gic/models.py:1134 gic/models_parler_NW.py:674 gic/models_prev.py:646
+msgid "Data di visibilità"
+msgstr "Datum der Sichtbarkeit"
+
+#: gic/models.py:1136 gic/models_parler_NW.py:676 gic/models_prev.py:648
+msgid "Data a partire dalla quale l'intervento diventa visibile."
+msgstr "Datum, ab dem die Intervention sichtbar wird."
+
+#: gic/models.py:1139 gic/models_parler_NW.py:679 gic/models_prev.py:651
+msgid "Data di urgenza"
+msgstr "Datum der Dringlichkeit"
+
+#: gic/models.py:1140 gic/models_parler_NW.py:680 gic/models_prev.py:652
+msgid "Data a partire dalla quale l'intervento diventa urgente."
+msgstr "Datum, ab dem die Intervention dringend wird."
+
+#: gic/models.py:1144 gic/models_parler_NW.py:684 gic/models_prev.py:656
+msgid "Data di esecuzione"
+msgstr "Datum der Ausführung"
+
+#: gic/models.py:1146 gic/models_parler_NW.py:686 gic/models_prev.py:658
+msgid "Data a partire dalla quale l'intervento può venire risolto."
+msgstr "Datum, ab dem die Intervention beendet werden kann."
+
+#: gic/models.py:1149 gic/models_parler_NW.py:689 gic/models_prev.py:661
+msgid "Intervento provvisorio"
+msgstr "Vorläufige Intervention"
+
+#: gic/models.py:1151 gic/models_parler_NW.py:691 gic/models_prev.py:663
+msgid "Intervento incompleto inserito da sistema"
+msgstr "Vom System eingegebene unvollständige Intervention"
+
+#: gic/models.py:1232 gic/models_parler_NW.py:696 gic/models_prev.py:668
+#: gic/templates/base_gic.html:55 gic/templates/base_gic_jq.html:55
+#: gic/templates/d_segnalazione.html:9 gic/templates/gic_debug.html:41
+#: gic/templates/gic_interventi.html:10
+#: gic/templates/gic_segnalazioni_OLD.html:56
+msgid "Interventi"
+msgstr "Interventionen"
+
+#: gic/models.py:1264 gic/models.py:1337 gic/models_parler_NW.py:713
+#: gic/models_parler_NW.py:762 gic/models_prev.py:685 gic/models_prev.py:734
+msgid "Intervento collegato"
+msgstr "Verwandte Intervention"
+
+#: gic/models.py:1269 gic/models_parler_NW.py:718 gic/models_prev.py:690
+msgid "Attività coinvolta"
+msgstr "Betroffene Tätigkeit"
+
+#: gic/models.py:1312 gic/models_parler_NW.py:737 gic/models_prev.py:709
+msgid "Team di intervento"
+msgstr "Interventionsteam"
+
+#: gic/models.py:1313 gic/models_parler_NW.py:738 gic/models_prev.py:710
+msgid "Teams di intervento"
+msgstr "Interventionsteams"
+
+#: gic/models.py:1330 gic/models_parler_NW.py:755 gic/models_prev.py:727
+msgid "Tipo di foto"
+msgstr "Art des Fotos"
+
+#: gic/models.py:1342 gic/models_parler_NW.py:767 gic/models_prev.py:739
+msgid "Collaboratore che inserisce la foto"
+msgstr "Mitarbeiter, der das Foto einfügt"
+
+#: gic/models.py:1381 gic/models_parler_NW.py:806 gic/models_prev.py:778
+msgid "Collaboratore incaricato"
+msgstr "Verantwortlicher Mitarbeiter"
+
+#: gic/models.py:1386 gic/models_parler_NW.py:811 gic/models_prev.py:783
+msgid "Team di intervento collegato"
+msgstr "Verknüpftes Interventionsteam"
+
+#: gic/models.py:1389 gic/models_parler_NW.py:814 gic/models_prev.py:786
+#: gic/templates/form_lavoro_accessorio.html:11
+#: gic/templates/nuovo_lavoro.html:25
+msgid "Durata prevista"
+msgstr "Voraussichtliche Dauer"
+
+#: gic/models.py:1390 gic/models_parler_NW.py:815 gic/models_prev.py:787
+#: gic/templates/nuovo_lavoro.html:26
+msgid "Il dato è inserito in ore/uomo."
+msgstr "Die Zahl wird in Arbeitsstunden angegeben."
+
+#: gic/models.py:1397 gic/models_parler_NW.py:822 gic/models_prev.py:794
+msgid "Caposquadra che ha verificato"
+msgstr "Vorarbeiter, der überprüft hat"
+
+#: gic/models.py:1403 gic/models_parler_NW.py:828 gic/models_prev.py:800
+msgid "Lavoro Accessorio"
+msgstr "Ergänzende Arbeiten"
+
+#: gic/models.py:1407 gic/models_parler_NW.py:832 gic/models_prev.py:804
+msgid "Lavoro inserito con carattere di urgenza"
+msgstr "Dringlich ausgeschriebene Stelle"
+
+#: gic/models.py:1411 gic/models_parler_NW.py:836 gic/models_prev.py:808
+msgid "Modifica manuale della priorità"
+msgstr "Manuelle Prioritätsänderung"
+
+#: gic/models.py:1528 gic/models.py:1600 gic/models_parler_NW.py:858
+#: gic/models_parler_NW.py:925 gic/models_prev.py:830 gic/models_prev.py:897
+msgid "Lavoro correlato"
+msgstr "Verwandte Arbeit"
+
+#: gic/models.py:1531 gic/models_parler_NW.py:861 gic/models_prev.py:833
+msgid "Data e ora di Inizio"
+msgstr "Datum und Uhrzeit des Beginns"
+
+#: gic/models.py:1535 gic/models_parler_NW.py:865 gic/models_prev.py:837
+msgid "Data e ora di fine"
+msgstr "Datum und Uhrzeit des Endes"
+
+#: gic/models.py:1553 gic/models_parler_NW.py:883 gic/models_prev.py:855
+msgid "Tempo di lavoro"
+msgstr "Arbeitszeit"
+
+#: gic/models.py:1554 gic/models_parler_NW.py:884 gic/models_prev.py:856
+#: gic/templates/lavoro_dettaglio.html:72
+msgid "Tempi di lavoro"
+msgstr "Arbeitszeiten"
+
+#: gic/models.py:1585 gic/models_parler_NW.py:910 gic/models_prev.py:882
+msgid "Allegato alla segnalazione"
+msgstr "Anlage des Berichts"
+
+#: gic/models.py:1586 gic/models_parler_NW.py:911 gic/models_prev.py:883
+msgid "Allegati alla segnalazione"
+msgstr "Anlagen des Berichts"
+
+#: gic/models.py:1603 gic/models_parler_NW.py:928 gic/models_prev.py:900
+msgid "Annotazione"
+msgstr "Bemerkungen"
+
+#: gic/models.py:1615 gic/models_parler_NW.py:940 gic/models_prev.py:912
+msgid "Annotazione al lavoro"
+msgstr "Anmerkungen bei der Arbeit"
+
+#: gic/models.py:1616 gic/models_parler_NW.py:941 gic/models_prev.py:913
+msgid "Annotazioni al lavoro"
+msgstr "Anmerkungen zur Arbeit"
+
+#: gic/models.py:1646
+msgid "Evento - Segnalazione"
+msgstr "Ereignis - Jahr - Bericht"
+
+#: gic/models.py:1647
+msgid "Eventi - Segnalazioni"
+msgstr "Ereignisse - Jahre - Berichte"
+
+#: gic/models.py:1674 gic/models_parler_NW.py:1005 gic/models_prev.py:977
+msgid "Collaboratore - Mansione"
+msgstr "Mitwirkender - Aufgabe"
+
+#: gic/models.py:1675 gic/models_parler_NW.py:1006 gic/models_prev.py:978
+msgid "Collaboratori -Mansioni"
+msgstr "Mitarbeiter - Aufgaben"
+
+#: gic/models.py:1692 gic/models_parler_NW.py:1023 gic/models_prev.py:995
+msgid "Tipo di assenza"
+msgstr "Art der Abwesenheit"
+
+#: gic/models.py:1706 gic/models_parler_NW.py:1037 gic/models_prev.py:1009
+msgid "Periodo di assenza del Collaboratore"
+msgstr "Abwesenheitzeit des Mitarbeiters"
+
+#: gic/models.py:1707 gic/models_parler_NW.py:1038 gic/models_prev.py:1010
+msgid "Periodi di assenze del collaboratore"
+msgstr "Abwesenheitszeiten des Mitarbeiters"
+
+#: gic/models.py:1725 gic/models_parler_NW.py:1055 gic/models_prev.py:1027
+msgid "Tipo di reperibilità"
+msgstr "Art der Verfügbarkeit"
+
+#: gic/models.py:1739 gic/models_parler_NW.py:1069 gic/models_prev.py:1041
+msgid "Periodo di reperibilità del Collaboratore"
+msgstr "Bereitschaftsdienst des Arbeitnehmers"
+
+#: gic/models.py:1740 gic/models_parler_NW.py:1070 gic/models_prev.py:1042
+msgid "Periodi di reperibilità del collaboratore"
+msgstr "Bereitschaftszeiten der Mitarbeiter"
+
+#: gic/models_parler_NW.py:124 gic/models_prev.py:101
+msgid "Nome Breve per riferimenti interni"
+msgstr "Kurzbezeichnung für interne Referenzen"
+
+#: gic/models_parler_NW.py:128 gic/models_prev.py:113
+msgid "Descrizione italiana per interfaccia"
+msgstr "Italienische Beschreibung  für die Schnittstelle"
+
+#: gic/models_parler_NW.py:529 gic/models_prev.py:501
+msgid "Indirizzo in italiano"
+msgstr "Adresse auf Italienisch"
+
+#: gic/models_parler_NW.py:533 gic/models_prev.py:505
+msgid "Indirizzo in tedesco"
+msgstr "Adresse auf Deutsch"
+
+#: gic/models_parler_NW.py:965 gic/models_prev.py:937
+msgid "Anno di riferimento"
+msgstr "Referenzjahr"
+
+#: gic/models_parler_NW.py:977 gic/models_prev.py:949
+msgid "Evento - Anno-segnalazione"
+msgstr "Ereignis - Jahr - Bericht"
+
+#: gic/models_parler_NW.py:978 gic/models_prev.py:950
+msgid "Eventi - Anni - Segnalazioni"
+msgstr "Ereignisse - Jahre - Berichte"
+
+#: gic/models_prev.py:105
+msgid "Nome italiano per l'interfaccia"
+msgstr "Italienischer Name für die Schnittstelle"
+
+#: gic/models_prev.py:109
+msgid "Nome tedesco per l'interfaccia"
+msgstr "Deutscher Name für die Schnittstelle"
+
+#: gic/models_prev.py:116
+msgid "Descrizione tedesca per interfaccia"
+msgstr "Deutsche Beschreibung  für die Schnittstelle"
+
+#: gic/templates/base_gic.html:57 gic/templates/base_gic2.html:55
+#: gic/templates/base_gic_1c.html:54 gic/templates/base_gic_3.html:57
+#: gic/templates/base_gic_OLD.html:40 gic/templates/base_gic_jq.html:47
+#: gic/templates/base_jq_old.html:50
+msgid "Logout"
+msgstr "Ausloggen"
+
+#: gic/templates/base_gic.html:58 gic/templates/base_gic2.html:56
+#: gic/templates/base_gic_1c.html:55 gic/templates/base_gic_3.html:58
+#: gic/templates/base_gic_OLD.html:41 gic/templates/base_gic_jq.html:48
+#: gic/templates/base_jq_old.html:51
+msgid "Wiki Laives"
+msgstr "Wiki Leifers"
+
+#: gic/templates/base_gic.html:59 gic/templates/base_gic2.html:57
+#: gic/templates/base_gic2.html:133 gic/templates/base_gic_1c.html:56
+#: gic/templates/base_gic_3.html:59 gic/templates/base_gic_3.html:132
+#: gic/templates/base_gic_OLD.html:42 gic/templates/base_jq_old.html:52
+msgid "Pagina di amministrazione"
+msgstr "Verwaltungsseite"
+
+#: gic/templates/base_gic2.html:37 gic/templates/base_gic_3.html:39
+msgid "Lingua"
+msgstr "Sprache"
+
+#: gic/templates/base_gic2.html:58 gic/templates/base_gic_3.html:60
+msgid "Menu Principale"
+msgstr "Hauptmenu"
+
+#: gic/templates/base_gic_jq.html:41
+msgid "Laisoft"
+msgstr "Laisoft"
+
+#: gic/templates/base_gic_jq.html:43
+msgid "Admin"
+msgstr "Admin"
+
+#: gic/templates/base_gic_jq.html:53 gic/templates/gic_iframe_operai.html:12
+#: gic/templates/gic_jquery.html:12 gic/templates/gic_segnalazioni_OLD.html:14
+#: gic/templates/gic_start.html:12 gic/templates/gic_start.html:40
+#: gic/templates/gic_start_OLD.html:12
+msgid "Pagina principale"
+msgstr "Hauptmenu"
+
+#: gic/templates/base_gic_jq.html:59
+#, fuzzy
+#| msgid "Pagina di amministrazione"
+msgid "Pagina registrazione lavori"
+msgstr "Verwaltungsseite"
+
+#: gic/templates/d_segnalazione.html:9 gic/templates/gic_intervento.html:34
+#: gic/templates/gic_intervento.html:88
+#: gic/templates/gic_segnalazioni_OLD.html:56
+#: gic/templates/gic_segnalazioni_OLD.html:79
+#: gic/templates/lista_interventi.html:12
+msgid "Teams"
+msgstr "Teams"
+
+#: gic/templates/d_segnalazione.html:9 gic/templates/gic_debug.html:41
+#: gic/templates/gic_intervento.html:34 gic/templates/gic_intervento.html:88
+#: gic/templates/gic_segnalazioni_OLD.html:56
+#: gic/templates/gic_segnalazioni_OLD.html:79
+#: gic/templates/lista_interventi.html:12 gic/templates/lista_teams.html:13
+msgid "Lavori"
+msgstr "Arbeiten"
+
+#: gic/templates/d_segnalazione.html:15 gic/templates/lista_interventi.html:15
+msgid "Apri dettaglio..."
+msgstr "mehrere Details..."
+
+#: gic/templates/d_segnalazione.html:28
+#, fuzzy
+#| msgid "Tag collegati"
+msgid " Allegati"
+msgstr "Verwandte Ereignisse"
+
+#: gic/templates/form_lavoro_accessorio.html:3
+#, fuzzy
+#| msgid "Lavoro Accessorio"
+msgid "Oggetto del lavoro accessorio"
+msgstr "Ergänzende Arbeiten"
+
+#: gic/templates/form_lavoro_accessorio.html:7
+#, fuzzy
+#| msgid "Descrizione tedesca per interfaccia"
+msgid "Descrizione del lavoro accessorio"
+msgstr "Deutsche Beschreibung  für die Schnittstelle"
+
+#: gic/templates/fr_jq_intervento_ERROR.html:78
+#: gic/templates/fr_jq_intervento_OLD.html:96
+#: gic/templates/fr_jq_intervento_PREC.html:61
+#: gic/templates/fr_jq_intervento_nr.html:61
+#: gic/templates/fr_t_intervento.html:25
+msgid "Date di pianificazione"
+msgstr "Datum der Planung"
+
+#: gic/templates/fr_jq_intervento_ERROR.html:105
+#: gic/templates/fr_jq_intervento_OLD.html:129
+#: gic/templates/fr_jq_intervento_PREC.html:82
+#: gic/templates/fr_jq_intervento_nr.html:82
+#: gic/templates/fr_jq_segnalazione.html:83
+#: gic/templates/fr_segnalazione.html:72 gic/templates/fr_t_intervento.html:36
+#: gic/templates/fr_t_segnalazione.html:36
+msgid "Dati per la periodicità"
+msgstr "Periodizitätsdaten"
+
+#: gic/templates/fr_jq_segnalazione.html:56
+#: gic/templates/fr_segnalazione.html:49
+#: gic/templates/fr_t_segnalazione.html:23
+msgid "Dati del messaggio di segnalazione"
+msgstr "Meldungsdaten "
+
+#: gic/templates/gic_collaboratori.html:12
+msgid "Pagina Collaboratori"
+msgstr "MItarbeitern"
+
+#: gic/templates/gic_debug.html:57 gic/templates/gic_segnalazioni_OLD.html:70
+msgid "Interventi collegati"
+msgstr "Verwandte Intervention"
+
+#: gic/templates/gic_interventi.html:12
+msgid "Pagina Interventi"
+msgstr "Interventionen"
+
+#: gic/templates/gic_intervento.html:10
+#, fuzzy
+#| msgid "Intervento"
+msgid "intervento"
+msgstr "Intervention"
+
+#: gic/templates/gic_intervento.html:12
+#, fuzzy
+#| msgid "Teams di intervento"
+msgid "Gestione intervento"
+msgstr "Interventionsteams"
+
+#: gic/templates/gic_intervento.html:27
+#, fuzzy
+#| msgid "Team di intervento"
+msgid "Modifica intervento"
+msgstr "Interventionsteam"
+
+#: gic/templates/gic_intervento.html:38
+#, fuzzy
+#| msgid "Intervento precedente"
+msgid "Apri intervento precedente..."
+msgstr "Frühere Intervention"
+
+#: gic/templates/gic_intervento.html:90
+msgid "Chiudi il pannello..."
+msgstr "Panel schliessen"
+
+#: gic/templates/gic_operai.html:46
+#, fuzzy
+#| msgid "Intervento precedente"
+msgid "Inserisci intervento urgente"
+msgstr "Frühere Intervention"
+
+#: gic/templates/gic_operai.html:51
+msgid "Inserisci lavoro urgente"
+msgstr ""
+
+#: gic/templates/gic_segnalazione.html:12
+#, fuzzy
+#| msgid "Tipo di segnalazione"
+msgid "Gestione segnalazione"
+msgstr "Meldungsart"
+
+#: gic/templates/gic_segnalazione.html:27
+#, fuzzy
+#| msgid "Tipo di segnalazione"
+msgid "Modifica segnalazione"
+msgstr "Meldungsart"
+
+#: gic/templates/gic_segnalazioni.html:12
+msgid "Pagina Segnalazioni"
+msgstr "Berichte"
+
+#: gic/templates/gic_segnalazioni_OLD.html:91 gic/templates/lista_teams.html:2
+msgid "Team di intervento collegati"
+msgstr "Verknüpftes Interventionsteam"
+
+#: gic/templates/gic_segnalazioni_OLD.html:130
+#: gic/templates/nuovo_lavoro.html:3
+msgid "Nuovo lavoro"
+msgstr "Neue Arbeit"
+
+#: gic/templates/gic_segnalazioni_OLD.html:147 gic/templates/nuovo_team.html:3
+msgid "Nuovo Team di intervento"
+msgstr "Interventionsteam"
+
+#: gic/templates/inserisci_allegato.html:3
+#, fuzzy
+#| msgid "Aggiungi un'immagine"
+msgid "Aggiungi un allegato"
+msgstr "Ein Bild hinzufügen"
+
+#: gic/templates/inserisci_allegato.html:9
+#, fuzzy
+#| msgid "Acquisisci immagine"
+msgid "Acquisisci allegato"
+msgstr "Bild einfangen"
+
+#: gic/templates/lavoro_dettaglio.html:5
+msgid "Partecipanti"
+msgstr "Teinehmern"
+
+#: gic/templates/lavoro_dettaglio.html:13
+msgid "Termina lavoro"
+msgstr "Arbeitszeit"
+
+#: gic/templates/lavoro_dettaglio.html:22
+msgid "Sospendi lavoro"
+msgstr "Arbeitszeit"
+
+#: gic/templates/lavoro_dettaglio.html:35
+msgid "Avvia Lavoro"
+msgstr "Arbeit"
+
+#: gic/templates/lavoro_dettaglio.html:41
+msgid "Aggiungi un'immagine"
+msgstr "Ein Bild hinzufügen"
+
+#: gic/templates/lavoro_dettaglio.html:46
+msgid "Acquisisci immagine"
+msgstr "Bild einfangen"
+
+#: gic/templates/lavoro_dettaglio.html:50
+#, fuzzy
+#| msgid "Lavoro Accessorio"
+msgid "Aggiungi un lavoro accessorio"
+msgstr "Ergänzende Arbeiten"
+
+#: gic/templates/lavoro_dettaglio.html:56
+#, fuzzy
+#| msgid "Lavoro Accessorio"
+msgid "Inserisci lavoro accessorio"
+msgstr "Ergänzende Arbeiten"
+
+#: gic/templates/lavoro_dettaglio.html:76
+msgid "Inizio"
+msgstr "Beginn"
+
+#: gic/templates/lavoro_dettaglio.html:76
+msgid "Fine"
+msgstr "Ende"
+
+#: gic/templates/lista_allegati.html:3
+#, fuzzy
+#| msgid "Tag collegati"
+msgid "Allegati"
+msgstr "Verwandte Ereignisse"
+
+#: gic/templates/lista_collaboratori.html:2
+msgid "Elenco collaboratori"
+msgstr "MItarbeitern"
+
+#: gic/templates/lista_collaboratori.html:11
+msgid "Nessun lavoro attivo"
+msgstr "Keine aktive Arbeit"
+
+#: gic/templates/lista_interventi.html:2
+msgid "Elenco Interventi"
+msgstr "Interventionen"
+
+#: gic/templates/lista_segnalazioni.html:2
+msgid "Elenco Segnalazioni"
+msgstr "Berichte"
+
+#: gic/templates/widgets/custom_select_filter.html:2
+msgid "scrivi qui..."
+msgstr "hier schreiben..."
+
+#~ msgid "Sezione Lavori"
+#~ msgstr "Arbeiten"
+
+#~ msgid "Elenco Collaboratori"
+#~ msgstr "MItarbeitern"
+
+#, fuzzy
+#~ msgid "Colonne"
+#~ msgstr "Farbe"
+
+#~ msgid "Operai"
+#~ msgstr "Arbeiter"
+
+#, fuzzy
+#~ msgid "Capo-cantiere"
+#~ msgstr "Bauhofsleiter"
+
+#~ msgid "Laisoft - Comune di Laives - Servizio informatico"
+#~ msgstr "Laisoft - Gemeinde Leifers - Informatikdienst"

@@ -1,0 +1,14 @@
+{% load i18n customform %} <!-- contesto: intervento = intervento di riferimento -->
+<div data-theme="{{ tema_t }}" data-role="collapsible"> <!-- coll  nuovo team -->
+	<h1> {% trans 'Nuovo Team di intervento' %}</h1>
+	<p data-theme="{{ tema_t }}">
+		<form data-theme="{{ tema_t }}" data-ajax="false" action="" method="post"> <!-- form  nuovo team -->
+			{% csrf_token %}
+			{{ team_new }}
+			<input type="hidden" name="model" value="Team" />
+			<input type="hidden" name="action" value="new" />
+			<input type="hidden" name="intervento" value="{{ intervento.id }}">
+			<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value = "Salva" />
+		</form> <!-- form nuovo team -->
+	</p>
+</div> <!-- coll  nuovo team -->

@@ -1,0 +1,109 @@
+{% extends "./base_gic_jq.html" %} 
+{% load static customform i18n parler_tags thumbnail %}
+
+{% block headers %} 
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+{% endblock %}
+	
+{% block pagetitle %}GIC - Gestione interventi Cantiere{% endblock %}
+
+{% block title %}{% trans 'intervento' %} {% endblock %}
+
+{% block pageheader %} {% trans "Gestione intervento" %} {% endblock %}
+
+{% block lang %} 
+{% include 'lang_button.html' %}
+{% endblock %}
+
+{% block main %} 
+
+	{% tema "segnalazione" as tema_s %}
+	{% tema "intervento" as tema_i %}
+	{% tema "team" as tema_t %}
+	{% tema "lavoro" as tema_l %}
+	{% tema "salva" as tema_u %}
+	{% tema "foto" as tema_f %}
+    
+    <form action="" method="post" data-ajax="True">
+        {% csrf_token %}
+        <fieldset>
+            <div class="ui-grid-b" data-theme="{{ tema_l }}" data-content-theme="{{ tema_l }}">
+                <div class="ui-block-a" data-theme="{{ tema_l }}" data-content-theme="{{ tema_l }}">
+                    <label class="enfasi" for="id_data_da", data_theme="{{ tema_l }}">{% trans "Data di inizio estrazione" %}</label>
+                    <input type="date" name="data_da" value="{{ data_da }}" data_theme="{{ tema_l }}" required id="id_data_da"><input type="hidden" name="initial-data_da" value="{{ data_da }}"  id="initial-id_data_da">
+                </div>
+                <div class="ui-block-b" data-theme="{{ tema_l }}" data-content-theme="{{ tema_l }}">
+                    <label class="enfasi" for="id_data_a", data_theme="{{ tema_l }}">{% trans "Data di fine estrazione" %}</label>
+                    <input type="date" name="data_a" value="{{ data_a }}" data_theme="{{ tema_l }}" required id="id_data_a"><input type="hidden" name="initial-data_a" value="{{ data_a }}"  id="initial-id_data_a">
+                </div>
+                <div class="ui-block-b"><input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value = {% trans "Aggiorna" %} /></div>
+            </div>
+        </fieldset>
+    </form>
+    <table data-role="table" data-mode="columntoggle" class="ui-responsive" id="tabella">
+        <thead>
+            <tr>
+                <th data-theme="{{ tema_l }}">{% trans "Oggetto" %}</th>
+                <th data-theme="{{ tema_l }}" data-priority="1">{% trans "Descrizione" %}</th>
+                <th data-theme="{{ tema_l }}" data-priority="1">{% trans "Incaricato" %}</th>
+                <th data-theme="{{ tema_l }}" data-priority="1">{% trans "Prima attività" %}</th>
+                <th data-theme="{{ tema_l }}" data-priority="1">{% trans "Ultima Attività" %}</th>
+                <th data-theme="{{ tema_l }}" data-priority="1">{% trans "Stato del lavoro" %}</th>
+                <th data-theme="{{ tema_l }}" data-priority="1">{% trans "Minuti totali" %}</th>
+                <th data-theme="{{ tema_l }}" data-priority="1">{% trans "Tempo totale" %}</th>
+                <th data-theme="{{ tema_l }}" data-priority="5">{% trans "allegati" %}</th>
+                <th data-theme="{{ tema_l }}" data-priority="5">{% trans "foto" %}</th>
+                <th data-theme="{{ tema_l }}" data-priority="1">{% trans "Attivo" %}</th>
+                <th data-theme="{{ tema_i }}" data-priority="4">{% trans "ID Intervento" %}</th>
+                <th data-theme="{{ tema_i }}" data-priority="4">{% trans "Oggetto Intervento" %}</th>
+                <th data-theme="{{ tema_t }}" data-priority="1">{% trans "Team di intervento" %}</th>
+                <th data-theme="{{ tema_s }}" data-priority="3">{% trans "Data Segnalazione" %}</th>
+                <th data-theme="{{ tema_s }}" data-priority="3">{% trans "Struttura" %}</th>
+                <th data-theme="{{ tema_s }}" data-priority="3">{% trans "Segnalatore" %}</th>
+                <th data-theme="{{ tema_s }}" data-priority="3">{% trans "CdC" %}</th>
+                <th data-theme="{{ tema_s }}" data-priority="4">{% trans "ID segnalazione" %}</th>
+                <th data-theme="{{ tema_s }}" data-priority="3">{% trans "Oggetto Segnalazione" %}</th>
+                <th data-theme="{{ tema_s }}" data-priority="3">{% trans "Tipo segnalazione" %}</th>
+                <th data-theme="{{ tema_s }}" data-priority="5">{% trans "Tags" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lav in lavori %}
+            <tr>
+                <td data-theme="{{ tema_l }}">{{ lav.oggetto }}</td>
+                <td data-theme="{{ tema_l }}">{{ lav.descrizione }}</td>
+                <td data-theme="{{ tema_l }}">{{ lav.collaboratore }}</td>
+                <td data-theme="{{ tema_l }}">{{ lav.data_inizio }}</td>
+                <td data-theme="{{ tema_l }}">{{ lav.data_fine }}</td>
+                <td data-theme="{{ tema_l }}">{{ lav.stato }}</td>
+                <td data-theme="{{ tema_l }}">{{ lav.minuti_totali }}</td>
+                <td data-theme="{{ tema_l }}">{{ lav.tempo_totale_h }}</td>
+                <td data-theme="{{ tema_l }}">{{ lav.team.intervento.segnalazione.allegato_set.count }}</td>
+                <td data-theme="{{ tema_l }}">{{ lav.team.intervento.foto_set.count }}</td>
+                <td data-theme="{{ tema_l }}">{{ lav.attivo }}</td>
+                <td data-theme="{{ tema_i }}">{{ lav.team.intervento.id }}</td>
+                <td data-theme="{{ tema_i }}">{{ lav.team.intervento.oggetto }}</td>
+                <td data-theme="{{ tema_t }}">{{ lav.team.attivita }}</td>
+                <td data-theme="{{ tema_s }}">{{ lav.team.intervento.segnalazione.data_creazione }}</td>
+                <td data-theme="{{ tema_s }}">{{ lav.team.intervento.segnalazione.struttura }}</td>
+                <td data-theme="{{ tema_s }}">{{ lav.team.intervento.segnalazione.segnalatore }}</td>
+                <td data-theme="{{ tema_s }}">{{ lav.team.intervento.segnalazione.struttura.cdc }}</td>
+                <td data-theme="{{ tema_s }}">{{ lav.team.intervento.segnalazione.id }}</td>
+                <td data-theme="{{ tema_s }}">{{ lav.team.intervento.segnalazione.oggetto }}</td>
+                <td data-theme="{{ tema_s }}">{{ lav.team.intervento.segnalazione.tipo }}</td>
+                <td data-theme="{{ tema_s }}">{% for tg in lav.team.intervento.segnalazione.tags.all %} {{ tg.icona|safe }} {% endfor %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form action="csv/" method="post" data-ajax="false">
+        {% csrf_token %}
+        <input type="hidden" name="data_da" value="{{ data_da }}">
+        <input type="hidden" name="data_a" value="{{ data_a }}">
+        <input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value="Scarica il CSV della tabella soprastante."/>
+    </form>
+{% endblock %}
+{% block panels %}
+
+
+{% endblock %}

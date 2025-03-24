@@ -1,0 +1,9 @@
+{% load i18n static imagefit %} <!-- contesto: pagina: pagina da renderizzare -->
+<div class="card">
+    <h2>{{ pagina.titolo }}</h2>
+    <div>{{ pagina.testo|safe }}</div>
+</div>
+{% for sez in pagina.sezioni %}
+    <div class="card">{% include "render_sezione.html" with sezione=sez %}</div>
+{% endfor %}
+

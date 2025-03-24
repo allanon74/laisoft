@@ -1,0 +1,14 @@
+{% load i18n customform %} <!-- contesto: segnalazione = segnalazione di riferimento (opzionale)-->
+<div data-theme="{{ tema_i }}" data-role="collapsible"> <!-- coll  nuovo intervento -->
+	<h1> Nuovo Intervento</h1>
+	<p data-theme="{{ tema_i }}">
+		<form data-theme="{{ tema_i }}" data-ajax="false" action="" method="post"> <!-- form  nuovo intervento -->
+			{% csrf_token %}
+			{{ intervento_new }}
+			<input type="hidden" name="model" value="Intervento" />
+			<input type="hidden" name="action" value="new" />
+			<input type="hidden" name="segnalazione" id = "id_segnalazione" value="{{ segnalazione.id }}">
+			<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value = "Salva" />
+		</form> <!-- form nuovo intervento -->
+	</p>
+</div> <!-- coll  nuovo intervento -->

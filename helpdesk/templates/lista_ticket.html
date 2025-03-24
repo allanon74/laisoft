@@ -1,0 +1,52 @@
+{% extends "./base_h.html" %}
+{% load static %}
+
+{% block headers %} <script type="text/javascript" src="{% static 'script/div_update.js' %}"></script> {% endblock %}
+	
+{% block pagetitle %}Comune di Laives - Gestione ticket di intervento tecnico{% endblock %}
+
+{% block title %}Lista ticket {% if admin %} in gestione{% else %} personali{% endif %}{% endblock %}
+
+
+
+{% block leftcolumn %}
+
+<div class="card">
+<h3> Ticket di {{ dipendente }}</h3>
+<br />
+
+<table id="myTable">
+  <tr class="header">
+    <th>Data di Apertura</th>
+    <th>Persona</th>
+    <th>Tipologia</th>
+	<th>descrizione</th>
+	<th>Incaricato</th>
+	<th>Dettaglio</th>
+	
+  </tr>
+
+	{% for tic in tickets %}
+		<tr>
+			<td> {{ tic.data_apertura }} </td>
+			<td> <div class="tooltip">{{ tic.persona }}<span class="tooltiptext">{{ tic.persona.dettaglio|linebreaksbr }}</span></div> </td>
+			<td> {{ tic.tipologia.nome }}  </td>
+			<td>  <div class=tooltip>{{ tic.testo|truncatechars:30 }}<span class="tooltiptext">{{ tic.testo }}</span></div></td>
+			<td> {{ tic.incaricato }}</td>
+			<td><form action="dettaglio/" method=POST>{% csrf_token %}
+			<input type="hidden" name="id_ticket" value="{{ tic.id }}"> <input type="submit" value="Dettaglio..."></form></td>
+		</tr>
+	{% endfor %} 
+
+  
+</table>
+</div>
+
+{% endblock %}
+
+{% block rightcolumn %}
+	
+{% endblock %}
+
+{% block footer %} <h6>Webmaster: <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>{% endblock %}
+

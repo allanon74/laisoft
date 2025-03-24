@@ -1,0 +1,61 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block headers %} <script type="text/javascript" src="{% static 'script/div_update.js' %}"></script> {% endblock %}
+	
+{% block pagetitle %}Comune di Laives - Tabella Turni volontariato COVID{% endblock %}
+
+{% block title %}Tabella Turni volontariato COVID{% endblock %}
+
+{% block leftcolumn %}
+<div class="card">
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Ricerca">
+
+
+
+	{% for giorno in elenco_giorni %}
+	<table id="myTable">
+		  <tr class="header">
+			<th>Nome</th>
+			<th>Coordinatore</th>
+			<th>Accettazione</th>
+			<th>Info-point</th>
+			<th>Ausilio al tavolo</th>
+			<th>istruttore tamponi</th>
+			<th>inserimento dati</th>
+			<th>sorveglianza</th>
+		  </tr>
+		<tr>
+			<td> </td>
+			<td> </td>
+			<td> </td>
+			<td> {% for pers in giorno.turno.persona.all| %} <div class=tooltip> {{ vis.id }} <span class="tooltiptext"> {{vis.descrizione}} </span></div>{% endfor %} </td>
+			<td> </td>
+			<td> </td>
+			<td> </td>
+		</tr>
+	</table>
+	{% endfor %} 
+
+  
+
+</div>
+{% endblock %}
+
+{% block rightcolumn %}
+<div class="card">
+{% if messaggio %} <p id="errore"> {{ messaggio }} </p>{% endif %}
+<form action="{% url 'suggerimento' %}" method="post">
+{% csrf_token %}
+Nome del documento da suggerire:
+<input type="text" name="nome"{% if nome %} value="{{ nome }}"{% endif %} >
+Suggerimento:
+<input type="text" name="nota"{% if nota %} value="{{ nota }}"{% endif %} >
+<br><br>
+<input type="submit" value="Invia">
+
+</div>
+{% endblock %}
+
+{% block footer %} <h6>Webmaster: <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>{% endblock %}
+

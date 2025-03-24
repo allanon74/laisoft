@@ -1,0 +1,10 @@
+{% load i18n static imagefit %} <!-- contesto: voce: voce da renderizzare -->
+<button type="button" class="collapsible">{{ voce.titolo }}</button>
+<div class="content">
+    <div class="istr">  
+        <div>{{ voce.testo|safe }}</div>
+        {% for cap in voce.capoverso_set.all %}
+            {% include "render_capoverso.html" with capoverso=cap %}
+        {% endfor %}
+    </div>
+</div>

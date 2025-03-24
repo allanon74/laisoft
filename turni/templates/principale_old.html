@@ -1,0 +1,55 @@
+{% load static %}
+
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'css/tabella.css' %}">
+</head>
+<body>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Ricerca">
+
+<table id="myTable">
+  <tr class="header">
+    <th>Nome</th>
+    <th>Classificazione</th>
+	<th>Gruppo Titolare</th>
+	<th>Gruppi in Visibilità</th>
+	<th></th>
+  </tr>
+
+	{% for tipo in elenco_tipi %}
+		<tr>
+			<td> {{ tipo.nome }} </td>
+			<td> <div class=tooltip> {{ tipo.classifica.id }} <span class="tooltiptext"> {{ tipo.classifica.descrizione }} </span></div> </td>
+			<td> <div class=tooltip> {{ tipo.titolari.id }} <span class="tooltiptext"> {{ tipo.titolari.descrizione }} </span></div> </td>
+			<td> {% for vis in tipo.visibilita.all %} <div class=tooltip> {{ vis.id }} <span class="tooltiptext"> {{vis.descrizione}} </span></div>{% endfor %} </td>
+			<td>{% if tipo.nota %}<div class="tooltip"> Note <span class="tooltiptext"> {{ tipo.nota }} </span></div>{% endif %}
+		</tr>
+	{% endfor %} 
+
+  
+</table>
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+</body>
+</html>

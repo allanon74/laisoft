@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/print.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<script type="text/javascript" src="{% static 'script/tabella.js' %}"></script>
+	{% block headers %} {% endblock %}		
+    <title>{% block pagetitle %}<h1>Comune di Laives</h1>{% endblock %}</title>
+</head>
+
+<body>
+
+<div class="header">
+      <p><img height="75px" src={{ logo.immagine.url }}></p>
+      <h1>Obiettivi e valutazioni</h1>
+</div>
+
+<div class="topnav">
+	{% block topbar %}
+	<a href={% url 'main' %}> Menu Principale</a>
+	<a href={% url 'lista_formulari' %}>Lista valutazioni</a>
+	<a href="/accounts/logout"style="float:right">Logout</a>
+	<a href="http://wikilaives/mediawiki/index.php/Pagina_principale" style="float:right" target="_blank">Wiki Laives</a>
+	{% if admin %}<a href="/admin/valutazioni/"style="float:right">Pagina di amministrazione</a>{% endif %}
+	{% endblock %}
+</div>
+
+<div class="row">
+  <div class="leftcolumn">
+	{% block left_top %} {% endblock %}
+    <div class="card">
+      <table class="intestazione" style="width:100%;">
+		<tr>
+			<td style="borderless"><div class="logo"> <img class="logo" src={% block logo %}"{% static 'img/1a-comune.jpg' %}"{% endblock %} alt="logo Laives comune"> </div></td>
+			<td style="borderless"><div class="intestazione_ufficio">{% block ufficio %}Comune di Laives - ufficio informatica<br>Gemeinde Leifers{% endblock %}</div></td>
+		</tr>
+	 </table>
+	 <div class="body">
+
+	 </div>
+	 {% block title %} <h1>Titolo</h1> {% endblock %}
+
+	 {% block document %} 
+	 Testo del documento.
+	 {% endblock %}
+
+   </div>
+  </div>
+  <div class="rightcolumn">
+	{% block rightcolumn %}
+    <div class="card">
+      <h2>Menu</h2>
+		<ul>
+        <li><a href="{% url 'index' %}">Tabella di classificazione</a></li>
+		<li><a href="{% url 'suggerimento' %}">Inserisci nuovo documento</a></li>
+		<li><a href="{% url 'wiki' %}">Wiki Laives</a></li>
+		</ul>
+    </div>
+	{% endblock %}
+  </div>
+</div>
+</div>
+<div class="footer">
+  {% block footer %}
+  <h2>Footer</h2>
+  {% endblock %}
+</div>
+</div>
+</body>
+</html>
+

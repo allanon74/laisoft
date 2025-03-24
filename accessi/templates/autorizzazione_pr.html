@@ -1,0 +1,538 @@
+{% extends "./base_a_pr.html" %}
+{% load static %}
+	
+{% block pagetitle %}Comune di Laives - Allegato I {% endblock %}
+
+{% block logo %} "{% static 'img/1a-comune.jpg' %}" {% endblock %}
+
+{% block ufficio %} Ufficio VII - Servizi demografici - Sviluppo informatico<br>Amt VII - Demographische Dieste - Informatik {% endblock %}
+
+{% block persona %}&nbsp;{% endblock %}
+
+{% block title %}
+<table style="width:100%;">
+	<tr>
+		<td style="width:48%;"><h1>Autorizzazione generale</h1><h2>{{ ufficio.nome_it_m }}</h2></td>
+		<td style="width:4%;">&nbsp;</td>
+		<td><h1>Generalgenehmigung</h1><h2>{{ ufficio.nome_dt_m }}</h2></td>
+	</tr>
+</table>
+{% endblock %} 
+
+{% block document %}
+
+<table style="width:100%;padding-bottom:10px;text-align:justify;vertical-align:top;font-size:12px;">
+	<tr>
+		<td style="width:48%;padding-bottom:10px;text-align:justify;vertical-align:top;font-size:14px;">{{ autorizzazione.testo.testo_fisso_it|linebreaksbr }}</td>
+		<td style="width:4%;">&nbsp;</td>
+		<td style="width:48%;padding-bottom:10px;text-align:justify;vertical-align:top;font-size:14px;">{{ autorizzazione.testo.testo_fisso_de|linebreaksbr }}</td>
+	</tr>
+	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	{% for cap in capoversi %}
+		<tr>
+			<td style="width:48%;padding-bottom:10px;text-align:justify;vertical-align:top;font-size:12px;">{{ cap.testo_it|linebreaksbr }}</td>
+			<td>&nbsp;</td>
+			<td style="width:48%;padding-bottom:10px;text-align:justify;vertical-align:top;font-size:12px;">{{ cap.testo_de|linebreaksbr }}</td>
+		</tr>
+	{% endfor %}
+</table>
+<br />
+<div style="break-after:page"></div>
+<table style="width:100%;">
+	<tr>
+		<td style="width:48%;"><h1>Dettaglio dei diritti</h1></td>
+		<td style="width:4%;">&nbsp;</td>
+		<td style="width:48%;"><h1>Details der Rechte</h1></td>
+	</tr>
+</table>
+<br />
+{% if gruppisamba.all %}
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan = 2 class="tabella_th">Accesso alle cartelle condivise<br>Zugänge zu gemeinsam benutzen Ordnern</td>
+		</tr>
+
+	{% for d in gruppisamba.all %}
+		{% ifchanged d.diritto.tipologia %}
+	</table>	
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td class="tabella_tm">{{ d.diritto.tipologia.nome }}<br>{{ d.diritto.tipologia.nome_de }}</td>
+			<td class="tabella_tm"> Descrizione<br>Beschreibung</td>
+		</tr>
+		{% endifchanged %}
+		<tr>
+			<td class="tabella_tv">{{ d.diritto.nome }}</td>
+			<td class="tabella_tv">{{ d.diritto.descrizione }}<br />{% for sh in d.diritto.shares.all %} {{ sh.percorso }} {% if forloop.last %} {% else %}<br />{% endif %} {% endfor %}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endif %}
+
+{% if sgvcanali.all %}
+<br />
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Mailing list Consorzio dei Comuni<br />Gemeindeverband-Mailinglists</td>
+		</tr>
+	</table>
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td class="tabella_tm">nome della lista</td>
+			<td class="tabella_tm"> Name der Liste</td>
+		</tr>
+		{% for d in sgvcanali.all %}
+		<tr>
+			<td class="tabella_tv">{{ d.diritto.nome }}</td>
+			<td class="tabella_tv">{{ d.diritto.nome_de }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endif %}
+
+{% if goffice.all %}
+<br />
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Accessi in GOffice<br />Zugänge im GOffice</td>
+		</tr>
+	</table>
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td class="tabella_tm">nome dell'applicazione<br>name des Programms</td>
+			<td class="tabella_tm"> Descrizione<br>Beschreibung</td>
+		</tr>
+		{% for d in goffice.all %}
+		<tr>
+			<td class="tabella_tv">{{ d.diritto.nome }}</td>
+			<td class="tabella_tv">{{ d.diritto.descrizione|linebreaksbr }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endif %}
+	
+{% if d3gruppi.all %}
+<br />
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Accessi in D.3 <br />Zugänge im D.3</td>
+		</tr>
+		<tr>
+			<td class="tabella_t">Legenda:<br>
+				<span class="info_it">L: diritti di lettura<br>
+				S: diritti di scrittura<br>
+				RL: diritto di lettura documenti riservati<br>
+				RS: diritto di scrittura documenti riservati<br>
+				P: casella postale di gruppo</span>
+			</td>
+			<td class="tabella_t">Legende:<br>
+				<span class="info_it">L: Leserechte<br>
+				S: Schreibreschte<br>
+				RL: Vertrauliche Dokumente - Leserechte<br>
+				RS: Vertrauliche Dokumente - Schreibrechte<br>
+				P: Postkorb</span>
+			</td>		
+		</tr>
+	</table>
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td class="tabella_tm">  </td>
+			<td class="tabella_tmx">L</td>
+			<td class="tabella_tmx">S</td>
+			<td class="tabella_tmx">RL</td>
+			<td class="tabella_tmx">RS</td>			
+			<td class="tabella_tmx">P</td>
+		</tr>
+		{% for d in d3gruppi.all %}
+		<tr>
+			<td class="tabella_t3t">{{ d.diritto.nome }} - {{ d.diritto.nome_it }}</td>
+			<td class="tabella_t3x">{% if d.lettura %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.scrittura %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.lettura_r %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.scrittura_r %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.posta %}X{% else %} {% endif %}</td>
+		</tr>
+		{% endfor %}
+	</table>	
+</div>
+{% endif %}
+
+{% if d3diritti.all %}
+<br />
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Diritti in D.3<br />Berechtigungen in D.3</td>
+		</tr>
+	</table>
+	
+	{% for d in d3diritti.all %}
+
+				{% ifchanged d.diritto.tipologia %}
+				</table>
+				<table class = "tabella_t" style="width:100%;">
+					<tr>
+						<td colspan=2 class="tabella_tm">{{ d.diritto.tipologia.nome }}<br>{{ d.diritto.tipologia.nome_de }}</td>
+					</tr>
+					<tr>
+						<td class="tabella_tm">nome del diritto<br>name des Rechtes</td>
+						<td class="tabella_tm"> Descrizione<br>Beschreibung</td>
+					</tr>				
+				{% endifchanged %}	
+			<tr>
+				<td class="tabella_tv">{{ d.diritto.nome }}</td>
+				<td class="tabella_tv">{{ d.diritto.descrizione|linebreaksbr }}</td>
+			</tr>
+	{% endfor %}
+	</table>
+</div>
+{% endif %}
+
+{% if generici.all %}
+<br />
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Accessi in Ascot<br />Zugänge im Ascot</td>
+		</tr>
+	</table>
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td class="tabella_tm">applicazione<br>Programm</td>
+			<td class="tabella_tm"> Diritto<br>Recht</td>
+		</tr>
+		{% for d in generici.all %}
+		<tr>
+			<td class="tabella_tv">{{ d.diritto.nome }}</td>
+			<td class="tabella_tv">{{ d.tipo.nome }} / {{ d.tipo.nome_de }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endif %}
+
+{% if dirittirete.all %}
+<br />
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Diritti di rete<br />Netzwerksrechte</td>
+		</tr>
+	</table>
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td class="tabella_tm">nome del Diritto<br>Name des Rechtes</td>
+			<td class="tabella_tm"> Descrizione<br>Beschreibung</td>
+		</tr>
+		{% for d in dirittirete.all %}
+		<tr>
+			<td class="tabella_tv">{{ d.diritto.nome }}</td>
+			<td class="tabella_tv">{{ d.diritto.descrizione|linebreaksbr }}
+				{% if d.annotazioni %} <br />{{ d.annotazioni }} {% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endif %}
+
+{% if 0365gruppi.all %}
+<br />
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Gruppi Office 365<br />Gruppen von Office 365</td>
+		</tr>
+	</table>
+	
+	{% for d in o365gruppi.all %}
+				{% ifchanged d.diritto.tipologia %}
+				</table>
+				<table class = "tabella_t" style="width:100%;">
+					<tr>
+						<td colspan=2 class="tabella_tm">{{ d.diritto.tipologia.nome }}<br>{{ d.diritto.tipologia.nome_de }}</td>
+					</tr>
+					<tr>
+						<td class="tabella_tm">nome del Gruppo<br>name der Gruppe</td>
+						<td class="tabella_tm"> Descrizione<br>Beschreibung</td>
+					</tr>				
+				{% endifchanged %}	
+			<tr>
+				<td class="tabella_tv">{{ d.diritto.nome }}</td>
+				<td class="tabella_tv">{{ d.diritto.descrizione|linebreaksbr }}</td>
+			</tr>
+	{% endfor %}
+	</table>
+</div>
+{% endif %}
+
+{% if nextcloud.all %}
+<br />
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Diritti di Nextcloud<br />Nextcloud-rechte</td>
+		</tr>
+	</table>
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td class="tabella_tm">nome del Diritto<br>Name des Rechtes</td>
+			<td class="tabella_tm"> Descrizione<br>Beschreibung</td>
+		</tr>
+		{% for d in nextcloud.all %}
+		<tr>
+			<td class="tabella_tv">{{ d.diritto.descrizione }}</td>
+			<td class="tabella_tv">{{ d.tipo.nome }} / {{ d.tipo.nome_de }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endif %}
+
+{% if gebevripartizioni.all %}
+<br />
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Diritti Programma Delibere <br />Berechtigungen Beschlussprogramm</td>
+		</tr>
+		<tr>
+	</table>
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Diritti di ripartizione  <br />Abteilungsechte</td>
+		</tr>
+		<tr>
+			<td class="tabella_t">Legenda:<br>
+				<span class="info_it">
+					da: Ripartizione di default<br>
+					ba: Visibilità delibere<br>
+					ea: visibilità determinazioni<br>
+					ia: visibilità decisioni interne<br>
+					aa: visibilità disposizioni<br>
+					pa: visibilità privacy<br>
+					fb: parere tecnico delibere<br>
+					bb: parere contabile delibere<br>
+					fe: parere tecnico determinazioni<br>
+					be: parere contabile determinazioni<br>
+					fi: parere decisioni interne<br>
+					<br> 
+					aagg: Affari generali<br>
+					LLPP: Lavori pubblici<br>
+					S.G.: Segreteria generale<br>
+					S.D.: Servizi demografici<br>
+					S.C.: Sociale e cultura<br>
+					Sv. Terr.: Sviluppo del territorio<br>
+				</span>
+			</td>
+			<td class="tabella_t">Legende:<br>
+				<span class="info_it">
+					da: defaultabteilung<br>
+					ba: Beschlüsse anzeigen<br>
+					ea: Entscheide anzeigen<br>
+					ia: interne Entscheidungen anzeigen<br>
+					aa: Anordnungen anzeigen<br>
+					pa: Privacy anzeigen<br>
+					fb: Fachliches Gutachten Beschlüsse<br>
+					bb: Buchhalterisches Gutachten Beschlüsse<br>
+					fe: Fachliches Gutachten Entscheide<br>
+					be: Buchhalterisches Gutachten Entscheide<br>
+					fi: Gutachten Interne Entscheidungen<br>
+					<br> 
+					Allg. Angel.: Allgemeine Angelegenheiten<br>
+					Öff. Arb.: Öffentliche Arbeiten<br>
+					Gen.Sekr.: Generalsekretariat<br>
+					D.D.: Demographische Dienste<br>
+					S.K.: Sozial Und Kultur<br>
+					Entw. des Terr.: Entwicklung des Territoriums<br>
+				</span>
+			</td>		
+		</tr>
+	</table>
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td class="tabella_tm">  </td>
+			<td class="tabella_tmx">da</td>
+			<td class="tabella_tmx">ba</td>
+			<td class="tabella_tmx">ea</td>
+			<td class="tabella_tmx">ia</td>			
+			<td class="tabella_tmx">aa</td>
+			<td class="tabella_tmx">pa</td>
+			<td class="tabella_tmx">fb</td>
+			<td class="tabella_tmx">bb</td>
+			<td class="tabella_tmx">fe</td>			
+			<td class="tabella_tmx">be</td>
+			<td class="tabella_tmx">fi</td>
+		</tr>
+		{% for d in gebevripartizioni.all %}
+		<tr>
+			<td class="tabella_t3t">{{ d.diritto.nome }}<br />{{ d.diritto.nome_de }}</td>
+			<td class="tabella_t3x">{% if d.default %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.del_v %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.det_v %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.int_v %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.dis_v %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.pri_v %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.del_pt %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.del_pc %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.det_pt %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.det_pc %}X{% else %} {% endif %}</td>
+			<td class="tabella_t3x">{% if d.int_p %}X{% else %} {% endif %}</td>
+		</tr>
+		{% endfor %}
+	</table>	
+</div>
+	{% if gebevdiritti.all %}
+	<br />
+	<div class="united">
+		<table class = "tabella_t" style="width:100%;">
+			<tr>
+				<td colspan=2 class="tabella_th">Diritti generali e di gruppo<br />Allgemeine und Gruppenrechte</td>
+			</tr>
+		</table>
+		
+		{% for d in gebevdiritti.all %}
+			
+					{% ifchanged d.diritto.tipologia %}
+					</table>
+					<table class = "tabella_t" style="width:100%;">
+						<tr>
+							<td colspan=2 class="tabella_tm">{{ d.diritto.tipologia.nome }}<br>{{ d.diritto.tipologia.nome_de }}</td>
+						</tr>
+						<tr>
+							<td class="tabella_tm">nome del Diritto<br>name des Rechtes</td>
+							<td class="tabella_tm"> Descrizione<br>Beschreibung</td>
+						</tr>				
+					{% endifchanged %}	
+
+				<tr>
+					<td class="tabella_tv">{{ d.diritto.nome }}</td>
+					<td class="tabella_tv">{{ d.diritto.descrizione|linebreaksbr }}</td>
+				</tr>
+		{% endfor %}
+		</table>
+	</div>
+	{% endif %}
+{% endif %}
+
+{% if porte.all %}
+<br />
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Porte Abilitate all‘accesso<br />Zugangsberechtigte Türen</td>
+		</tr>
+		<tr>
+			<td class="tabella_tv">Numero badge / Badgenummer: </td>
+			<td class="tabella_tvm">{{ autorizzazione.dipendente.badge_p }} </td>
+		</tr>
+	</table>
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td class="tabella_tm">Nome Porta<br>Türname</td>
+			<td class="tabella_tm"> Transponder</td>
+		</tr>
+		{% for d in porte.all %}
+		<tr>
+			<td class="tabella_tv">
+			{% if d.diritto.num_stanza %}
+				Stanza  {{ d.diritto.num_stanza }} - 
+			{% endif %}
+			{{ d.diritto.nome }} <br>
+			{% if d.diritto.num_stanza %}
+				Zimmer  {{ d.diritto.num_stanza }} - 
+			{% endif %}
+			{{ d.diritto.nome_de }} 
+			</td>
+			<td class="tabella_tvm">{{ d.diritto.transponder }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endif %}
+
+{% if web.all %}
+<br />
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Diritti sulle pagine web comunali<br />Rechte der Gemeindewebseiten</td>
+		</tr>
+	</table>
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td class="tabella_tm">nome della pagina web<br>Name der Webseite</td>
+			<td class="tabella_tm"> Descrizione<br>Beschreibung</td>
+			<td class="tabella_tm">Utente<br>Username</td>
+			<td class="tabella_tm">Diritto<br>Rechte</td>
+		</tr>
+		{% for d in web.all %}
+		<tr>
+			<td class="tabella_tv">{{ d.diritto.nome }}</td>
+			<td class="tabella_tv">{{ d.diritto.descrizione|linebreaksbr }}</td>
+			<td class="tabella_tv">{{ d.utente }}</td>
+			<td class="tabella_tv">{{ d.tipo.nome }}<br />{{ d.tipo.nome_de }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endif %}
+
+{% if goffice2.all %}
+<br />
+<div class="united">
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td colspan=2 class="tabella_th">Moduli GOffice2<br />GOffice2 Module</td>
+		</tr>
+	</table>
+	<table class = "tabella_t" style="width:100%;">
+		<tr>
+			<td class="tabella_tm" width="25%">nome del modulo<br>Name des Moduls</td>
+			<td class="tabella_tm"> Descrizione<br>Beschreibung</td>
+			<td class="tabella_tm">Diritti<br>Rechte</td>
+		</tr>
+		{% for d in goffice2.all %}
+		<tr>
+			<td class="tabella_tv">{{ d.diritto.nome }}<br />{{ d.diritto.nome_de }}</td>
+			<td class="tabella_tv"><p>{{ d.diritto.descrizione|linebreaksbr }}<br />{{ d.diritto.descrizione_de|linebreaksbr }}</p></td>
+			<td class="tabella_tv">
+				{% for t in d.tipo.all %}{{ t.nome }}- {{ t.nome_de }}<br />{% endfor %}
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endif %}
+
+<table class="tabella_t">
+	<tr>
+		<td class="tabella_t" colspan=2>Laives / Leifers, {{ autorizzazione.data_firma }}</td>
+	</tr>
+	<tr>
+		<td colspan=2> <br />  </td>
+	</tr>
+	<tr>
+		<td class="firma" style="width=50%;text-align: center;"><span >Firma del Dirigente:</span></td>
+		<td class="firma" style="text-align: center;"><span >Unterschrift des Amtsleiters:</span></td>
+	</tr>
+	<tr>
+		<td colspan=2> <br />  </td>
+	</tr>
+	<tr>
+		<td colspan=2 class="firma" style="text-align:center;"><span class="bold">{{ dirigente.nome }} {{ dirigente.cognome }}</span><br /><span class="info_it">(firmato digitalmente)</span></td>
+	</tr>
+
+		<td colspan=2> <br />  </td>
+	</tr>
+</table>
+</table>
+{% endblock %}
+

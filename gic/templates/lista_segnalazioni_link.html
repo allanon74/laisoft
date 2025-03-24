@@ -1,0 +1,26 @@
+{% load i18n customform %} <!-- segnalazioni: lista di segnalazioni da visualizzare; diritto diritti dell'utente; gic_render: cosa renderizzare -->
+<h1 class="centra" data-theme="a">{% trans "Elenco Segnalazioni" %}</h1>
+<div data-theme="{{ tema_s }}" data-content-theme="{{ tema_s }}">
+	{% if gic_render.segnalazioni_new and diritto.segnalazioni_w %}{% include 'nuova_segnalazione.html' %}{% endif %}
+
+	<form class="ui-filterable"><input id="filtroseg" data-type="search"></form>
+	<ul data-role="listview" data-inset="true" data-filter="true" data-input="#filtroseg">
+	{% for seg in segnalazioni %}
+	<li data-theme="{{ tema_s }}" data-filtertext="{{ seg.oggetto }}"><a href="{% url 'gic_segnalazione' %}?id={{ seg.id }}" data-theme="{{ tema_s }}">
+		<h2  data-theme="{{ tema_s }}">{{ seg.data_creazione|date:"SHORT_DATE_FORMAT" }} - {{ seg.oggetto }} 
+			{{ seg.stato.icona|safe }}
+			<span style="float:right;">&nbsp;</span>
+			{{ seg.tipo.icona|safe }}
+			<span style="float:right;">&nbsp;</span>
+			{{ seg.origine.icona|safe }}
+			 <br />
+			<span class="minimal">{% trans "Interventi" %}: {{ seg.intervento_set.count }} - {% trans "Teams" %}: {{ seg.conta_teams }} - {% trans "Lavori" %}: {{ seg.conta_lavori }}</span>
+			{% for tag in seg.eventi.all %}
+			{{ tag.icona|safe }}<span style="float:right;">&nbsp;</span>
+			{% endfor %}
+		</h2>
+	</a></li>
+	{% endfor %}
+	</ul>
+
+</div> <!--  segnalazioni -->

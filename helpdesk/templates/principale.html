@@ -1,0 +1,54 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block headers %} <script type="text/javascript" src="{% static 'script/div_update.js' %}"></script> {% endblock %}
+	
+{% block pagetitle %}Comune di Laives - Tabella classificazione documenti{% endblock %}
+
+{% block title %}Tabella classificazione documenti{% endblock %}
+
+{% block leftcolumn %}
+<div class="card">
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Ricerca">
+
+<table id="myTable">
+  <tr class="header">
+    <th>Nome</th>
+    <th>Classificazione</th>
+	<th>Gruppo Titolare</th>
+	<th>Gruppi in Visibilità</th>
+	<th></th>
+  </tr>
+
+	{% for tipo in elenco_tipi %}
+		<tr>
+			<td> {{ tipo.nome }} </td>
+			<td> <div class=tooltip> {{ tipo.classifica.id }} <span class="tooltiptext"> {{ tipo.classifica.descrizione }} </span></div> </td>
+			<td> <div class=tooltip> {{ tipo.titolari.id }} <span class="tooltiptext"> {{ tipo.titolari.descrizione }} </span></div> </td>
+			<td> {% for vis in tipo.visibilita.all %} <div class=tooltip> {{ vis.id }} <span class="tooltiptext"> {{vis.descrizione}} </span></div>{% endfor %} </td>
+			<td>{% if tipo.nota %}<div class="tooltip"> Note <span class="tooltiptext"> {{ tipo.nota }} </span></div>{% endif %}
+		</tr>
+	{% endfor %} 
+
+  
+</table>
+</div>
+{% endblock %}
+
+{% block rightcolumn %}
+<div class="card">
+{% if messaggio %} <p id="errore"> {{ messaggio }} </p>{% endif %}
+<form action="{% url 'suggerimento' %}" method="post">
+{% csrf_token %}
+Nome del documento da suggerire:
+<input type="text" name="nome"{% if nome %} value="{{ nome }}"{% endif %} >
+Suggerimento:
+<input type="text" name="nota"{% if nota %} value="{{ nota }}"{% endif %} >
+<br><br>
+<input type="submit" value="Invia">
+
+</div>
+{% endblock %}
+
+{% block footer %} <h6>Webmaster: <a href="mailto:edp@comune.laives.bz.it">edp@comune.laives.bz.it</a></h6>{% endblock %}
+
