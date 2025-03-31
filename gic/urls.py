@@ -35,4 +35,5 @@ urlpatterns = [
 	path('report/csv/<str:dt_da>/<str:dt_a>/', login_required(views.ReportCSVDt), name='gic_report_csv_dt'),
 	path('report/csv/', login_required(views.ReportCSV), name='gic_report_csv'),
 	path('jq/', views.VistaJq.as_view(), name='jq'),
+	path('segnalazionestruttura/', views.VistaStrutture.as_view(), name="gic_segnalazioni_strutture"),
 	]

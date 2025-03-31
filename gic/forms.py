@@ -10,7 +10,7 @@ from datetime import datetime
 from .widgets import CustomDate, FilterSelect
 from django.contrib.gis.forms import PointField
 
-from .fotoform import FotoForm as _f
+from .fotoform import FotoForm as _f, MultipleFileField
 
 from django.utils import translation
 
@@ -291,7 +291,7 @@ class AllegatoForm(Form):
 class FotoForm(_f):
 	pass
 
-class SegnalazioneStruttura(Form):
+class SegnalazioneStrutturaForm(Form):
 	_tema = Tema.get_tema('segnalazione')
 	oggetto = CharField(
 		required = True, 
@@ -303,9 +303,13 @@ class SegnalazioneStruttura(Form):
 		strip = True, 
 		label = _("Descrizione del problema"),		
 	)
- 
+	foto = MultipleFileField(
+		required=False, 
+		label=_("Seleziona una o più immagini"),
+		)
  
 	class Meta:
+			fields = ['oggetto', 'descrizione', 'foto',]
 			_tema = Tema.get_tema('segnalazione')
 			widgets = {
 				'oggetto' : TextInput(attrs={ "data-theme" : _tema, }),

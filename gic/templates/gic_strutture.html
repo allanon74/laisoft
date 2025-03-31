@@ -23,12 +23,11 @@
 {% tema "lavoro" as tema_l %}
 {% tema "salva" as tema_u %}
 
-{% include 'nuova_segnalazione_struttura.html' with segnalazione_new=segnalazione_new %}
+{% include 'nuova_segnalazione_struttura.html' with segnalazione_new=segnalazione_new strutture=strutture %}
 <hr />
-<h2>{% trans 'Elenco segnalazioni aperte per le strutture gestite' %}</h2>
-{% include 'lista_segnalazioni_link.html' with segnalazioni=segnalazioni diritto=diritto gic_render=gic_render %}
+{% include 'lista_segnalazioni.html' with segnalazioni=segnalazioni diritto=diritto gic_render=gic_render %}
 
-{% endblock %}
+{% endblock %} 
 
 
 

@@ -56,6 +56,7 @@
 				{% if diritto.collaboratori_r %}<li><a class="ui-btn" data-ajax="false" href={% url 'gic_collaboratori' %}>{% trans 'Collaboratori' %}</a></li>{% endif %}
 				{% if diritto.report %}<li><a class="ui-btn" data-ajax="false" href={% url 'gic_report' %}>{% trans 'Report' %}</a></li>{% endif %}
 				{% if diritto.lavori_v %}<li><a class="ui-btn" data-ajax="false" href={% url 'gic_lavori_verifica' %}>{% trans 'Lavori da Verificare' %}</a></li>{% endif %}
+				{% if diritto.segnalazioni_i %}<li><a class="ui-btn" data-ajax="false" href={% url 'gic_segnalazioni_strutture' %}>{% trans 'Gestione segnalazioni per struttura' %}</a></li>{% endif %}
 			</ul>
 			{% if diritto.orario %}<ul>
 			<li><a class="ui-btn" data-ajax="false" href={% url 'gic_operai' %}>{% trans 'Pagina registrazione lavori' %}</a></li>

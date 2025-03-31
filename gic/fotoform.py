@@ -9,7 +9,7 @@ from .models import Tema, Tipologia
 from django.contrib.gis.forms import PointField
 
 from django.utils import translation
-
+ 
 
 from django.utils.translation import gettext_lazy as _
 

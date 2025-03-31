@@ -1,10 +1,15 @@
-{% load i18n customform %}
+{% load i18n customform %} <!-- contesto: strutture = elenco strutture possibili, segnalazione_new = form di segnalazione  -->
 <div data-theme="{{ tema_s }}" data-role="collapsible"> <!-- coll nuova segnalazione --> 
 	<h1> Nuova segnalazione</h1> <!-- form nuova segnalazione --> 
 		<p data-theme="{{ tema_s }}">
-			<form data-theme="{{ tema_s }}" action="" method="post"> {% csrf_token %}
+			<form method="post" data-ajax="false" action="" enctype="multipart/form-data"> {% csrf_token %}
 				{{ segnalazione_new }}
-
+				<label for="id_struttura" data-theme="{{ tema_s }}">{% trans 'Struttura' %}:</label>
+				<select name = "struttura" id="id_struttura" data-theme="{{ tema_s }}">
+					{% for st in dipendente.servizio_al.strutture.all %}
+					<option value={{ st.id }}>{{ st.nome_breve }}</option> 
+					{% endfor %}
+				</select>
 				<input type="hidden" name="model" value="Segnalazione" />
 				<input type="hidden" name="action" value="new" />
                 <input type="hidden" name="tipo" value="ST-EST">
@@ -16,4 +21,4 @@
 				<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value="Salva" />
 			</form> <!-- form nuova segnalazione --> 
 		</p>
-</div> <!-- coll nuova segnalazione -->  
+</div> <!-- coll nuova segnalazione -->   

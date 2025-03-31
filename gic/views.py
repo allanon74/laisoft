@@ -27,11 +27,11 @@ from dipendenti.views import base_context
 
 from laisoft.settings import BASE_URL
 
-from .models import Tema, Segnalazione, Diritto, Intervento, Team, Collaboratore, Tipologia, TempiLavoro, Foto, Allegato
+from .models import Tema, Segnalazione, Diritto, Intervento, Team, Collaboratore, Tipologia, TempiLavoro, Foto, Allegato, Struttura
 from .models import Lavoro, Attivita, Priorita 
-from .forms import SegnalazioneFormset, SegnalazioneForm, InterventoForm, TeamForm, LavoroForm, FotoForm, AllegatoForm
+from .forms import SegnalazioneFormset, SegnalazioneForm, InterventoForm, TeamForm, LavoroForm, FotoForm, AllegatoForm, SegnalazioneStrutturaForm
 
-CAPOCANTIERE = 'capocantiere'
+CAPOCANTIERE = 'capocantiere' 
 CAPOSQUADRA = 'caposquadra'
 COORDINATORE = 'coordinatore'
 OPERAIO = 'operaio'
@@ -50,18 +50,18 @@ ALLEGATO = "allegato"
 """
 
 Il rendering delle pagine vuole un context pageconfig con i seguenti valori:
- 	lavori: se vuoi o non vuoi visualizzare la scheda valori 
- 	lavori_new: se vuoi o non vuoi visualizzare la scheda nuovo lavoro
- 	teams
- 	teams_new
- 	interventi
- 	interventi_new
- 	segnalazioni
- 	segnalazioni_new
- 	allegati
- 	annotazioni
- 	foto
- 	tempilavoro
+	lavori: se vuoi o non vuoi visualizzare la scheda valori 
+	lavori_new: se vuoi o non vuoi visualizzare la scheda nuovo lavoro
+	teams
+	teams_new
+	interventi
+	interventi_new
+	segnalazioni
+	segnalazioni_new
+	allegati
+	annotazioni
+	foto
+	tempilavoro
 
 
 """
@@ -142,9 +142,25 @@ coll_render[FOTO] = True
 coll_render[TEMPILAVORO] = True 
 coll_render[VERIFICA] = False
 
+str_render = {}
+str_render[LAVORI] = False
+str_render[LAVORI_NEW] = False
+str_render[TEAMS] = False
+str_render[TEAMS_NEW] = False
+str_render[INTERVENTI] = True
+str_render[INTERVENTI_NEW] = False
+str_render[SEGNALAZIONI] = True
+str_render[SEGNALAZIONI_NEW] = False
+str_render[ALLEGATI] = False
+str_render[ANNOTAZIONI] = False
+str_render[FOTO] = False
+str_render[TEMPILAVORO] = False 
+str_render[VERIFICA] = False
+
+
 class Echo:
-    def write(self, value):
-        return value
+	def write(self, value):
+		return value
 
 
 def last_day_of_month(date):
@@ -194,7 +210,7 @@ def carica_diritti(context):
 #	@property 
 #	def fotoform(self):
 #		return FotoForm()
- 	
+	
 
 # Create your views here.
 def main_menu(request):
@@ -343,36 +359,36 @@ class VistaLavoriVerifica(VistaMain):
 
 """
 class VistaIntervento(Vista_a):
- 	template_name = "gic_intervento.html"
- 	action = ERROR
- 	id_int = ERROR
- 	
- 	def get(self, request, *args, **kwargs):
+	template_name = "gic_intervento.html"
+	action = ERROR
+	id_int = ERROR
+	
+	def get(self, request, *args, **kwargs):
 		self.id_int = request.GET.get("id", ERROR)
 		if self.id_int == ERROR:
- 			redirect(VistaInterventi)
+			redirect(VistaInterventi)
 		return render(request, self.template_name, self.get_context_data(self, *args, **kwargs))
- 	
- 	def post(self, request, *args, **kwargs):
+	
+	def post(self, request, *args, **kwargs):
 		self.action = request.POST.get('action', ERROR)
 		m = request.POST.get('model')
 		self.id_int = request.POST.get("id", ERROR)
 		if self.id_int == ERROR:
- 			self.id_int = request.GET.get("id", ERROR)
+			self.id_int = request.GET.get("id", ERROR)
 		if self.id_int == ERROR:
- 			redirect(VistaInterventi)
+			redirect(VistaInterventi)
 		if m:
- 			mdl = getattr(gic.models, m)
- 			frm = type(form(mdl()))
- 			
+			mdl = getattr(gic.models, m)
+			frm = type(form(mdl()))
+			
 		if self.action == ERROR:
- 			redirect(VistaInterventi)
+			redirect(VistaInterventi)
 		elif self.action == SAVE:
- 			inst = mdl.objects.get(pk=request.POST.get('id'))
- 			f = frm(request.POST, instance = inst)
- 			if f.is_valid():
+			inst = mdl.objects.get(pk=request.POST.get('id'))
+			f = frm(request.POST, instance = inst)
+			if f.is_valid():
 				f.save()
- 			self.action = START
+			self.action = START
 		elif self.action == NEW:
 				f = frm(request.POST)
 #				frm.fields['stato'].required = False
@@ -381,7 +397,7 @@ class VistaIntervento(Vista_a):
 				request.POST= {}
 		return render(request, self.template_name, self.get_context_data(self, *args, **kwargs))
 
- 	def get_context_data(self, *args, **kwargs):
+	def get_context_data(self, *args, **kwargs):
 		
 		intervento = Intervento.objects.get(id=self.id_int)
 		
@@ -399,36 +415,36 @@ class VistaIntervento(Vista_a):
 		return self.context
 
 class VistaSegnalazione(Vista_a):
- 	template_name = "gic_segnalazione.html"
- 	action = ERROR
- 	id_seg = ERROR
- 	
- 	def get(self, request, *args, **kwargs):
+	template_name = "gic_segnalazione.html"
+	action = ERROR
+	id_seg = ERROR
+	
+	def get(self, request, *args, **kwargs):
 		self.id_seg = request.GET.get("id", ERROR)
 		if self.id_seg == ERROR:
- 			redirect(VistaSegnalazioni)
+			redirect(VistaSegnalazioni)
 		return render(request, self.template_name, self.get_context_data(self, *args, **kwargs))
- 	
- 	def post(self, request, *args, **kwargs):
+	
+	def post(self, request, *args, **kwargs):
 		self.action = request.POST.get('action', ERROR)
 		m = request.POST.get('model')
 		self.id_seg = request.POST.get("id", ERROR)
 		if self.id_seg == ERROR:
- 			self.id_seg = request.GET.get("id", ERROR)
+			self.id_seg = request.GET.get("id", ERROR)
 		if self.id_seg == ERROR:
- 			redirect(VistaSegnalazioni)
+			redirect(VistaSegnalazioni)
 		if m:
- 			mdl = getattr(gic.models, m)
- 			frm = type(form(mdl()))
- 			
+			mdl = getattr(gic.models, m)
+			frm = type(form(mdl()))
+			
 		if self.action == ERROR:
- 			redirect(VistaSegnalazioni)
+			redirect(VistaSegnalazioni)
 		elif self.action == SAVE:
- 			inst = mdl.objects.get(pk=request.POST.get('id'))
- 			f = frm(request.POST, instance = inst)
- 			if f.is_valid():
+			inst = mdl.objects.get(pk=request.POST.get('id'))
+			f = frm(request.POST, instance = inst)
+			if f.is_valid():
 				f.save()
- 			self.action = START
+			self.action = START
 		elif self.action == NEW:
 				f = frm(request.POST)
 #				frm.fields['stato'].required = False
@@ -437,7 +453,7 @@ class VistaSegnalazione(Vista_a):
 				request.POST= {}
 		return render(request, self.template_name, self.get_context_data(self, *args, **kwargs))
 
- 	def get_context_data(self, *args, **kwargs):
+	def get_context_data(self, *args, **kwargs):
 		
 		segnalazione = Segnalazione.objects.get(id=self.id_seg)
 		
@@ -644,7 +660,7 @@ class VistaOperaiLavoro(Vista_a):
 			ogg = request.POST.get('oggetto')
 			descrizione = request.POST.get('descrizione')
 			durata_prevista = request.POST.get('durata_prevista')
-   
+
 			int = Intervento(
 				oggetto = "INTERVENTO URGENTE: {o}".format(o = ogg),
 				descrizione = "INTERVENTO URGENTE: {d}".format(d=descrizione),
@@ -655,7 +671,7 @@ class VistaOperaiLavoro(Vista_a):
 	
 			)
 			int.save()
-   
+
 			tm = Team(
 				attivita = Attivita.urgente(),
 				intervento = int,
@@ -763,12 +779,12 @@ class VistaReport(Vista_a):
 		self.context['data_a'] = "{dt}".format(dt=self.data_a)
 		
 		return self.context
-    
-    
-    
+	
+	
+	
 # class VistaReportCSV(VistaReport):
 #     template_name = "gic_report.csv"
-    
+	
 # def ReportCSVStream(request): #not working
 
 # 	oggi = datetime.date(timezone.now().year, timezone.now().month, 1)
@@ -777,7 +793,7 @@ class VistaReport(Vista_a):
 	
 # 	data_da=datetime.date(int(dt_da[0:4]), int(dt_da[5:7]), int(dt_da[8:10]))
 # 	data_a=datetime.date(int(dt_a[0:4]), int(dt_a[5:7]), int(dt_a[8:10]))
-    
+	
 # 	lavs = Lavoro.lavori_data().exclude(data_fine__lt=data_da).exclude(data_inizio__gt=data_a).order_by('data_inizio')
 # 	pseudo_buffer = Echo()
 # 	writer = csv.writer(pseudo_buffer)
@@ -787,21 +803,21 @@ class VistaReport(Vista_a):
 # 		content_type="text/csv",
 # 		headers={"Content-Disposition": 'attachment; filename="report-{dt1}-{dt2}.csv"'.format(dt1=data_da, dt2=data_a)},
 #     )
- 
+
 
 def ReportCSV(request):
 	oggi = datetime.date(timezone.now().year, timezone.now().month, 1)
 	dt_da = request.POST.get('data_da', "{dt}".format(dt = oggi ))
 	dt_a = request.POST.get('data_a', "{dt}".format(dt=last_day_of_month(oggi)))
 	return ReportCSVDt(request, dt_da, dt_a)
- 
+
 def ReportCSVDt(request, dt_da, dt_a):
 
 	humanize.i18n.activate("it_IT")
- 
+
 	data_da=datetime.date(int(dt_da[0:4]), int(dt_da[5:7]), int(dt_da[8:10]))
 	data_a=datetime.date(int(dt_a[0:4]), int(dt_a[5:7]), int(dt_a[8:10]))
-    
+	
 	lavs = (Lavoro.lavori_data().exclude(data_fine__lt=data_da).exclude(data_inizio__gt=data_a).order_by('data_inizio') | Lavoro.lavori_data().filter(data_inizio__isnull=True)).distinct()
 	response = HttpResponse(
 		content_type="text/csv",
@@ -880,3 +896,56 @@ def ReportCSVDt(request, dt_da, dt_a):
 				tags,
 			])
 	return response
+
+
+class VistaStrutture(Vista_a):
+	template_name = "gic_strutture.html"
+	action = START	
+	debug = ""
+	id_s = ERROR
+	
+	def post(self, request, *args, **kwargs):
+		self.action = request.POST.get("action", START)
+		self.id_s = request.POST.get("id_lavoro", self.id_s)
+  
+		if self.action == NEW:
+			segn = Segnalazione(
+				tipo = Tipologia.tipologia(request.POST.get("tipo")[0:2], request.POST.get("tipo")[3:6]),
+				stato = Tipologia.tipologia(request.POST.get("stato")[0:2], request.POST.get("stato")[3:6]),
+				origine = Tipologia.tipologia(request.POST.get("origine")[0:2], request.POST.get("origine")[3:6]),
+				segnalatore = request.POST.get("segnalatore"),
+				email = request.POST.get("email"),
+				telefono = request.POST.get("telefono"),
+				oggetto = request.POST.get("oggetto"),
+				descrizione = request.POST.get("descrizione"),
+				struttura = Struttura.objects.get(id = request.POST.get("struttura")),
+				data_pianificazione = timezone.now(),
+    
+			)
+			segn.save()
+
+			for img in request.FILES.getlist('foto'):
+				allg = Allegato(
+					file = img, 
+					segnalazione = segn,
+					)
+				allg.save()
+
+
+		
+
+		#self.debug += self.action + " fine post."
+		self.action = START
+
+		#request.POST= {}
+		return render(request, self.template_name, self.get_context_data(self, *args, **kwargs))
+
+
+	def get_context_data(self, *args, **kwargs):
+		
+		strutts = self.context["dipendente"].servizio_al().strutture.all()
+		self.context["strutture"] = strutts
+		self.context["segnalazioni"] = Segnalazione.objects.filter(struttura__in = strutts).exclude(stato__in = (Tipologia.t_stato("CHI"), Tipologia.t_stato("VER")))
+		self.context["segnalazione_new"] = SegnalazioneStrutturaForm
+		self.context['gic_render'] = str_render
+		return self.context
