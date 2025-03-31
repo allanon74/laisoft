@@ -25,4 +25,8 @@ __pycache__
 *.pydevproject
 *\__pycache__\
 
+<<<<<<< HEAD
 .venv/
+=======
+.venv/
+>>>>>>> 0bc9dac850de9390be05a5cc7051c2b1e52c8dbb
