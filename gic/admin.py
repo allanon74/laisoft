@@ -13,6 +13,7 @@ from .models import Evento, Segnalazione, Intervento, Team, Foto, Lavoro, TempiL
 
 from .models import CollaboratoreMansione, CollaboratoreAssenza, CollaboratoreReperibilita, EventoSegnalazione
 
+from dipendenti.models import Servizio
 # funzioni
 
 
@@ -145,7 +146,10 @@ class AllegatoInline(Inline_a):
 	
 class AnnotazioneInline(Inline_a):
 	model = Annotazione
-	
+
+class ServizioInline(Inline_a):
+    model = Servizio
+    	
 # classi admin
 
 class MansioneAdmin(ItDe_a):
@@ -185,7 +189,8 @@ class CdCAdmin(ItDe_a):
 class StrutturaAdmin(ItDe_a):
 	# search_fields = ['translations__nome_breve', 'translations__descrizione',]
 	# ordering = ['nome_breve', ]
-	pass
+	# inlines = [ServizioInline, ]
+	filter_horizontal = ['autorizzati', ]
 
 class EventoAdmin(ItDe_a):
 	inlines = [EventoSegnalazioneInline, ]

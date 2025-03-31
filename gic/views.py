@@ -139,7 +139,7 @@ coll_render[SEGNALAZIONI_NEW] = True
 coll_render[ALLEGATI] = True
 coll_render[ANNOTAZIONI] = True
 coll_render[FOTO] = True
-coll_render[TEMPILAVORO] = True
+coll_render[TEMPILAVORO] = True 
 coll_render[VERIFICA] = False
 
 class Echo:

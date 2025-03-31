@@ -8,6 +8,7 @@ from django.db.models import Count, F, When, Case, Value, ExpressionWrapper as E
 
 import humanize
 
+from dipendenti.models import Servizio
 
 
 
@@ -972,7 +973,13 @@ class Struttura(Base_a, ItDe_a):
 		_("Numero di telefono"),
 		max_length = 15,
 		)
-	
+	autorizzati = models.ManyToManyField(
+		Servizio,
+		related_name = "strutture", 
+
+	)	
+ 
+ 
 	class Meta:
 		verbose_name = _("Struttura")
 		verbose_name_plural = _("Strutture")

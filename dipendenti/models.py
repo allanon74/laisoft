@@ -941,7 +941,9 @@ class Dipendente(models.Model):
 		eml.send()
 
 
-
+	@property
+	def nomecompleto(self):
+		return "{c} {n}".format(c=self.cognome, n=self.nome)
 		  
 	
 	class Meta:

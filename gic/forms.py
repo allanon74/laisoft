@@ -20,21 +20,21 @@ from django.utils.translation import gettext_lazy as _
 
 translation.activate('it')
 
-# class MultipleFileInput(ClearableFileInput):
-#     allow_multiple_selected = True
+#class MultipleFileInput(ClearableFileInput):
+#	allow_multiple_selected = True
 
-# class MultipleFileField(FileField):
-#     def __init__(self, *args, **kwargs):
-#         kwargs.setdefault("widget", MultipleFileInput())
-#         super().__init__(*args, **kwargs)
+#class MultipleFileField(FileField):
+#	def __init__(self, *args, **kwargs):
+#		kwargs.setdefault("widget", MultipleFileInput())
+#		super().__init__(*args, **kwargs)
 
-#     def clean(self, data, initial=None):
-#         single_file_clean = super().clean
-#         if isinstance(data, (list, tuple)):
-#             result = [single_file_clean(d, initial) for d in data]
-#         else:
-#             result = single_file_clean(data, initial)
-#         return result
+#	def clean(self, data, initial=None):
+#		single_file_clean = super().clean
+#		if isinstance(data, (list, tuple)):
+#			result = [single_file_clean(d, initial) for d in data]
+#		else:
+#			result = single_file_clean(data, initial)
+#		return result
 
 class SegnalazioneForm(ModelForm):
 	template_name = "fr_jq_segnalazione.html"
@@ -234,46 +234,46 @@ class LavoroJqmForm(ModelForm):
 			}
 		
 
-# class FotoForm(Form):
-# 	_tema = Tema.get_tema("tempilavoro")
-# 	foto = MultipleFileField(
-# 		required=True, 
-# 		label=_("Seleziona un'immagine"),
-# 		)
-# 	tipo = ChoiceField(
-# 		choices={t.id : t.nome_breve for t in Tipologia.foto()}, 
-# 		widget=Select(attrs={ "data-theme" : _tema, }),
-# 		required=True,
-# 		label = _("Tipologia di foto"),
-# 		)
-# 	posizione = PointField(
-# 		widget = OSMWidget(
-# 			attrs={
-# 				'map-width' : 300,
-# 				'map-heigth' : 200,
-# 				'template-name' : 'gis/openlayers-osm.html',
-# 				'default-lat': 57,
-# 				'default-lon' : 12
-# 				}
-# 			)
-# 		)
-# 	note = SlugField()
-# 	
-# 	class Meta:
-# 		fields = ['foto', 'tipo', 'posizione', ]
-# 		widgets=  {
-# 		#	'foto' : ClearableFileInput(attrs={'class': 'file-upload-input', 'id': 'file-selector',"multiple": True}),
-# 			'posizione' : OSMWidget(
-# 				attrs={
-# 					'map-width' : 300,
-# 					'map-heigth' : 200,
-# 					'template-name' : 'gis/openlayers-osm.html',
-# 					'default-lat': 57,
-# 					'default-lon' : 12
-# 					}
-# 				),
-# 			}
-# 		
+#class FotoForm(Form):
+#	_tema = Tema.get_tema("tempilavoro")
+#	foto = MultipleFileField(
+#		required=True, 
+#		label=_("Seleziona un'immagine"),
+#		)
+#	tipo = ChoiceField(
+#		choices={t.id : t.nome_breve for t in Tipologia.foto()}, 
+#		widget=Select(attrs={ "data-theme" : _tema, }),
+#		required=True,
+#		label = _("Tipologia di foto"),
+#		)
+#	posizione = PointField(
+#		widget = OSMWidget(
+#			attrs={
+#				'map-width' : 300,
+#				'map-heigth' : 200,
+#				'template-name' : 'gis/openlayers-osm.html',
+#				'default-lat': 57,
+#				'default-lon' : 12
+#				}
+#			)
+#		)
+#	note = SlugField()
+#	
+#	class Meta:
+#		fields = ['foto', 'tipo', 'posizione', ]
+#		widgets=  {
+#		#	'foto' : ClearableFileInput(attrs={'class': 'file-upload-input', 'id': 'file-selector',"multiple": True}),
+#			'posizione' : OSMWidget(
+#				attrs={
+#					'map-width' : 300,
+#					'map-heigth' : 200,
+#					'template-name' : 'gis/openlayers-osm.html',
+#					'default-lat': 57,
+#					'default-lon' : 12
+#					}
+#				),
+#			}
+#		
 		
 
 class AllegatoForm(Form):
@@ -290,3 +290,24 @@ class AllegatoForm(Form):
 	
 class FotoForm(_f):
 	pass
+
+class SegnalazioneStruttura(Form):
+	_tema = Tema.get_tema('segnalazione')
+	oggetto = CharField(
+		required = True, 
+		strip = True, 
+		label = _("Oggetto"),
+	)
+	descrizione = CharField(
+		required = True,
+		strip = True, 
+		label = _("Descrizione del problema"),		
+	)
+ 
+ 
+	class Meta:
+			_tema = Tema.get_tema('segnalazione')
+			widgets = {
+				'oggetto' : TextInput(attrs={ "data-theme" : _tema, }),
+				'descrizione' : Textarea(attrs={ "data-theme" : _tema, }),
+			}

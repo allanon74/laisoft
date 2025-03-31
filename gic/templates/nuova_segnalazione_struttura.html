@@ -1,0 +1,19 @@
+{% load i18n customform %}
+<div data-theme="{{ tema_s }}" data-role="collapsible"> <!-- coll nuova segnalazione --> 
+	<h1> Nuova segnalazione</h1> <!-- form nuova segnalazione --> 
+		<p data-theme="{{ tema_s }}">
+			<form data-theme="{{ tema_s }}" action="" method="post"> {% csrf_token %}
+				{{ segnalazione_new }}
+
+				<input type="hidden" name="model" value="Segnalazione" />
+				<input type="hidden" name="action" value="new" />
+                <input type="hidden" name="tipo" value="ST-EST">
+                <input type="hidden" name="stato" value="TO-ACQ">
+                <input type="hidden" name= "origine" value="SO-FRM">
+                <input type="hidden" name="segnalatore" value="{{ dipendente.nomecompleto }}">
+                <input type="hidden" name="email" value="{{ dipendente.email }}">
+                <input type="hidden" name="telefono" value="{{ dipendente.telefono }}">
+				<input type="submit" data-theme="{{ tema_u }}" class="ui-btn ui-btn-b" value="Salva" />
+			</form> <!-- form nuova segnalazione --> 
+		</p>
+</div> <!-- coll nuova segnalazione -->  
