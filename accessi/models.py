@@ -215,6 +215,7 @@ class Template(Base_abstract):
 	data = models.DateField("Data di decorrenza della validità del template", )
 	data_firma = models.DateField("Data della sottoscrizione", null=True, blank=True )
 	nome = models.CharField("nome del template", max_length=20, )
+	nome_int = models.CharField("nome del template in LDAP", max_length=20, null=True, blank=True, )
 
 	autorizzazione = models.ForeignKey(
 								Autorizzazione, 
