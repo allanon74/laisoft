@@ -1156,6 +1156,46 @@ class Segnalazione(Base_a, Periodic_a, Description_a, Status_a, D3_a):
 			tot += itv.conta_teams()
 		return tot
 	
+	def calcola_stato(self):
+		"""
+		assegna lo stato alla segnalazione in base agli stati degli interventi
+		"""
+		verificato = Tipologia.tipologia(STATO, "VER")
+		assegnato = Tipologia.tipologia(STATO, "ASS")
+		acquisito = Tipologia.tipologia(STATO, "ACQ")
+		in_corso = Tipologia.tipologia(STATO, "INC")
+		in_pausa = Tipologia.tipologia(STATO, "PAU")
+		chiuso = Tipologia.tipologia(STATO, "CHI")
+
+		stato_r = acquisito
+
+		if self.intervento_set.all().count() == 0:
+			stato_r = acquisito   
+		else:
+			ass = self.intervento_set.filter(stato = assegnato).count()
+			acq = self.intervento_set.filter(stato = acquisito).count()
+			inc = self.intervento_set.filter(stato = in_corso).count()
+			pau = self.intervento_set.filter(stato = in_pausa).count()
+			ver = self.intervento_set.filter(stato = verificato).count()
+			# chi = self.intervento_set.filter(stato = chiuso).count()
+			tot = self.intervento_set.all().count()
+
+			if pau > 0:
+				stato_r = in_pausa
+			elif inc > 0:
+				stato_r = in_corso
+			elif acq > 0: 
+				stato_r = acquisito
+			elif ass > 0:
+				stato_r = assegnato
+			elif ver == tot:
+				stato_r == verificato
+			else:
+				stato_r == chiuso
+		return stato_r		
+
+		
+ 
 	def save(self, *args, **kwargs):
 		acquisito = Tipologia.tipologia(STATO, "ACQ")
 		verificato = Tipologia.tipologia(STATO, "VER")
@@ -1296,28 +1336,70 @@ class Intervento(Base_a, Periodic_a, Description_a, Status_a, RABS_a):
 			tot += tm.conta_lavori()
 		return tot
 
-	def save(self, *args, **kwargs):
-		
+	def calcola_stato(self):
+		"""
+		assegna lo stato all'intervento in base agli stati dei lavori
+		"""
 		acquisito = Tipologia.tipologia(STATO, "ACQ")
 		assegnato = Tipologia.tipologia(STATO, "ASS")
 		chiuso = Tipologia.tipologia(STATO, "CHI")
 		verificato = Tipologia.tipologia(STATO, "VER")
 		in_corso = Tipologia.tipologia(STATO, "COR")
+		in_pausa = Tipologia.tipologia(STATO, "PAU")
+
+		stato_r = assegnato
+  
+		tot = self.conta_lavori()
+  
+		if tot == 0:
+			stato_r = acquisito
+		else:
+			lavs = Lavoro.objects.filter(team__intervento=self.id)
+			ass = lavs.filter(stato = assegnato).count()
+			# acq = lavs.filter(stato = acquisito).count()
+			inc = lavs.filter(stato = in_corso).count()
+			pau = lavs.filter(stato = in_pausa).count()
+			ver = lavs.filter(stato = verificato).count()
+			# chi = lavs.filter(stato = chiuso).count()
+
+			if pau > 0:
+				stato_r = in_pausa
+			elif inc > 0:
+				stato_r = in_corso
+			elif ass > 0:
+				stato_r = assegnato
+			elif ver == tot:
+				stato_r = verificato
+			else:
+				stato_r = chiuso
+		return stato_r
+
+
+			
+			
+ 
+	def save(self, *args, **kwargs):
+		
+		acquisito = Tipologia.tipologia(STATO, "ACQ")
+		# assegnato = Tipologia.tipologia(STATO, "ASS")
+		# chiuso = Tipologia.tipologia(STATO, "CHI")
+		verificato = Tipologia.tipologia(STATO, "VER")
+		# in_corso = Tipologia.tipologia(STATO, "COR")
 		
 		if not self.id:
 			self.stato = acquisito
-		else:
-			if self.segnalazione:
-				if self.stato in (assegnato, chiuso, verificato):
-					res = True
-					for i in self.segnalazione.intervento_set.all():
-						res &= (i.stato == self.stato)
-					if res:
-						self.segnalazione.stato = self.stato
-						self.segnalazione.save()
-				elif self.stato == in_corso:
-					self.segnalazione.stato = self.stato
-					self.segnalazione.save()
+		# else:
+		# 	if self.segnalazione:
+		# 		if self.stato in (assegnato, chiuso, verificato):
+		# 			res = True
+		# 			for i in self.segnalazione.intervento_set.all():
+		# 				res &= (i.stato == self.stato)
+		# 			if res:
+		# 				self.segnalazione.stato = self.stato
+		# 				self.segnalazione.save()
+		# 		elif self.stato == in_corso:
+		# 			self.segnalazione.stato = self.stato
+		# 			self.segnalazione.save()
 		if self.stato == verificato:
 			try:
 				intv = Intervento.objects.get(pk=self.id)
@@ -1325,7 +1407,11 @@ class Intervento(Base_a, Periodic_a, Description_a, Status_a, RABS_a):
 					self.duplica()
 			except Intervento.DoesNotExist:
 				self.duplica()
-		return super(Intervento, self).save(*args, **kwargs)
+		res = super(Intervento, self).save(*args, **kwargs)
+		if self.segnalazione:
+			self.segnalazione.stato = self.calcola_stato()
+			self.segnalazione.save()
+		return res
 
 	class Meta:
 		verbose_name = _("Intervento")
@@ -1682,35 +1768,38 @@ class Lavoro(Base_a, Description_a, Status_a):
 	
 	def save(self, *args, **kwargs):
 		assegnato = Tipologia.tipologia(STATO, "ASS")
-		chiuso = Tipologia.tipologia(STATO, "CHI")
-		verificato = Tipologia.tipologia(STATO, "VER")
-		in_corso = Tipologia.tipologia(STATO, "COR")
+		# chiuso = Tipologia.tipologia(STATO, "CHI")
+		# verificato = Tipologia.tipologia(STATO, "VER")
+		# in_corso = Tipologia.tipologia(STATO, "COR")
 		
 		if not self.id:
 			self.stato = assegnato
-			res = True
-			for t in self.team.intervento.team_set.all():
-				res &= (t.lavoro_set.all().count()>0)
-				if res:
-					self.team.intervento.stato = assegnato
-					self.team.intervento.save()
-		else:
-			if self.stato in (chiuso, verificato):
-				res = True
-				for t in self.team.intervento.team_set.all():
-					for l in t.lavoro_set.all():
-						res &= (l.stato == self.stato)
-					if res:
-						self.team.intervento.stato = self.stato
-						self.team.intervento.save()
-			elif self.stato in (in_corso, assegnato):
-				self.team.intervento.stato = self.stato
-				self.team.intervento.save()
+		# 	res = True
+		# 	for t in self.team.intervento.team_set.all():
+		# 		res &= (t.lavoro_set.all().count()>0)
+		# 		if res:
+		# 			self.team.intervento.stato = assegnato
+		# 			self.team.intervento.save()
+		# else:
+		# 	if self.stato in (chiuso, verificato):
+		# 		res = True
+		# 		for t in self.team.intervento.team_set.all():
+		# 			for l in t.lavoro_set.all():
+		# 				res &= (l.stato == self.stato)
+		# 			if res:
+		# 				self.team.intervento.stato = self.stato
+		# 				self.team.intervento.save()
+		# 	elif self.stato in (in_corso, assegnato):
+		# 		self.team.intervento.stato = self.stato
+		# 		self.team.intervento.save()
 				
-			else:
-				self.stato = assegnato
-				self.save()
-		return super(Lavoro, self).save(*args, **kwargs)
+		# 	else:
+		# 		self.stato = assegnato
+		# 		self.save()
+		res = super(Lavoro, self).save(*args, **kwargs)
+		self.team.intervento.stato = self.team.intervento.calcola_stato()
+		self.team.intervento.save()
+		return res
 
 	
 	

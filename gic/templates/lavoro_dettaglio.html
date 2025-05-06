@@ -88,4 +88,14 @@
 	</div>
 {% endif %}
 
-
+{% if diritto.lavori_v and gic_render.verifica %}
+	<br />
+	<hr />
+	<form method="post" data-ajax="false" action="">
+		{% csrf_token %}
+		<input type="hidden" name="action" value="verificato">
+		<input type="hidden" name="id" value="{{ lavoro.id }}">
+		<input type="hidden" name="model" value="Lavoro">
+		<button class="ui-btn ui-icon-check ui-btn-icon-left">{% trans "Lavoro verificato" %}</button>
+	</form>
+{% endif %}

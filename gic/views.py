@@ -46,6 +46,7 @@ TERMINA = "termina"
 PAUSA = "pausa"
 ERROR = "err"
 ALLEGATO = "allegato"
+VERIFICATO = "verificato"
 
 """
 
@@ -277,6 +278,14 @@ class VistaMain(Vista_a):
 					)
 				alg.save()
 				request.POST={}
+    
+			elif self.action == VERIFICATO:
+				inst = mdl.objects.get(pk=request.POST.get('id'))
+				inst.stato = Tipologia.tipologia("TO", "VER")
+				inst.save()
+				self.action = START
+				request.POST={}
+				
 				
 		return render(request, self.template_name, self.get_context_data(self, *args, **kwargs))
 
@@ -348,7 +357,7 @@ class VistaJq(VistaMain):
 		return self.context
 	
 class VistaLavoriVerifica(VistaMain):
-	template_name = "gic_lavori.html"
+	template_name = "gic_lavori.html" 
 
 	def get_context_data(self, *args, **kwargs):
 		self.context = super().get_context_data(*args, **kwargs)
@@ -526,6 +535,14 @@ class VistaSingola_a(Vista_a):
 				)
 			alg.save()
 			request.POST={}
+
+		elif self.action == VERIFICATO:
+			inst = mdl.objects.get(pk=request.POST.get('id'))
+			inst.stato = Tipologia.tipologia("TO", "VER")
+			inst.save()
+			self.action = START
+			request.POST={}
+
 		kwargs['id'] = v_tst 
 		return render(request, self.template_name, self.get_context_data(self, *args, **kwargs))
 
