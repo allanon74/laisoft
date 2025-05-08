@@ -1130,7 +1130,7 @@ class Segnalazione(Base_a, Periodic_a, Description_a, Status_a, D3_a):
 		)
 	
 	def duplica(self):
-		if self.periodico():
+		if self.periodico:
 			a = self
 			if a.periodo:
 				a.id = None 
@@ -1295,7 +1295,7 @@ class Intervento(Base_a, Periodic_a, Description_a, Status_a, RABS_a):
 	def duplica(self):
 		a = copy.copy(self)
 		verificato = Tipologia.tipologia(STATO, "VER") 
-		if a.periodico():
+		if a.periodico:
 			a.id = None
 			if a.segnalazione:
 				if a.segnalazione.periodico and a.segnalazione.duplicare:
