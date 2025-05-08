@@ -1130,19 +1130,20 @@ class Segnalazione(Base_a, Periodic_a, Description_a, Status_a, D3_a):
 		)
 	
 	def duplica(self):
-		if self.periodico:
-			a = self
-			if a.periodo:
-				a.id = None 
-				a.data_pianificazione += datetime.timedelta(days=a.periodo)
-				if a.cicli:
-					a.cicli -= 1 
-					if a.cicli <= 0:
-						a.cicli = None
-						a.periodico = None
-				if a.duplicare:
-					for itv in self.intervento_set.all():
-						itv.duplica()
+		# if self.periodico:
+		# 	a = self
+		# 	if a.periodo:
+		# 		a.id = None 
+		# 		a.data_pianificazione += datetime.timedelta(days=a.periodo)
+		# 		if a.cicli:
+		# 			a.cicli -= 1 
+		# 			if a.cicli <= 0:
+		# 				a.cicli = None
+		# 				a.periodico = None
+		# 		if a.duplicare:
+		# 			for itv in self.intervento_set.all():
+		# 				itv.duplica()
+		pass
 	
 	def conta_lavori(self):
 		tot = 0
@@ -1293,38 +1294,38 @@ class Intervento(Base_a, Periodic_a, Description_a, Status_a, RABS_a):
 	
 	
 	def duplica(self):
-		a = copy.copy(self)
-		verificato = Tipologia.tipologia(STATO, "VER") 
-		if a.periodico:
-			a.id = None
-			if a.segnalazione:
-				if a.segnalazione.periodico and a.segnalazione.duplicare:
-					a.data_visibilita += datetime.timedelta(days=a.segnalazione.periodo)
-				elif a.stato == verificato:
-					a.data_visibilita += datetime.timedelta(days=a.periodo)
-					a.cicli -= 1
-					if a.cicli <= 0:
-						a.cicli = None
-						a.periodico = False
-			else:
-				a.data_visibilita += datetime.timedelta(days=a.periodo)
-				a.cicli -= 1
-				if a.cicli <= 0:
-					a.cicli = None
-					a.periodico = False
-			a.save()	
-			if a.duplicare:
-				for tm in self.team_set.all():
-					t = copy.copy(tm)
-					t.id = None
-					t.intervento = a
-					t.save()
-					for lv in tm.lavoro_set.all():
-						l = copy.copy(lv)
-						l.id = None
-						l.team = t
-						l.save()
-						
+		# a = copy.copy(self)
+		# verificato = Tipologia.tipologia(STATO, "VER") 
+		# if a.periodico:
+		# 	a.id = None
+		# 	if a.segnalazione:
+		# 		if a.segnalazione.periodico and a.segnalazione.duplicare:
+		# 			a.data_visibilita += datetime.timedelta(days=a.segnalazione.periodo)
+		# 		elif a.stato == verificato:
+		# 			a.data_visibilita += datetime.timedelta(days=a.periodo)
+		# 			a.cicli -= 1
+		# 			if a.cicli <= 0:
+		# 				a.cicli = None
+		# 				a.periodico = False
+		# 	else:
+		# 		a.data_visibilita += datetime.timedelta(days=a.periodo)
+		# 		a.cicli -= 1
+		# 		if a.cicli <= 0:
+		# 			a.cicli = None
+		# 			a.periodico = False
+		# 	a.save()	
+		# 	if a.duplicare:
+		# 		for tm in self.team_set.all():
+		# 			t = copy.copy(tm)
+		# 			t.id = None
+		# 			t.intervento = a
+		# 			t.save()
+		# 			for lv in tm.lavoro_set.all():
+		# 				l = copy.copy(lv)
+		# 				l.id = None
+		# 				l.team = t
+		# 				l.save()
+		pass				
 			
 
 	def conta_teams(self):
