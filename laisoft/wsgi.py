@@ -10,9 +10,14 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
 import os
 import sys
 import site
+import oracledb
+oracledb.init_oracle_client(lib_dir="/usr/lib/oracle/11.2/client64/lib") # Oracle Thick client
+
 
 
 from django.core.wsgi import get_wsgi_application
+
+
 
 site.addsitedir('/home/django/ambienti/laisoft/lib/python3.10/site-packages')
 

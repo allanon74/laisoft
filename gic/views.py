@@ -4,10 +4,45 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import modelformset_factory
 from django.utils import timezone
-from django.db.models import F
+from django.db.models import F, Q
 from django.urls import reverse_lazy
 from django.http import StreamingHttpResponse, HttpResponse
 import humanize
+from django_filters.rest_framework import DjangoFilterBackend
+
+
+from django.contrib.auth import authenticate
+
+
+from rest_framework import viewsets, status, permissions
+
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+
+from rest_framework.authtoken.admin import User
+from rest_framework.authentication import TokenAuthentication
+
+
+from .models import (
+    Tema, Vista, Mansione, MansioneTranslation, Attivita, AttivitaTranslation,
+    Priorita, PrioritaTranslation, Anno, Squadra, SquadraTranslation, Tipologia,
+    TipologiaTranslation, Collaboratore, CdC, CdCTranslation, Struttura, StrutturaTranslation,
+    Diritto, Evento, Tag, EventoTranslation, Segnalazione, Intervento, Team,
+    Foto, Lavoro, TempiLavoro, Allegato, Annotazione, EventoSegnalazione,
+    CollaboratoreMansione, CollaboratoreAssenza, CollaboratoreReperibilita
+)
+from .serializers import (
+    TemaSerializer, VistaSerializer, MansioneSerializer, MansioneTranslationSerializer,
+    AttivitaSerializer, AttivitaTranslationSerializer, PrioritaSerializer, PrioritaTranslationSerializer,
+    AnnoSerializer, SquadraSerializer, SquadraTranslationSerializer, TipologiaSerializer,
+    TipologiaTranslationSerializer, CollaboratoreSerializer, CdCSerializer, CdCTranslationSerializer,
+    StrutturaSerializer, StrutturaTranslationSerializer, DirittoSerializer, EventoSerializer,
+    TagSerializer, EventoTranslationSerializer, SegnalazioneSerializer, InterventoSerializer,
+    TeamSerializer, FotoSerializer, LavoroSerializer, TempiLavoroSerializer, AllegatoSerializer,
+    AnnotazioneSerializer, EventoSegnalazioneSerializer, CollaboratoreMansioneSerializer,
+    CollaboratoreAssenzaSerializer, CollaboratoreReperibilitaSerializer, UserSerializer,
+    SegnalazioneCompletaSerializer, AuthTokenSerializer,
+)
 
 import csv
 
@@ -27,8 +62,8 @@ from dipendenti.views import base_context
 
 from laisoft.settings import BASE_URL
 
-from .models import Tema, Segnalazione, Diritto, Intervento, Team, Collaboratore, Tipologia, TempiLavoro, Foto, Allegato, Struttura
-from .models import Lavoro, Attivita, Priorita 
+# from .models import Tema, Segnalazione, Diritto, Intervento, Team, Collaboratore, Tipologia, TempiLavoro, Foto, Allegato, Struttura
+# from .models import Lavoro, Attivita, Priorita 
 from .forms import SegnalazioneFormset, SegnalazioneForm, InterventoForm, TeamForm, LavoroForm, FotoForm, AllegatoForm, SegnalazioneStrutturaForm
 
 CAPOCANTIERE = 'capocantiere' 
@@ -263,11 +298,21 @@ class VistaMain(Vista_a):
 				request.POST={}
 			
 			elif self.action == NEW:
+# 				f = frm(request.POST)
+# #				frm.fields['stato'].required = False
+# 				n_seg = f.save()
+# 				self.action = START
+# 				request.POST= {}
+
+				
 				f = frm(request.POST)
-#				frm.fields['stato'].required = False
-				n_seg = f.save()
-				self.action = START
-				request.POST= {}
+				if f.is_valid():
+					n_seg = f.save()
+					self.action = START
+					request.POST = {}
+				else:
+					print(f.errors)
+
 			
 			elif self.action == ALLEGATO:
 				sg = Segnalazione.objects.get(id=request.POST["id_segnalazione"])
@@ -282,6 +327,7 @@ class VistaMain(Vista_a):
 			elif self.action == VERIFICATO:
 				inst = mdl.objects.get(pk=request.POST.get('id'))
 				inst.stato = Tipologia.tipologia("TO", "VER")
+				inst.caposquadra = self.dipendente.collaboratore
 				inst.save()
 				self.action = START
 				request.POST={}
@@ -292,34 +338,84 @@ class VistaMain(Vista_a):
 	def get_context_data(self, *args, **kwargs):
 		
 		ruolo = self.context['ruolo']
-		interv = None
-		segn = None
+# 		interv = None
+# 		segn = None
+# 		if not (ruolo[CAPOCANTIERE] or ruolo[UFFICIO] or ruolo[COORDINATORE]):
+# 			if ruolo[CAPOSQUADRA]:
+# 				interv = self.dipendente.collaboratore.squadra.interventi()
+# 				segn = Segnalazione.objects.exclude(stato__abbreviazione="VER") # INSERITE tutte le segnalazioni per un bug: da RISOLVERE
+# 			elif ruolo[STRUTTURA]:
+# 				segn = Segnalazione.objects.exclude(stato__abbreviazione="VER").filter(struttura__in = self.dipendente.collaboratore.struttura_set.all())
+# 		else:
+# 			interv = Intervento.objects.exclude(stato__abbreviazione="VER")
+# 			segn = Segnalazione.objects.exclude(stato__abbreviazione="VER")
+	
+# 		interv = interv.order_by("stato__ordine","-priorita__valore","-data_creazione")
+# 		segn = segn.order_by("stato__ordine","-data_creazione").exclude(data_pianificazione__gt = timezone.now())
+		
+# 		self.context['interventi'] = interv
+# 		self.context['segnalazioni'] = segn
+# 		self.context['action'] = self.action
+# #		self.context['seg_v'] = Segnalazione.objects.filter(stato__abbreviazione="VER").order_by("-data_creazione")
+# 		self.context['oggi'] = timezone.now()
+		
+# 		self.context['collaboratori'] = Collaboratore.objects.all().order_by('dipendente__cognome', 'dipendente__nome')
+# 		self.context['segnalazione_new'] = SegnalazioneForm 
+# 		self.context["intervento_new"] = InterventoForm
+# 		self.context["team_new"] = TeamForm
+# 		self.context['lavoro_new'] = LavoroForm
+# 		self.context['coll_render'] = coll_render
+		
+# 		self.context['gic_render'] = gic_no_render
+
+# prova ottimizzata
+
+		oggi = timezone.now()
+
+		# QuerySet base per Segnalazioni e Interventi
+		segnalazioni_qs = Segnalazione.objects.select_related(
+			'struttura', 'tipo', 'stato'
+		).prefetch_related(
+			'tags', 'eventi'
+		).exclude(
+			stato__abbreviazione="VER"
+		).filter(
+			data_pianificazione__lte=oggi
+		).order_by("stato__ordine", "-data_creazione")
+
+		interventi_qs = Intervento.objects.select_related(
+			'struttura', 'priorita', 'preposto', 'stato'
+		).exclude(
+			stato__abbreviazione="VER"
+		).order_by("stato__ordine", "-priorita__valore", "-data_creazione")
+
+		# Filtri per ruolo
 		if not (ruolo[CAPOCANTIERE] or ruolo[UFFICIO] or ruolo[COORDINATORE]):
 			if ruolo[CAPOSQUADRA]:
-				interv = self.dipendente.collaboratore.squadra.interventi()
+				interventi_qs = self.dipendente.collaboratore.squadra.interventi()
+				segnalazioni_qs = segnalazioni_qs
 			elif ruolo[STRUTTURA]:
-				segn = Segnalazione.objects.exclude(stato__abbreviazione="VER").filter(struttura__in = self.dipendente.collaboratore.struttura_set.all())
-		else:
-			interv = Intervento.objects.exclude(stato__abbreviazione="VER")
-			segn = Segnalazione.objects.exclude(stato__abbreviazione="VER")
-	
-		interv = interv.order_by("stato__ordine","-priorita__valore","-data_creazione")
-		segn = segn.order_by("stato__ordine","-data_creazione").exclude(data_pianificazione__gt = timezone.now())
-		
-		self.context['interventi'] = interv
-		self.context['segnalazioni'] = segn
-		self.context['action'] = self.action
-#		self.context['seg_v'] = Segnalazione.objects.filter(stato__abbreviazione="VER").order_by("-data_creazione")
-		self.context['oggi'] = timezone.now()
-		
-		self.context['collaboratori'] = Collaboratore.objects.all().order_by('dipendente__cognome', 'dipendente__nome')
-		self.context['segnalazione_new'] = SegnalazioneForm 
-		self.context["intervento_new"] = InterventoForm
-		self.context["team_new"] = TeamForm
-		self.context['lavoro_new'] = LavoroForm
-		self.context['coll_render'] = coll_render
-		
-		self.context['gic_render'] = gic_no_render
+				strutture = self.dipendente.collaboratore.struttura_set.all()
+				segnalazioni_qs = segnalazioni_qs.filter(struttura__in=strutture)
+				interventi_qs = Intervento.objects.none()
+			else:
+				interventi_qs = Intervento.objects.none()
+				segnalazioni_qs = Segnalazione.objects.none()
+
+		# Assegnazione al context
+		self.context.update({
+			'interventi': interventi_qs,
+			'segnalazioni': segnalazioni_qs,
+			'oggi': oggi,
+			'action': self.action,
+			'collaboratori': Collaboratore.objects.select_related('dipendente').order_by('dipendente__cognome', 'dipendente__nome'),
+			'segnalazione_new': SegnalazioneForm,
+			'intervento_new': InterventoForm,
+			'team_new': TeamForm,
+			'lavoro_new': LavoroForm,
+			'coll_render': coll_render,
+			'gic_render': gic_no_render,
+		})
 		
 		return self.context
 	
@@ -342,11 +438,15 @@ class VistaInterventi(VistaMain):
 
 class VistaCollaboratori(VistaMain):
 	template_name = "gic_collaboratori.html"
-	
-	def get_context_data(self, *args, **kwargs):
-		self.context = super().get_context_data(*args, **kwargs)
-		self.context['gic_render'] = gic_render
-		return self.context
+	login_url = "/login/"
+
+	def get_context_data(self, **kwargs):
+		context = base_context(self.request)
+		context['collaboratori'] = Collaboratore.objects.select_related('dipendente').order_by(
+			'dipendente__cognome', 'dipendente__nome'
+		)
+		context['gic_render'] = gic_render
+		return context
 
 class VistaJq(VistaMain):
 	template_name = "gic_jquery.html"
@@ -360,10 +460,37 @@ class VistaLavoriVerifica(VistaMain):
 	template_name = "gic_lavori.html" 
 
 	def get_context_data(self, *args, **kwargs):
-		self.context = super().get_context_data(*args, **kwargs)
-		self.context['gic_render'] = gic_render_v
-		self.context['lavori'] = Lavoro.objects.filter(stato = Tipologia.tipologia('TO', 'CHI')).order_by("-data_modifica")
-		self.context['foto_form'] = FotoForm
+     
+		# self.context = super().get_context_data(*args, **kwargs)
+		# self.context['gic_render'] = gic_render_v
+		# self.context['lavori'] = Lavoro.objects.filter(stato = Tipologia.tipologia('TO', 'CHI')).order_by("-data_modifica")
+		# self.context['foto_form'] = FotoForm
+  
+		
+		oggi = timezone.now()
+
+		# Recupera lo stato "CHI" (chiuso) una sola volta
+		stato_chiuso = Tipologia.tipologia('TO', 'CHI')
+
+		# Ottimizza la query dei lavori chiusi con select_related per evitare query nidificate
+		lavori_qs = Lavoro.objects.select_related(
+			'collaboratore__dipendente',
+			'team__attivita',
+			'team__intervento__segnalazione',
+			'team__intervento__struttura',
+			'team__intervento__priorita',
+			'stato'
+		).filter(
+			stato=stato_chiuso
+		).order_by('-data_modifica')
+
+		self.context.update({
+			'gic_render': gic_render_v,
+			'lavori': lavori_qs,
+			'foto_form': FotoForm,
+		})
+
+		
 		return self.context 
 
 """
@@ -841,7 +968,7 @@ def ReportCSVDt(request, dt_da, dt_a):
 		headers={"Content-Disposition": 'attachment; filename="report-{dt1}-{dt2}.csv"'.format(dt1=data_da, dt2=data_a)},
 	)
 	writer = csv.writer(response, dialect="excel")
-	#writer.writerow(["dt_da",dt_da, "dt_a", dt_a, "data_da", "{d}".format(d= data_da), "data_a", "{d}".format(d= data_a),])
+	#writer.writerow(["dt_da",dt_da, "dt_a", last_day_of_month(dt_a), "data_da", "{d}".format(d= data_da), "data_a", "{d}".format(d= data_a),])
 	writer.writerow([
 		"Oggetto", 
 		"Descrizione", 
@@ -965,4 +1092,293 @@ class VistaStrutture(Vista_a):
 		self.context["segnalazioni"] = Segnalazione.objects.filter(struttura__in = strutts).exclude(stato__in = (Tipologia.t_stato("CHI"), Tipologia.t_stato("VER")))
 		self.context["segnalazione_new"] = SegnalazioneStrutturaForm
 		self.context['gic_render'] = str_render
-		return self.context
+
+
+
+
+class TemaViewSet(viewsets.ModelViewSet):
+	queryset = Tema.objects.all()
+	serializer_class = TemaSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione']
+
+class VistaViewSet(viewsets.ModelViewSet):
+	queryset = Vista.objects.all()
+	serializer_class = VistaSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema']
+
+
+class MansioneViewSet(viewsets.ModelViewSet):
+	queryset = Mansione.objects.all()
+	serializer_class = MansioneSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema']
+
+class MansioneTranslationViewSet(viewsets.ModelViewSet):
+	queryset = MansioneTranslation.objects.all()
+	serializer_class = MansioneTranslationSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema']
+
+class AttivitaViewSet(viewsets.ModelViewSet):
+	queryset = Attivita.objects.all()
+	serializer_class = AttivitaSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema']
+
+class AttivitaTranslationViewSet(viewsets.ModelViewSet):
+	queryset = AttivitaTranslation.objects.all()
+	serializer_class = AttivitaTranslationSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema']
+
+class PrioritaViewSet(viewsets.ModelViewSet):
+	queryset = Priorita.objects.all()
+	serializer_class = PrioritaSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'valore']
+
+class PrioritaTranslationViewSet(viewsets.ModelViewSet):
+	queryset = PrioritaTranslation.objects.all()
+	serializer_class = PrioritaTranslationSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'valore']
+
+class AnnoViewSet(viewsets.ModelViewSet):
+	queryset = Anno.objects.all()
+	serializer_class = AnnoSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['anno', 'descrizione']
+
+class SquadraViewSet(viewsets.ModelViewSet):
+	queryset = Squadra.objects.all()
+	serializer_class = SquadraSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema']
+
+class SquadraTranslationViewSet(viewsets.ModelViewSet):
+	queryset = SquadraTranslation.objects.all()
+	serializer_class = SquadraTranslationSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema']
+
+class TipologiaViewSet(viewsets.ModelViewSet):
+	queryset = Tipologia.objects.all()
+	serializer_class = TipologiaSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'abbreviazione', 'tema']
+
+class TipologiaTranslationViewSet(viewsets.ModelViewSet):
+	queryset = TipologiaTranslation.objects.all()
+	serializer_class = TipologiaTranslationSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'abbreviazione', 'tema']
+
+class CollaboratoreViewSet(viewsets.ModelViewSet):
+	queryset = Collaboratore.objects.all()
+	serializer_class = CollaboratoreSerializer
+	authentication_classes = (TokenAuthentication,)
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'cognome', 'email', 'telefono', 'servizio', 'tema']
+
+class CdCViewSet(viewsets.ModelViewSet):
+	queryset = CdC.objects.all()
+	serializer_class = CdCSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema']
+
+class CdCTranslationViewSet(viewsets.ModelViewSet):
+	queryset = CdCTranslation.objects.all()
+	serializer_class = CdCTranslationSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields =	 ['nome', 'descrizione', 'tema']
+ 
+
+class StrutturaViewSet(viewsets.ModelViewSet):
+	queryset = Struttura.objects.all()
+	serializer_class = StrutturaSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema', 'cdc']
+
+class StrutturaTranslationViewSet(viewsets.ModelViewSet):
+	queryset = StrutturaTranslation.objects.all()
+	serializer_class = StrutturaTranslationSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema', 'cdc']
+
+class DirittoViewSet(viewsets.ModelViewSet):
+	queryset = Diritto.objects.all()
+	serializer_class = DirittoSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema']
+
+class EventoViewSet(viewsets.ModelViewSet):
+	queryset = Evento.objects.all()
+	serializer_class = EventoSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema', 'priorita', 'stato']
+
+class TagViewSet(viewsets.ModelViewSet):
+	queryset = Tag.objects.all()
+	serializer_class = TagSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema']
+
+class EventoTranslationViewSet(viewsets.ModelViewSet):
+	queryset = EventoTranslation.objects.all()
+	serializer_class = EventoTranslationSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['nome', 'descrizione', 'tema', 'priorita', 'stato']
+
+#----- Segnalazioni -----
+
+class SegnalazioneViewSet(viewsets.ModelViewSet):
+	queryset = Segnalazione.objects.exclude(stato__abbreviazione="VER")
+	serializer_class = SegnalazioneSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['tipo', 'stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', ]
+
+
+class SegnalazioneCompletaViewSet(viewsets.ModelViewSet):
+	queryset = Segnalazione.objects.exclude(stato__abbreviazione="VER")
+	serializer_class = SegnalazioneCompletaSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['tipo', 'stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', ]
+ 
+
+ 
+class SegnalazioneStoricaViewSet(viewsets.ModelViewSet):
+	queryset = Segnalazione.objects.filter(stato__abbreviazione="VER")
+	serializer_class = SegnalazioneSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['tipo', 'stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', ]
+
+class SegnalazioneStoricaCompletaViewSet(viewsets.ModelViewSet):
+	queryset = Segnalazione.objects.filter(stato__abbreviazione="VER")
+	serializer_class = SegnalazioneCompletaSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['tipo', 'stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', ]
+
+#----- Interventi -----
+class InterventoViewSet(viewsets.ModelViewSet):
+	queryset = Intervento.objects.all()
+	serializer_class = InterventoSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['segnalazione', 'stato', 'oggetto', 'priorita', 'preposto', 'provvisorio']
+
+class TeamViewSet(viewsets.ModelViewSet):
+	queryset = Team.objects.all()
+	serializer_class = TeamSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['attivita', 'intervento', 'collaboratore']
+
+class FotoViewSet(viewsets.ModelViewSet):
+	queryset = Foto.objects.all()
+	serializer_class = FotoSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['tipologia', 'collaboratore', 'intervento', 'posizione']
+
+class LavoroViewSet(viewsets.ModelViewSet):
+	queryset = Lavoro.objects.all()
+	serializer_class = LavoroSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['oggetto', 'descrizione', 'collaboratore', 'team', 'stato', 'accessorio']
+class TempiLavoroViewSet(viewsets.ModelViewSet):
+	queryset = TempiLavoro.objects.all()
+	serializer_class = TempiLavoroSerializer
+	authentication_classes = (TokenAuthentication,)
+class AllegatoViewSet(viewsets.ModelViewSet):
+	queryset = Allegato.objects.all()
+	serializer_class = AllegatoSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['segnalazione', 'descrizione', 'data_creazione']
+class AnnotazioneViewSet(viewsets.ModelViewSet):
+	queryset = Annotazione.objects.all()
+	serializer_class = AnnotazioneSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['intervento', 'collaboratore', 'testo', 'data_creazione']
+
+class EventoSegnalazioneViewSet(viewsets.ModelViewSet):
+	queryset = EventoSegnalazione.objects.all()
+	serializer_class = EventoSegnalazioneSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['segnalazione', 'evento', 'collaboratore', 'data_creazione']
+class CollaboratoreMansioneViewSet(viewsets.ModelViewSet):
+	queryset = CollaboratoreMansione.objects.all()
+	serializer_class = CollaboratoreMansioneSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['collaboratore', 'mansione', 'data_inizio', 'data_fine']
+class CollaboratoreAssenzaViewSet(viewsets.ModelViewSet):
+	queryset = CollaboratoreAssenza.objects.all()
+	serializer_class = CollaboratoreAssenzaSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['collaboratore', 'data_inizio', 'data_fine', 'tipo']
+class CollaboratoreReperibilitaViewSet(viewsets.ModelViewSet):
+	queryset = CollaboratoreReperibilita.objects.all()
+	serializer_class = CollaboratoreReperibilitaSerializer
+	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['collaboratore', 'data_inizio', 'data_fine', 'tipo']
+class UserViewSet(viewsets.ModelViewSet):
+	queryset = User.objects.all()
+	serializer_class = UserSerializer
+	authentication_classes = (TokenAuthentication,)
+	permission_classes = (permissions.IsAuthenticated, )
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['username', 'email', 'first_name', 'last_name']
+    
+
+class AuthTokenViewSet(viewsets.ViewSet):
+	serializer_class = AuthTokenSerializer
+	permission_classes = (permissions.AllowAny,)
+
+	def create(self, request):
+		serializer = self.serializer_class(data=request.data)
+		serializer.is_valid(raise_exception=True)
+
+		user = authenticate(
+			request=request,
+			username=serializer.validated_data['username'],
+			password=serializer.validated_data['password']
+		)
+
+		if not user:
+			return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+		token, created = Token.objects.get_or_create(user=user)
+		return Response({'token': token.key})

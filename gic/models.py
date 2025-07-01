@@ -1088,7 +1088,7 @@ class Segnalazione(Base_a, Periodic_a, Description_a, Status_a, D3_a):
 		Tipologia,
 		on_delete = models.PROTECT,
 		verbose_name = _("Origine della segnalazione"),
-		related_name = "segnalazione_origine",
+		related_name = "origine_segnalazioni",
 		limit_choices_to = {'tipo' : SEGNORIG},
 		)
 	segnalatore = models.CharField(
@@ -1112,20 +1112,20 @@ class Segnalazione(Base_a, Periodic_a, Description_a, Status_a, D3_a):
 	eventi = models.ManyToManyField(
 		Evento,
 		verbose_name = _("Eventi collegati"),
-		related_name = "+",
+		related_name = "evento_segnalazioni",
 		through = "EventoSegnalazione",
 		)
 	tags = models.ManyToManyField(
 		Tag,
 		verbose_name = _("Tag collegati"),
-		related_name = "segnalazioni",
+		related_name = "tag_segnalazioni",
 		null = True, blank = True,
 		)
 	tipo = models.ForeignKey(
 		Tipologia,
 		on_delete = models.PROTECT,
 		verbose_name = _("Tipo di segnalazione"),
-		related_name = "segnalazione_tipo",
+		related_name = "tipo_segnalazioni",
 		limit_choices_to = {'tipo' : SEGNTIPO},
 		)
 	

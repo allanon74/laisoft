@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 import os
 import ldap
+import oracledb
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, PosixGroupType
 from django.utils.translation import gettext_lazy as _
 
@@ -73,6 +74,9 @@ INSTALLED_APPS = [
 	'sorl.thumbnail', #15/03/2024 thumbnails per immagini
 	'imagefit', # 12/11/2024 Resizer per immagini
     'django_summernote', # 02/12/2024 rtf editor per email
+	'rest_framework', # Django REST Framework
+    'rest_framework.authtoken', # Django REST Framework Token Authentication
+	'corsheaders', # Django CORS Headers
 	]
 
 
@@ -86,6 +90,7 @@ MIDDLEWARE = [
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.locale.LocaleMiddleware', #27/12/2023 multilanguage admin interface FATTO
 #	'django.middleware.cache.UpdateCacheMiddleware', #11/07/2024 Cache config
+ 	'corsheaders.middleware.CorsMiddleware',  # Django CORS Headers
 	'django.middleware.common.CommonMiddleware',
 #	'django.middleware.cache.FetchFromCacheMiddleware', #11/07/2024 Cache config
 	'django.middleware.csrf.CsrfViewMiddleware',
@@ -98,6 +103,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'laisoft.urls'
+
+CORS_ALLOWED_ORIGINS = [
+	'http://localhost',
+	'https://laisoft.gvcc.net',
+	'https://leiferstsdjango.leifers.gvcc.net',
+	'http://172.23.44.200', # IP del server di sviluppo
+]
+
 
 TEMPLATES = [
 	{
@@ -137,23 +150,49 @@ DATABASES = {
 		'HOST': env("DBT_HOST"),
 		'PORT': env("DBT_PORT"),
 	},
-	"oracle_p": {
-		"ENGINE": "django.db.backends.oracle", #10/09/2024
-		'NAME': env("DBOP_NAME"),
-		'USER': env("DBOP_USER"),
-		'PASSWORD': env("DBOP_PASSWORD"),
-		'HOST': env("DBOP_HOST"),
-		'PORT': env("DBOP_PORT"),
-	},
-	"oracle_l": {
-		"ENGINE": "django.db.backends.oracle", #10/09/2024
-		'NAME': env("DBOL_NAME"),
-		'USER': env("DBOL_USER"),
-		'PASSWORD': env("DBOL_PASSWORD"),
-		'HOST': env("DBOL_HOST"),
-		'PORT': env("DBOL_PORT"),
-	},
+    'oracle_r040': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': oracledb.makedsn("172.27.4.22", 1521, sid="DB"),
+        'USER': env("DBR0_USER"),
+		'PASSWORD': env("DBR0_PASSWORD"),
+        # 'OPTIONS': {
+        #     'threaded': True,
+        # },
+    }
+
+
+ 
+	# "oracle_p": {
+	# 	"ENGINE": "django.db.backends.oracle", #10/09/2024
+	# 	'NAME': env("DBOP_NAME"),
+	# 	'USER': env("DBOP_USER"),
+	# 	'PASSWORD': env("DBOP_PASSWORD"),
+	# 	'HOST': env("DBOP_HOST"),
+	# 	'PORT': env("DBOP_PORT"),
+	# },
+	# "oracle_l": {
+	# 	"ENGINE": "django.db.backends.oracle", #10/09/2024
+	# 	'NAME': env("DBOL_NAME"),
+	# 	'USER': env("DBOL_USER"),
+	# 	'PASSWORD': env("DBOL_PASSWORD"),
+	# 	'HOST': env("DBOL_HOST"),
+	# 	'PORT': env("DBOL_PORT"),
+	# },
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
+}
+
 
 LOGIN_URL = "/accounts/login/" #27/12/2023
 

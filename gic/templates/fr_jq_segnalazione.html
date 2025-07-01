@@ -53,7 +53,7 @@
 	<div class="ui-field-contain" data-theme="{{ tm }}">
 		{{ form.eventi.errors }}
 		<label class="enfasi" for="{{ form.eventi.id_for_label }}" data-theme="{{ tm }}">{{ form.eventi.label }}</label>
-		<div class="ui-collapsible">{{ form.eventi }}</div>
+		<div class="ui-field-contains">{{ form.eventi }}</div>
 		{% if form.eventi.help_text %}<div{{ div_f|safe }}>{{ form.eventi.help_text }}</div>{% endif %}
 	</div>
 </div>

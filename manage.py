@@ -2,6 +2,8 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+# import oracledb
+# oracledb.init_oracle_client(lib_dir="/usr/lib/oracle/11.2/client64/lib") # Oracle Thick client
 
 
 def main():

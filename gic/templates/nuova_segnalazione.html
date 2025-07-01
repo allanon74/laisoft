@@ -2,7 +2,7 @@
 <div data-theme="{{ tema_s }}" data-role="collapsible"> <!-- coll nuova segnalazione --> 
 	<h1> Nuova segnalazione</h1> <!-- form nuova segnalazione --> 
 		<p data-theme="{{ tema_s }}">
-			<form data-theme="{{ tema_s }}" action="" method="post"> {% csrf_token %}
+			<form data-theme="{{ tema_s }}" action="" method="post" data-ajax="false"> {% csrf_token %}
 				{{ segnalazione_new }}
 				<input type="hidden" name="model" value="Segnalazione" />
 				<input type="hidden" name="action" value="new" />
