@@ -1101,113 +1101,113 @@ class TemaViewSet(viewsets.ModelViewSet):
 	serializer_class = TemaSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione']
+	filterset_fields = ['modello', 'tema']
 
 class VistaViewSet(viewsets.ModelViewSet):
 	queryset = Vista.objects.all()
 	serializer_class = VistaSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema']
+	filterset_fields = ['nome', 'nome_modello', ]
 
 
 class MansioneViewSet(viewsets.ModelViewSet):
 	queryset = Mansione.objects.all()
 	serializer_class = MansioneSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'descrizione', 'tema']
 
 class MansioneTranslationViewSet(viewsets.ModelViewSet):
 	queryset = MansioneTranslation.objects.all()
 	serializer_class = MansioneTranslationSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'descrizione', 'tema']
 
 class AttivitaViewSet(viewsets.ModelViewSet):
 	queryset = Attivita.objects.all()
 	serializer_class = AttivitaSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema']
+	filterset_fields = ['obbligo_foto', 'chiusura_auto_lavoro', 'mansioni']
 
 class AttivitaTranslationViewSet(viewsets.ModelViewSet):
 	queryset = AttivitaTranslation.objects.all()
 	serializer_class = AttivitaTranslationSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'descrizione', 'tema']
 
 class PrioritaViewSet(viewsets.ModelViewSet):
 	queryset = Priorita.objects.all()
 	serializer_class = PrioritaSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'valore']
+	filterset_fields = ['valore', ]
 
 class PrioritaTranslationViewSet(viewsets.ModelViewSet):
 	queryset = PrioritaTranslation.objects.all()
 	serializer_class = PrioritaTranslationSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'valore']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'descrizione', 'valore']
 
 class AnnoViewSet(viewsets.ModelViewSet):
 	queryset = Anno.objects.all()
 	serializer_class = AnnoSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['anno', 'descrizione']
+	filterset_fields = ['anno', ]
 
 class SquadraViewSet(viewsets.ModelViewSet):
 	queryset = Squadra.objects.all()
 	serializer_class = SquadraSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'descrizione', 'tema']
 
 class SquadraTranslationViewSet(viewsets.ModelViewSet):
 	queryset = SquadraTranslation.objects.all()
 	serializer_class = SquadraTranslationSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'descrizione', 'tema']
 
 class TipologiaViewSet(viewsets.ModelViewSet):
 	queryset = Tipologia.objects.all()
 	serializer_class = TipologiaSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'abbreviazione', 'tema']
+	filterset_fields = ['tipo', 'abbreviazione', 'ordine',]
 
 class TipologiaTranslationViewSet(viewsets.ModelViewSet):
 	queryset = TipologiaTranslation.objects.all()
 	serializer_class = TipologiaTranslationSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'abbreviazione', 'tema']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'descrizione', 'abbreviazione', 'tema']
 
 class CollaboratoreViewSet(viewsets.ModelViewSet):
 	queryset = Collaboratore.objects.all()
 	serializer_class = CollaboratoreSerializer
 	authentication_classes = (TokenAuthentication,)
-	# filter_backends = [DjangoFilterBackend]
-	# filterset_fields = ['nome', 'cognome', 'email', 'telefono', 'servizio', 'tema']
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['dipendente', 'squadra', 'responsabile', 'mansioni', 'assenze', 'reperibilita']
 
 class CdCViewSet(viewsets.ModelViewSet):
 	queryset = CdC.objects.all()
 	serializer_class = CdCSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'descrizione', 'tema']
 
 class CdCTranslationViewSet(viewsets.ModelViewSet):
 	queryset = CdCTranslation.objects.all()
 	serializer_class = CdCTranslationSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields =	 ['nome', 'descrizione', 'tema']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields =	 ['nome', 'descrizione', 'tema']
  
 
 class StrutturaViewSet(viewsets.ModelViewSet):
@@ -1215,42 +1215,42 @@ class StrutturaViewSet(viewsets.ModelViewSet):
 	serializer_class = StrutturaSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema', 'cdc']
+	filterset_fields = ['responsabile', 'cdc', 'autorizzati', ]
 
 class StrutturaTranslationViewSet(viewsets.ModelViewSet):
 	queryset = StrutturaTranslation.objects.all()
 	serializer_class = StrutturaTranslationSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema', 'cdc']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'descrizione', 'tema', 'cdc']
 
 class DirittoViewSet(viewsets.ModelViewSet):
 	queryset = Diritto.objects.all()
 	serializer_class = DirittoSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema']
+	filterset_fields = ['nome', 'capocantiere', 'caposquadra', 'coordinatore', 'operaio', 'struttura', 'ufficio',]
 
 class EventoViewSet(viewsets.ModelViewSet):
 	queryset = Evento.objects.all()
 	serializer_class = EventoSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema', 'priorita', 'stato']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'descrizione', 'tema', 'priorita', 'stato']
 
 class TagViewSet(viewsets.ModelViewSet):
 	queryset = Tag.objects.all()
 	serializer_class = TagSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'descrizione', 'tema']
 
 class EventoTranslationViewSet(viewsets.ModelViewSet):
 	queryset = EventoTranslation.objects.all()
 	serializer_class = EventoTranslationSerializer
 	authentication_classes = (TokenAuthentication,)
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['nome', 'descrizione', 'tema', 'priorita', 'stato']
+	# filter_backends = [DjangoFilterBackend]
+	# filterset_fields = ['nome', 'descrizione', 'tema', 'priorita', 'stato']
 
 #----- Segnalazioni -----
 
@@ -1259,7 +1259,7 @@ class SegnalazioneViewSet(viewsets.ModelViewSet):
 	serializer_class = SegnalazioneSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['tipo', 'stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', ]
+	filterset_fields = ['stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', 'eventi', 'tags', 'tipo',  ]
 
 
 class SegnalazioneCompletaViewSet(viewsets.ModelViewSet):
@@ -1267,7 +1267,7 @@ class SegnalazioneCompletaViewSet(viewsets.ModelViewSet):
 	serializer_class = SegnalazioneCompletaSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['tipo', 'stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', ]
+	filterset_fields = ['stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', 'eventi', 'tags', 'tipo', ]
  
 
  
@@ -1276,14 +1276,14 @@ class SegnalazioneStoricaViewSet(viewsets.ModelViewSet):
 	serializer_class = SegnalazioneSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['tipo', 'stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', ]
+	filterset_fields = ['stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', 'eventi', 'tags', 'tipo', ]
 
 class SegnalazioneStoricaCompletaViewSet(viewsets.ModelViewSet):
 	queryset = Segnalazione.objects.filter(stato__abbreviazione="VER")
 	serializer_class = SegnalazioneCompletaSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['tipo', 'stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', ]
+	filterset_fields = ['stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', 'eventi', 'tags', 'tipo', ]
 
 #----- Interventi -----
 class InterventoViewSet(viewsets.ModelViewSet):
@@ -1291,32 +1291,36 @@ class InterventoViewSet(viewsets.ModelViewSet):
 	serializer_class = InterventoSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['segnalazione', 'stato', 'oggetto', 'priorita', 'preposto', 'provvisorio']
+	filterset_fields = ['segnalazione', 'stato', 'priorita', 'preposto', 'provvisorio', 'struttura', ]
 
 class TeamViewSet(viewsets.ModelViewSet):
 	queryset = Team.objects.all()
 	serializer_class = TeamSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['attivita', 'intervento', 'collaboratore']
+	filterset_fields = ['attivita', 'intervento', ]
 
 class FotoViewSet(viewsets.ModelViewSet):
 	queryset = Foto.objects.all()
 	serializer_class = FotoSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['tipologia', 'collaboratore', 'intervento', 'posizione']
+	filterset_fields = ['tipologia', 'collaboratore', 'intervento', 'posizione', ]
 
 class LavoroViewSet(viewsets.ModelViewSet):
 	queryset = Lavoro.objects.all()
 	serializer_class = LavoroSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['oggetto', 'descrizione', 'collaboratore', 'team', 'stato', 'accessorio']
+	filterset_fields = ['collaboratore', 'team', 'caposquadra', 'stato', 'accessorio', 'urgenza', ]
+
 class TempiLavoroViewSet(viewsets.ModelViewSet):
 	queryset = TempiLavoro.objects.all()
 	serializer_class = TempiLavoroSerializer
 	authentication_classes = (TokenAuthentication,)
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['lavoro', 'inizio', 'fine', ]
+
 class AllegatoViewSet(viewsets.ModelViewSet):
 	queryset = Allegato.objects.all()
 	serializer_class = AllegatoSerializer
@@ -1328,32 +1332,36 @@ class AnnotazioneViewSet(viewsets.ModelViewSet):
 	serializer_class = AnnotazioneSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['intervento', 'collaboratore', 'testo', 'data_creazione']
+	filterset_fields = ['lavoro',  'data_creazione']
 
 class EventoSegnalazioneViewSet(viewsets.ModelViewSet):
 	queryset = EventoSegnalazione.objects.all()
 	serializer_class = EventoSegnalazioneSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['segnalazione', 'evento', 'collaboratore', 'data_creazione']
+	filterset_fields = ['segnalazione', 'evento', 'data_creazione', ]
+
 class CollaboratoreMansioneViewSet(viewsets.ModelViewSet):
 	queryset = CollaboratoreMansione.objects.all()
 	serializer_class = CollaboratoreMansioneSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['collaboratore', 'mansione', 'data_inizio', 'data_fine']
+	filterset_fields = ['collaboratore', 'mansione', 'data_da', 'data_a', ]
+
 class CollaboratoreAssenzaViewSet(viewsets.ModelViewSet):
 	queryset = CollaboratoreAssenza.objects.all()
 	serializer_class = CollaboratoreAssenzaSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['collaboratore', 'data_inizio', 'data_fine', 'tipo']
+	filterset_fields = ['collaboratore', 'data_da', 'data_a', 'assenza', ]
+
 class CollaboratoreReperibilitaViewSet(viewsets.ModelViewSet):
 	queryset = CollaboratoreReperibilita.objects.all()
 	serializer_class = CollaboratoreReperibilitaSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['collaboratore', 'data_inizio', 'data_fine', 'tipo']
+	filterset_fields = ['collaboratore', 'data_da', 'data_a', 'reperibilita', ]
+
 class UserViewSet(viewsets.ModelViewSet):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer

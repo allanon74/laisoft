@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
+# from parler_rest.serializers import TranslatableModelSerializer, TranslatedFieldsField
 
 from .models import (
     Tema, Vista, Mansione, MansioneTranslation, Attivita, AttivitaTranslation,
@@ -11,6 +12,21 @@ from .models import (
 )
 
 from django.contrib.auth.models import User
+
+
+# Base struttura campi
+
+_f_base = ('id', 'data_creazione', 'data_modifica', )
+_f_gis = ('id', 'data_creazione', 'data_modifica', )
+_f_itde = ('colore', 'fa_icon', 'fa_visible', 'translations', )
+_f_periodic = ('periodico', 'periodo', 'cicli', 'duplicare', )
+_f_description = ('oggetto', 'descrizione', 'note', )
+_f_valid_date = ('data_da', 'data_a', )
+_f_status = ('stato', )
+_f_d3  = ('id_documento', )
+_f_rabs = ('id_rabs', )
+
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,12 +46,12 @@ class TokenSerializer(serializers.ModelSerializer):
 class TemaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tema
-        fields = '__all__'
+        fields = _f_base + ('modello', 'tema')
 
 class VistaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vista
-        fields = '__all__'
+        fields = _f_base + ('nome', 'nome_modello')
 
 class MansioneTranslationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,7 +62,7 @@ class MansioneSerializer(serializers.ModelSerializer):
     translations = MansioneTranslationSerializer(many=True, read_only=True)
     class Meta:
         model = Mansione
-        fields = '__all__'
+        fields = _f_base + _f_itde 
 
 class AttivitaTranslationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -58,7 +74,7 @@ class AttivitaSerializer(serializers.ModelSerializer):
     mansioni = serializers.PrimaryKeyRelatedField(many=True, queryset=Mansione.objects.all())
     class Meta:
         model = Attivita
-        fields = '__all__'
+        fields = _f_base + _f_itde + ('obbligo_foto', 'chiusura_auto_lavoro', 'tempo_stimato', 'tempo_aumento', 'mansioni')
 
 class PrioritaTranslationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -69,12 +85,12 @@ class PrioritaSerializer(serializers.ModelSerializer):
     translations = PrioritaTranslationSerializer(many=True, read_only=True)
     class Meta:
         model = Priorita
-        fields = '__all__'
+        fields = _f_base + _f_itde + ('valore', )
 
 class AnnoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Anno
-        fields = '__all__'
+        fields = _f_base + ('anno', ) 
 
 class SquadraTranslationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -85,7 +101,7 @@ class SquadraSerializer(serializers.ModelSerializer):
     translations = SquadraTranslationSerializer(many=True, read_only=True)
     class Meta:
         model = Squadra
-        fields = '__all__'
+        fields = _f_base + _f_itde
 
 class TipologiaTranslationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -96,12 +112,12 @@ class TipologiaSerializer(serializers.ModelSerializer):
     translations = TipologiaTranslationSerializer(many=True, read_only=True)
     class Meta:
         model = Tipologia
-        fields = '__all__'
+        fields = _f_base + _f_itde + ('tipo', 'abbreviazione', 'ordine')
 
 class CollaboratoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Collaboratore
-        fields = '__all__'
+        fields = _f_base + ('dipendente', 'squadra', 'telefono', 'responsabile', 'mansioni', 'assenze', 'reperibilita', 'sigla', 'vista', )
 
 class CdCTranslationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -112,7 +128,7 @@ class CdCSerializer(serializers.ModelSerializer):
     translations = CdCTranslationSerializer(many=True, read_only=True)
     class Meta:
         model = CdC
-        fields = '__all__'
+        fields = _f_base + _f_itde + ('annotazioni', )
 
 class StrutturaTranslationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -124,12 +140,12 @@ class StrutturaSerializer(serializers.ModelSerializer):
     autorizzati = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = Struttura
-        fields = '__all__'
+        fields = _f_base + _f_itde + ('responsabile', 'cdc', 'telefono', 'autorizzati', )
 
 class DirittoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diritto
-        fields = '__all__'
+        fields = _f_base + ('nome', 'capocantiere', 'caposquadra', 'coordinatore', 'operaio', 'struttura', 'ufficio', )
 
 class EventoTranslationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -140,7 +156,7 @@ class EventoSerializer(serializers.ModelSerializer):
     translations = EventoTranslationSerializer(many=True, read_only=True)
     class Meta:
         model = Evento
-        fields = '__all__'
+        fields = _f_base + _f_itde
 
 class TagSerializer(EventoSerializer):
     class Meta(EventoSerializer.Meta):
@@ -155,7 +171,7 @@ class SegnalazioneSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Segnalazione
-        fields = '__all__'
+        fields = _f_base + _f_periodic + _f_description + _f_status + _f_d3 + ('data_pianificazione', 'struttura', 'origine', 'segnalatore', 'email', 'telefono', 'risposta', 'eventi', 'tags', 'tipo',  )
         
 class SegnalazioneCompletaSerializer(serializers.ModelSerializer):
     struttura = StrutturaSerializer(many=False, read_only=True)
@@ -166,42 +182,43 @@ class SegnalazioneCompletaSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Segnalazione
-        fields = '__all__'
+        fields = _f_base + _f_periodic + _f_description + _f_status + _f_d3 + ('data_pianificazione', 'struttura', 'origine', 'segnalatore', 'email', 'telefono', 'risposta', 'eventi', 'tags', 'tipo',  )
 
 class InterventoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Intervento
-        fields = '__all__'
+        fields = fields = _f_base  + _f_periodic + _f_description + _f_status + _f_rabs +  ('segnalazione', 'struttura', 'priorita', 'preposto', 'precedente', 'data_visibilita', 'data_urgente', 'data_esecuzione', 'provvisorio', )
+        
 
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
-        fields = '__all__'
+        fields = _f_base + ('intervento', 'attivita', 'tempo_stimato',  'tempo_aumento', )
 
 class FotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Foto
-        fields = '__all__'
+        fields = _f_gis + ('tipologia', 'intervento', 'collaboratore', 'foto', 'posizione', 'note', )
 
 class LavoroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lavoro
-        fields = '__all__'
+        fields = _f_base + _f_description +_f_status + ('collaboratore', 'team', 'durata_prevista', 'caposquadra', 'accessorio', 'urgenza', 'mod_priorita', )
 
 class TempiLavoroSerializer(serializers.ModelSerializer):
     class Meta:
         model = TempiLavoro
-        fields = '__all__'
+        fields = _f_base + ('lavoro', 'inizio', 'fine', 'note', )
 
 class AllegatoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Allegato
-        fields = '__all__'
+        fields = _f_base + ('segnalazione', 'file', 'descrizione', )
 
 class AnnotazioneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Annotazione
-        fields = '__all__'
+        fields = _f_base + ('lavoro', 'testo', )
 
 class EventoSegnalazioneSerializer(serializers.ModelSerializer):
     class Meta:

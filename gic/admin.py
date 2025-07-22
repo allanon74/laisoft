@@ -25,6 +25,7 @@ class Admin_a(GISModelAdmin):
 	list_display = ['id',]
 	list_filter = []
 	search_fields = []
+	list_select_related = True
 	ordering = ['-data_creazione',]
 	readonly_fields = ['id', 'data_creazione', 'data_modifica', ]
 	gis_widget_kwargs = {
@@ -48,6 +49,7 @@ class ItDe_a(TranslatableAdmin):
 		'translations__descrizione',
 		]
 	list_filter = []
+	list_select_related = True
 	#search_fields = []
 	save_on_top = True
 	ordering = ['-data_creazione',]
@@ -73,6 +75,7 @@ class Description_a(Admin_a):
 class Inline_a(admin.TabularInline):
 	extra = 1
 	min_num = 0
+	list_select_related = True
 	readonly_fields = ['id', 'data_creazione', 'data_modifica', ]
 	
 	class Meta:
@@ -81,6 +84,7 @@ class Inline_a(admin.TabularInline):
 class Stackline_a(admin.StackedInline):
 	extra = 0
 	min_num = 0
+	list_select_related = True
 	readonly_fields = ['id', 'data_creazione', 'data_modifica', ]
 	
 	class Meta:
