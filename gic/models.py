@@ -1037,6 +1037,24 @@ class Evento(Base_a, ItDe_a):
 	class Meta:
 		verbose_name = _("Evento")
 		verbose_name_plural = _("Eventi")
+  
+	@classmethod
+	def default(self):
+		res = None 
+		a = self.objects.filter(id = 0)
+		if a.count() == 0:
+			res = self( 
+				   id=0,
+				   colore="#555555",  
+				   nome_breve="Nessun Evento", 
+				   descrizione="Nessun evento selezionato",
+				   fa_icon="fa-solid fa-square",
+				   fa_visible=False,
+			)
+			res.save()
+		else:
+			res = a[0]
+		return res
 
 class Tag(Evento):
 	
@@ -1114,6 +1132,7 @@ class Segnalazione(Base_a, Periodic_a, Description_a, Status_a, D3_a):
 		verbose_name = _("Eventi collegati"),
 		related_name = "evento_segnalazioni",
 		through = "EventoSegnalazione",
+		null = True, blank = True,
 		)
 	tags = models.ManyToManyField(
 		Tag,
@@ -1130,19 +1149,21 @@ class Segnalazione(Base_a, Periodic_a, Description_a, Status_a, D3_a):
 		)
 	
 	def duplica(self):
-		# if self.periodico:
-		# 	a = self
-		# 	if a.periodo:
-		# 		a.id = None 
-		# 		a.data_pianificazione += datetime.timedelta(days=a.periodo)
-		# 		if a.cicli:
-		# 			a.cicli -= 1 
-		# 			if a.cicli <= 0:
-		# 				a.cicli = None
-		# 				a.periodico = None
-		# 		if a.duplicare:
-		# 			for itv in self.intervento_set.all():
-		# 				itv.duplica()
+		if self.periodico:
+			a = copy.deepcopy(self)
+			a.id = None
+			if a.periodo:
+				a.id = None 
+				a.data_pianificazione += datetime.timedelta(days=a.periodo)
+				if a.cicli:
+					a.cicli -= 1 
+					if a.cicli <= 0:
+						a.cicli = None
+						a.periodico = None
+				if a.duplicare:
+					for itv in self.intervento_set.all():
+						itv.duplica(a)
+			a.save()
 		pass
 	
 	def conta_lavori(self):
@@ -1293,38 +1314,39 @@ class Intervento(Base_a, Periodic_a, Description_a, Status_a, RABS_a):
 		return self.foto_set.filter(tipologia=istruzioni)
 	
 	
-	def duplica(self):
-		# a = copy.copy(self)
-		# verificato = Tipologia.tipologia(STATO, "VER") 
-		# if a.periodico:
-		# 	a.id = None
-		# 	if a.segnalazione:
-		# 		if a.segnalazione.periodico and a.segnalazione.duplicare:
-		# 			a.data_visibilita += datetime.timedelta(days=a.segnalazione.periodo)
-		# 		elif a.stato == verificato:
-		# 			a.data_visibilita += datetime.timedelta(days=a.periodo)
-		# 			a.cicli -= 1
-		# 			if a.cicli <= 0:
-		# 				a.cicli = None
-		# 				a.periodico = False
-		# 	else:
-		# 		a.data_visibilita += datetime.timedelta(days=a.periodo)
-		# 		a.cicli -= 1
-		# 		if a.cicli <= 0:
-		# 			a.cicli = None
-		# 			a.periodico = False
-		# 	a.save()	
-		# 	if a.duplicare:
-		# 		for tm in self.team_set.all():
-		# 			t = copy.copy(tm)
-		# 			t.id = None
-		# 			t.intervento = a
-		# 			t.save()
-		# 			for lv in tm.lavoro_set.all():
-		# 				l = copy.copy(lv)
-		# 				l.id = None
-		# 				l.team = t
-		# 				l.save()
+	def duplica(self, seg = None):
+		a = copy.deepcopy(self)
+		verificato = Tipologia.tipologia(STATO, "VER") 
+		if a.periodico:
+			a.id = None
+			if seg:
+				a.segnalazione = seg
+				if seg.periodico and seg.duplicare:
+					a.data_visibilita += datetime.timedelta(days=a.segnalazione.periodo)
+				elif a.stato == verificato:
+					a.data_visibilita += datetime.timedelta(days=a.periodo)
+					a.cicli -= 1
+					if a.cicli <= 0:
+						a.cicli = None
+						a.periodico = False
+			else:
+				a.data_visibilita += datetime.timedelta(days=a.periodo)
+				a.cicli -= 1
+				if a.cicli <= 0:
+					a.cicli = None
+					a.periodico = False
+			a.save()	
+			if a.duplicare:
+				for tm in self.team_set.all():
+					t = copy.deepcopy(tm)
+					t.id = None
+					t.intervento = a
+					t.save()
+					for lv in tm.lavoro_set.all():
+						l = copy.deepcopy(lv)
+						l.id = None
+						l.team = t
+						l.save()
 		pass				
 			
 

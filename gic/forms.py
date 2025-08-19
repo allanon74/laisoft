@@ -5,7 +5,7 @@ from django.forms import ImageField, CharField, IntegerField, ChoiceField, SlugF
 from django.contrib.gis.forms.widgets import OSMWidget
 import django.contrib.gis.forms as gis_forms
 from django.contrib.admin.widgets import AdminDateWidget
-from .models import Tema, Segnalazione, si_no, Intervento, Team, Lavoro, Tipologia
+from .models import Tema, Segnalazione, si_no, Intervento, Team, Lavoro, Tipologia, Evento
 from datetime import datetime
 from .widgets import CustomDate, FilterSelect
 from django.contrib.gis.forms import PointField
@@ -42,9 +42,6 @@ class SegnalazioneForm(ModelForm):
 		"data-theme" : Tema.get_tema("Segnalazione")
 		  }
 	
-	def __init__(self, *args, **kwargs):
-		super(SegnalazioneForm, self).__init__(*args, **kwargs)
-		self.fields['stato'].disabled = True
 	
 	class Meta:
 		_tema = Tema.get_tema("Segnalazione")
@@ -90,7 +87,28 @@ class SegnalazioneForm(ModelForm):
 			'note' : Textarea(attrs={ "data-theme" : _tema, }, ),
 			'eventi' : CheckboxSelectMultiple(attrs={ "data-theme" : _tema, }, )
 			}
+	
+		def __init__(self, *args, **kwargs):
+			super(SegnalazioneForm, self).__init__(*args, **kwargs)
+			self.fields['stato'].disabled = True
+
+			self.fields['eventi'].queryset = Evento.objects.all().order_by('id')
+   
+			if not self.instance.pk:
+
+				evento_default = Evento.default()
+				self.initial['eventi'] = [evento_default, ]
+
 		
+		def clean_eventi(self):
+			eventi = self.cleaned_data.get('eventi')
+			if not eventi:
+				try:
+					evento_default = Evento.default()
+					return[evento_default]
+				except Evento.DoesNotExist:
+					raise ValueError(_("Nessun evento selezionato e nessun evento predefinito disponibile."))
+			return eventi
 		
 SegnalazioneFormset = modelformset_factory(Segnalazione, form=SegnalazioneForm)
 

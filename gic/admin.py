@@ -226,6 +226,7 @@ class SegnalazioneAdmin(Description_a):
 		}
 	search_fields = ['oggetto', 'descrizione']
 	autocomplete_fields = ['struttura', ]
+	list_filter = ['stato', 'tipo', ]
 
 class InterventoAdmin(Description_a):
 	fieldsets = SegnalazioneInterventoInline.fieldsets

@@ -142,7 +142,7 @@ class FormularioAdmin(SimpleHistoryAdmin):
 			#return qs.filter(dipqual__dipendente__servizio__ufficio__in=uff)
 			
 			ser = Servizio.objects.filter(responsabile__id=dip.id)
-			return qs.filter(dipqual__dipendente__servizio__in=ser)
+			return qs.filter(dipqual__dipendente__servizio__in=ser).distinct()
 	
 	def formfield_for_foreignkey(self, db_field, request, **kwargs):
 		dip = None
