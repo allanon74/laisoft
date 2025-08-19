@@ -168,6 +168,7 @@ class SegnalazioneSerializer(serializers.ModelSerializer):
     eventi = serializers.PrimaryKeyRelatedField(many=True, queryset=Evento.objects.all())
     tags = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all(), required=False, allow_null=True)
     tipo = serializers.PrimaryKeyRelatedField(queryset=Tipologia.objects.filter(tipo="ST"))
+    stato = serializers.PrimaryKeyRelatedField(queryset=Tipologia.objects.filter(tipo="TO"))
     
     class Meta:
         model = Segnalazione
@@ -179,6 +180,7 @@ class SegnalazioneCompletaSerializer(serializers.ModelSerializer):
     eventi = EventoSerializer(many=True, read_only=True)
     tags = TagSerializer(many=True, read_only=True, required=False, allow_null=True)
     tipo = TipologiaSerializer(many=False, read_only=True)
+    stato = TipologiaSerializer(many=False, read_only=True)
     
     class Meta:
         model = Segnalazione

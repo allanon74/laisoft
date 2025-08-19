@@ -1255,7 +1255,7 @@ class EventoTranslationViewSet(viewsets.ModelViewSet):
 #----- Segnalazioni -----
 
 class SegnalazioneViewSet(viewsets.ModelViewSet):
-	queryset = Segnalazione.objects.exclude(stato__abbreviazione="VER")
+	queryset = Segnalazione.objects.exclude(stato__abbreviazione="VER").distinct()
 	serializer_class = SegnalazioneSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
@@ -1263,7 +1263,7 @@ class SegnalazioneViewSet(viewsets.ModelViewSet):
 
 
 class SegnalazioneCompletaViewSet(viewsets.ModelViewSet):
-	queryset = Segnalazione.objects.exclude(stato__abbreviazione="VER")
+	queryset = Segnalazione.objects.exclude(stato__abbreviazione="VER").distinct()
 	serializer_class = SegnalazioneCompletaSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
@@ -1272,7 +1272,7 @@ class SegnalazioneCompletaViewSet(viewsets.ModelViewSet):
 
  
 class SegnalazioneStoricaViewSet(viewsets.ModelViewSet):
-	queryset = Segnalazione.objects.filter(stato__abbreviazione="VER")
+	queryset = Segnalazione.objects.filter(stato__abbreviazione="VER").distinct()
 	serializer_class = SegnalazioneSerializer
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]

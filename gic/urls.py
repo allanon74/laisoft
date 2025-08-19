@@ -16,7 +16,7 @@ from .views import (
     AuthTokenViewSet,
 )
 
-#	2025_06_12_Router for REST API
+#	2025_06_12_Router for REST API 
 
 router = DefaultRouter()
 router.register(r'temi', TemaViewSet)
