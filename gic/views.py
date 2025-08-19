@@ -1260,6 +1260,8 @@ class SegnalazioneViewSet(viewsets.ModelViewSet):
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', 'eventi', 'tags', 'tipo',  ]
+	ordering_fields = ['stato', 'data_creazione', 'tipo']
+	ordering = ['stato', '-data_creazione']
 
 
 class SegnalazioneCompletaViewSet(viewsets.ModelViewSet):
@@ -1268,6 +1270,8 @@ class SegnalazioneCompletaViewSet(viewsets.ModelViewSet):
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', 'eventi', 'tags', 'tipo', ]
+	ordering_fields = ['stato', 'data_creazione', 'tipo']
+	ordering = ['stato', '-data_creazione']
  
 
  
@@ -1277,6 +1281,8 @@ class SegnalazioneStoricaViewSet(viewsets.ModelViewSet):
 	authentication_classes = (TokenAuthentication,)
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['stato', 'origine', 'segnalatore', 'struttura', 'data_creazione', 'data_pianificazione', 'eventi', 'tags', 'tipo', ]
+	ordering_fields = ['stato', 'data_creazione', 'tipo']
+	ordering = ['stato', '-data_creazione']
 
 class SegnalazioneStoricaCompletaViewSet(viewsets.ModelViewSet):
 	queryset = Segnalazione.objects.filter(stato__abbreviazione="VER")
