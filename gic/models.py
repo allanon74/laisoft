@@ -1220,15 +1220,16 @@ class Segnalazione(Base_a, Periodic_a, Description_a, Status_a, D3_a):
  
 	def save(self, *args, **kwargs):
 		acquisito = Tipologia.tipologia(STATO, "ACQ")
-		verificato = Tipologia.tipologia(STATO, "VER")
+		# verificato = Tipologia.tipologia(STATO, "VER")
+		chiuso = Tipologia.tipologia(STATO, "CHI")
 
 		
 		if not self.id:
 			self.stato = acquisito
-		if self.stato == verificato:
+		if self.stato == chiuso:
 			try:
 				sg = Segnalazione.objects.get(pk=self.id)
-				if sg.stato != verificato:
+				if sg.stato != chiuso:
 					self.duplica()
 			except Segnalazione.DoesNotExist:
 				self.duplica()
@@ -1316,25 +1317,28 @@ class Intervento(Base_a, Periodic_a, Description_a, Status_a, RABS_a):
 	
 	def duplica(self, seg = None):
 		a = copy.deepcopy(self)
-		verificato = Tipologia.tipologia(STATO, "VER") 
+		# verificato = Tipologia.tipologia(STATO, "VER") 
+		chiuso = Tipologia.tipologia(STATO, "CHI")
 		if a.periodico:
 			a.id = None
 			if seg:
 				a.segnalazione = seg
 				if seg.periodico and seg.duplicare:
 					a.data_visibilita += datetime.timedelta(days=a.segnalazione.periodo)
-				elif a.stato == verificato:
+				elif a.stato == chiuso:
 					a.data_visibilita += datetime.timedelta(days=a.periodo)
+					if a.cicli:
+						a.cicli -= 1
+						if a.cicli <= 0:
+							a.cicli = None
+							a.periodico = False
+			else:
+				a.data_visibilita += datetime.timedelta(days=a.periodo)
+				if a.cicli:
 					a.cicli -= 1
 					if a.cicli <= 0:
 						a.cicli = None
 						a.periodico = False
-			else:
-				a.data_visibilita += datetime.timedelta(days=a.periodo)
-				a.cicli -= 1
-				if a.cicli <= 0:
-					a.cicli = None
-					a.periodico = False
 			a.save()	
 			if a.duplicare:
 				for tm in self.team_set.all():
@@ -1405,8 +1409,8 @@ class Intervento(Base_a, Periodic_a, Description_a, Status_a, RABS_a):
 		
 		acquisito = Tipologia.tipologia(STATO, "ACQ")
 		# assegnato = Tipologia.tipologia(STATO, "ASS")
-		# chiuso = Tipologia.tipologia(STATO, "CHI")
-		verificato = Tipologia.tipologia(STATO, "VER")
+		chiuso = Tipologia.tipologia(STATO, "CHI")
+		# verificato = Tipologia.tipologia(STATO, "VER")
 		# in_corso = Tipologia.tipologia(STATO, "COR")
 		
 		if not self.id:
@@ -1423,10 +1427,10 @@ class Intervento(Base_a, Periodic_a, Description_a, Status_a, RABS_a):
 		# 		elif self.stato == in_corso:
 		# 			self.segnalazione.stato = self.stato
 		# 			self.segnalazione.save()
-		if self.stato == verificato:
+		if self.stato == chiuso:
 			try:
 				intv = Intervento.objects.get(pk=self.id)
-				if intv.stato != verificato:
+				if intv.stato != chiuso:
 					self.duplica()
 			except Intervento.DoesNotExist:
 				self.duplica()
