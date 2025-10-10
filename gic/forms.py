@@ -5,7 +5,7 @@ from django.forms import ImageField, CharField, IntegerField, ChoiceField, SlugF
 from django.contrib.gis.forms.widgets import OSMWidget
 import django.contrib.gis.forms as gis_forms
 from django.contrib.admin.widgets import AdminDateWidget
-from .models import Tema, Segnalazione, si_no, Intervento, Team, Lavoro, Tipologia, Evento
+from .models import Tema, Segnalazione, si_no, Intervento, Team, Lavoro, Tipologia, Evento, Struttura, Collaboratore, Attivita
 from datetime import datetime
 from .widgets import CustomDate, FilterSelect
 from django.contrib.gis.forms import PointField
@@ -93,6 +93,7 @@ class SegnalazioneForm(ModelForm):
 			self.fields['stato'].disabled = True
 
 			self.fields['eventi'].queryset = Evento.objects.all().order_by('id')
+			self.fields['struttura'].queryset = Struttura.objects.translated().order_by('translations__nome_breve')
    
 			if not self.instance.pk:
 
@@ -120,7 +121,8 @@ class InterventoForm(ModelForm):
 		super(InterventoForm, self).__init__(*args, **kwargs)
 		self.fields['stato'].disabled = True
 #		self.fields['segnalazione'].disabled = True
-	
+		self.fields['struttura'].queryset = Struttura.objects.translated().order_by('translations__nome_breve')
+		self.fields['preposto'].queryset = Collaboratore.objects.filter(dipendente__attivo=True).order_by('dipendente__cognome', 'dipendente__nome')
 	class Meta:
 		_tema = Tema.get_tema("Intervento")
 		model = Intervento
@@ -174,6 +176,7 @@ class TeamForm(ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(TeamForm, self).__init__(*args, **kwargs)
 #		self.fields['intervento'].disabled = True
+		self.fields['attivita'].queryset = Attivita.objects.translated().order_by('translations__nome_breve')
 	
 	class Meta:
 		_tema = Tema.get_tema("Team")
@@ -200,6 +203,7 @@ class LavoroForm(ModelForm):
 		super(LavoroForm, self).__init__(*args, **kwargs)
 		self.fields['stato'].disabled = True
 #		self.fields['team'].disabled = True
+		self.fields['collaboratore'].queryset = Collaboratore.objects.filter(dipendente__attivo=True).order_by('dipendente__cognome', 'dipendente__nome')
 	
 	class Meta:
 		_tema = Tema.get_tema("lavoro")

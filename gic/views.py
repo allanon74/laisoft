@@ -698,7 +698,7 @@ class VistaIntervento(VistaSingola_a):
 		self.context['lavoro_new'] = LavoroForm
 		self.context['gic_render'] = gic_render
 		
-		return self.context
+		return self.context 
 
 class VistaSegnalazione(VistaSingola_a):
 	template_name = "gic_segnalazione.html"

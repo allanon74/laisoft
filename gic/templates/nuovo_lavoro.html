@@ -7,11 +7,11 @@
 			<table class="formtable" data-theme="{{ tema_l }}">
 				<tr data-theme="{{ tema_l }}">
 					<td data-theme="{{ tema_l }}"><label class="enfasi" for="id_oggetto" data-theme="{{ tema_l }}">{% trans 'Oggetto' %}</label></td>
-					<td data-theme="{{ tema_l }}"><input type="text" name="oggetto" data-theme="{{ tema_l }}" required id="id_oggetto"></td>
+					<td data-theme="{{ tema_l }}"><input type="text" name="oggetto" data-theme="{{ tema_l }}" required id="id_oggetto" value="{{ intervento.oggetto|default:'' }}"></td>
 				</tr>
 				<tr data-theme="{{ tema_l }}">
 					<td data-theme="{{ tema_l }}"><label class="enfasi" for="id_descrizione" data-theme="{{ tema_l }}">{% trans 'Descrizione' %}</label></td>
-					<td data-theme="{{ tema_l }}"><textarea cols="40" rows="10" name="descrizione" data-theme="{{ tema_l }}" required id="id_descrizione"></textarea></td>
+					<td data-theme="{{ tema_l }}"><textarea cols="40" rows="10" name="descrizione" data-theme="{{ tema_l }}" required id="id_descrizione">{{ intervento.descrizione|default:'' }}</textarea></td>
 				</tr>
 				<tr data-theme="{{ tema_l }}">
 					<td data-theme="{{ tema_l }}"><label class="enfasi" for="id_collaboratore" data-theme="{{ tema_l }}">{% trans 'Collaboratore' %}</label></td>
